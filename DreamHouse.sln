@@ -15,15 +15,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{5B66D6DC-D8C3-40D9-B350-92F244E57894}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamHouse.Infrastructure.Identity", "DreamHouse.Infrastructure.Identity\DreamHouse.Infrastructure.Identity.csproj", "{36144FE5-2C66-4381-83DB-C73D4EF1199F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamHouse.Infrastructure.Identity", "DreamHouse.Infrastructure.Identity\DreamHouse.Infrastructure.Identity.csproj", "{36144FE5-2C66-4381-83DB-C73D4EF1199F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamHouse.Infrastructure.Shared", "DreamHouse.Infrastructure.Shared\DreamHouse.Infrastructure.Shared.csproj", "{ACAE565D-D7C3-41E4-BF4C-D801F20FE31F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamHouse.Infrastructure.Shared", "DreamHouse.Infrastructure.Shared\DreamHouse.Infrastructure.Shared.csproj", "{ACAE565D-D7C3-41E4-BF4C-D801F20FE31F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamHouse.Infrastructure.Persistence", "DreamHouse.Infrastructure.Persistence\DreamHouse.Infrastructure.Persistence.csproj", "{7247DC2A-995D-4F24-8F67-B216DE3C8D3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamHouse.Infrastructure.Persistence", "DreamHouse.Infrastructure.Persistence\DreamHouse.Infrastructure.Persistence.csproj", "{7247DC2A-995D-4F24-8F67-B216DE3C8D3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamHouse.Core.Application", "DreamHouse.Core.Application\DreamHouse.Core.Application.csproj", "{C2EBC274-B2EE-4218-A889-50C9061D992A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamHouse.Core.Application", "DreamHouse.Core.Application\DreamHouse.Core.Application.csproj", "{C2EBC274-B2EE-4218-A889-50C9061D992A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamHouse.Core.Domain", "DreamHouse.Core.Domain\DreamHouse.Core.Domain.csproj", "{349A6FC6-F113-42A2-9411-ED16BD5DD2CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamHouse.Core.Domain", "DreamHouse.Core.Domain\DreamHouse.Core.Domain.csproj", "{349A6FC6-F113-42A2-9411-ED16BD5DD2CB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{FC5A23B6-71E6-4841-9E75-99877397D955}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.DreamHouse", "WebApi.DreamHouse\WebApi.DreamHouse.csproj", "{610B276D-87D6-4917-AF97-552A49921457}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +59,10 @@ Global
 		{349A6FC6-F113-42A2-9411-ED16BD5DD2CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{349A6FC6-F113-42A2-9411-ED16BD5DD2CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{349A6FC6-F113-42A2-9411-ED16BD5DD2CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{610B276D-87D6-4917-AF97-552A49921457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{610B276D-87D6-4917-AF97-552A49921457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{610B276D-87D6-4917-AF97-552A49921457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{610B276D-87D6-4917-AF97-552A49921457}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +78,8 @@ Global
 		{7247DC2A-995D-4F24-8F67-B216DE3C8D3F} = {414C3AAB-87EA-47D3-9EE1-2364D9CA7332}
 		{C2EBC274-B2EE-4218-A889-50C9061D992A} = {1D1F5979-B206-4E93-BB8A-D3AB20913F23}
 		{349A6FC6-F113-42A2-9411-ED16BD5DD2CB} = {1D1F5979-B206-4E93-BB8A-D3AB20913F23}
+		{FC5A23B6-71E6-4841-9E75-99877397D955} = {43EA23B9-CABF-4FCC-9DFB-F3569F68110B}
+		{610B276D-87D6-4917-AF97-552A49921457} = {FC5A23B6-71E6-4841-9E75-99877397D955}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DDDE7F8C-3C2F-4BD7-ADB0-FFE8E59E4FD7}
