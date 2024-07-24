@@ -5,6 +5,16 @@ VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamHouse", "DreamHouse\DreamHouse.csproj", "{9F9A9678-74D8-4C26-8EE6-4A932F999B41}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{18EB03DA-29E5-4451-B405-8B8FC75C2F4F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{1D1F5979-B206-4E93-BB8A-D3AB20913F23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{414C3AAB-87EA-47D3-9EE1-2364D9CA7332}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{43EA23B9-CABF-4FCC-9DFB-F3569F68110B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{5B66D6DC-D8C3-40D9-B350-92F244E57894}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +28,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9F9A9678-74D8-4C26-8EE6-4A932F999B41} = {5B66D6DC-D8C3-40D9-B350-92F244E57894}
+		{1D1F5979-B206-4E93-BB8A-D3AB20913F23} = {18EB03DA-29E5-4451-B405-8B8FC75C2F4F}
+		{414C3AAB-87EA-47D3-9EE1-2364D9CA7332} = {18EB03DA-29E5-4451-B405-8B8FC75C2F4F}
+		{43EA23B9-CABF-4FCC-9DFB-F3569F68110B} = {18EB03DA-29E5-4451-B405-8B8FC75C2F4F}
+		{5B66D6DC-D8C3-40D9-B350-92F244E57894} = {43EA23B9-CABF-4FCC-9DFB-F3569F68110B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DDDE7F8C-3C2F-4BD7-ADB0-FFE8E59E4FD7}
