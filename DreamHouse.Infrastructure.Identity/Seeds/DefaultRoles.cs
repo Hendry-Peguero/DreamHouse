@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-//using DreamHouse.Core.Application.Enums;
+using DreamHouse.Core.Application.Enums;
 
 namespace DreamHouse.Infrastructure.Identity.Seeds
 {
@@ -7,9 +7,8 @@ namespace DreamHouse.Infrastructure.Identity.Seeds
     {
         public static async Task SeedAsync(RoleManager<IdentityRole> roleManager)
         {
-            //await roleManager.CreateAsync(new IdentityRole(ERoles.SUPERADMIN.ToString()));
-            //await roleManager.CreateAsync(new IdentityRole(ERoles.ADMIN.ToString()));
-            //await roleManager.CreateAsync(new IdentityRole(ERoles.BASIC.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(ERoles.SUPERADMIN.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(ERoles.ADMIN.ToString()));
         }
     }
 }

@@ -3,14 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-//using DreamHouse.Core.Application.Helpers;
-//using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Infrastructure.Identity.Context;
 using DreamHouse.Infrastructure.Identity.Entities;
 using DreamHouse.Infrastructure.Identity.Seeds;
-//using DreamHouse.Infrastructure.Identity.Services;
+using DreamHouse.Infrastructure.Identity.Services;
 using DreamHouse.Infrastructure.Persistence.Seeds.Users;
 using System.Reflection;
+using DreamHouse.Core.Application.Interfaces.Services.User;
 
 namespace DreamHouse.Infrastructure.Identity.DependencyInjection
 {
@@ -55,7 +54,7 @@ namespace DreamHouse.Infrastructure.Identity.DependencyInjection
 
             #region Services
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            //services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAccountService, AccountService>();
             #endregion
         }
 

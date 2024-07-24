@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-//using DreamHouse.Core.Application.Interfaces.Repositories;
+﻿using DreamHouse.Core.Application.Interfaces.Repositories;
 using DreamHouse.Infrastructure.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace DreamHouse.Infrastructure.Persistence.Repositories
 {
-    public class GenericRepository<Entity> /*: IGenericRepository<Entity> */ where Entity : class
+    public class GenericRepository<Entity> : IGenericRepository<Entity> where Entity : class
     {
         private readonly ApplicationContext context;
 

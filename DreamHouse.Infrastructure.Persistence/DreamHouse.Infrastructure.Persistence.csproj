@@ -16,4 +16,9 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DreamHouse.Core.Application\DreamHouse.Core.Application.csproj" />
+    <ProjectReference Include="..\DreamHouse.Core.Domain\DreamHouse.Core.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

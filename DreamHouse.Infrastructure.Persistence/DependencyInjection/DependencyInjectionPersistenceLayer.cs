@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using DreamHouse.Core.Application.Interfaces.Repositories;
 using DreamHouse.Infrastructure.Persistence.Contexts;
 using DreamHouse.Infrastructure.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace DreamHouse.Infrastructure.Persistence.DependencyInjection
@@ -32,7 +33,7 @@ namespace DreamHouse.Infrastructure.Persistence.DependencyInjection
             #endregion
 
             #region Repositories
-            //services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             #endregion
         }
     }

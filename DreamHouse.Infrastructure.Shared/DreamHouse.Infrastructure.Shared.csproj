@@ -12,4 +12,9 @@
     <PackageReference Include="MimeKit" Version="4.7.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DreamHouse.Core.Application\DreamHouse.Core.Application.csproj" />
+    <ProjectReference Include="..\DreamHouse.Core.Domain\DreamHouse.Core.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
