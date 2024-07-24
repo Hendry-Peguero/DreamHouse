@@ -2,6 +2,8 @@
 using DreamHouse.Core.Application.Interfaces.Helpers;
 using DreamHouse.Core.Application.Interfaces.Services.Commons;
 using DreamHouse.Core.Application.Interfaces.Services.User;
+using DreamHouse.Core.Application.Services.Commons;
+using DreamHouse.Core.Application.Services.User;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

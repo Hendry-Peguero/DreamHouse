@@ -1,4 +1,6 @@
 ﻿using DreamHouse.Core.Application.Dtos.Account;
+using DreamHouse.Core.Application.ViewModels.Auth;
+using DreamHouse.Core.Application.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +18,6 @@ namespace DreamHouse.Core.Application.Interfaces.Services.User
         Task SignOutAsync();
         //Task<string> ConfirmEmailAsync(string userId, string token);
         Task<AuthenticationResponse> LoginAsync(LoginViewModel vm);
-        Task<IEnumerable<UserViewModel>> GetActiveUsersAsync();
-        Task<IEnumerable<UserViewModel>> GetInactiveUsersAsync();
         Task<bool> DuplicateUserName(string userName);
         Task<bool> DuplicateEmail(string email);
     }
