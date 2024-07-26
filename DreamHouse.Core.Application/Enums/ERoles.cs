@@ -3,6 +3,9 @@
     public enum ERoles
     {
         SUPERADMIN,
-        ADMIN
+        ADMIN,
+        AGENT,
+        CLIENT,
+        DEVELOPER
     }
 }

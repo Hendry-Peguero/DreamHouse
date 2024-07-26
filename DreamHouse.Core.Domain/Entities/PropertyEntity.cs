@@ -10,15 +10,14 @@
         public int Bedrooms { get; set; }
         public int Bathrooms { get; set; }
         public int TypePropertyId { get; set; }
-        public int TypeSaleId { get; set; }
+        public int TypeSaleId { get; set; } 
         public int AgentId { get; set; }
 
         //NAV 
-        public TypePropertyEntity TypeProperty { get; set; }
-        public TypeSaleEntity TypeSale { get; set; }
-        public ICollection<ImprovementEntity> Improvements { get; set; }
-        public ICollection<FavoritePropertyEntity> Favorites { get; set; }
-        public ICollection<ImagePropertyEntity> Images { get; set; }
-        public ICollection<ImprovementPropertyEntity> ImprovementProperties { get; set; }
+        public PropertyTypeEntity? TypeProperty { get; set; }
+        public SaleTypeEntity? TypeSale { get; set; }
+        public ICollection<PropertyFavoriteEntity>? Favorites { get; set; }
+        public ICollection<PropertyImageEntity>? Images { get; set; }
+        public ICollection<PropertyImprovementEntity>? ImprovementProperties { get; set; }
     }
 }

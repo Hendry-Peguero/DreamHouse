@@ -10,6 +10,5 @@ namespace DreamHouse.Infrastructure.Identity.Entities
         public string ImageUrl { get; set; }
         public string IdCard { get; set; }
         public int Status { get; set; }
-
     }
 }

@@ -7,8 +7,6 @@
         public string Description { get; set; }
 
         //NAV
-        public ICollection<PropertyEntity> Properties { get; set; }
-        public ICollection<ImprovementPropertyEntity> ImprovementProperties { get; set; }
-
+        public ICollection<PropertyImprovementEntity> ImprovementProperties { get; set; }
     }
 } 

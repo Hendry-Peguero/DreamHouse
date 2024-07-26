@@ -1,4 +1,5 @@
-﻿using DreamHouse.Core.Application.Interfaces.Repositories;
+﻿using DreamHouse.Core.Application.Helpers.FOR_DELETE;
+using DreamHouse.Core.Application.Interfaces.Repositories;
 using DreamHouse.Infrastructure.Persistence.Contexts;
 using DreamHouse.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace DreamHouse.Infrastructure.Persistence.DependencyInjection
             }
             else
             {
-                string? connectionString = configuration.GetConnectionString("SqlServerConnection");
+                var connectionString = configuration.GetConnection("SqlServerConnection");
 
                 services.AddDbContext<ApplicationContext>(
                     options => options.UseSqlServer(

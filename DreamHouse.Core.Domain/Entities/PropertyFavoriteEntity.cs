@@ -1,9 +1,9 @@
-﻿ namespace DreamHouse.Core.Domain.Entities
+﻿namespace DreamHouse.Core.Domain.Entities
 {
-    public class ImagePropertyEntity
+    public class PropertyFavoriteEntity
     {
         public int Id { get; set; }
-        public string ImageUrl { get; set; }
+        public string UserId { get; set; }
         public int PropertyId { get; set; }
 
         //NAV

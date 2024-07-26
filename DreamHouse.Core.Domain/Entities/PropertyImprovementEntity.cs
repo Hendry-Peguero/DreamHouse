@@ -1,6 +1,6 @@
 ﻿namespace DreamHouse.Core.Domain.Entities
 {
-    public class ImprovementPropertyEntity
+    public class PropertyImprovementEntity
     {
         public int Id { get; set; }
         public int PropertyId { get; set; }

@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using DreamHouse.Core.Application.Helpers.FOR_DELETE;
+using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Infrastructure.Identity.Context;
 using DreamHouse.Infrastructure.Identity.Entities;
 using DreamHouse.Infrastructure.Identity.Seeds;
 using DreamHouse.Infrastructure.Identity.Services;
 using DreamHouse.Infrastructure.Persistence.Seeds.Users;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Reflection;
-using DreamHouse.Core.Application.Interfaces.Services.User;
 
 namespace DreamHouse.Infrastructure.Identity.DependencyInjection
 {
@@ -27,7 +28,7 @@ namespace DreamHouse.Infrastructure.Identity.DependencyInjection
             }
             else
             {
-                var connectionString = configuration.GetConnectionString("IdentityConnection");
+                var connectionString = configuration.GetConnection("IdentityConnection");
 
                 services.AddDbContext<IdentityContext>(options =>
                 {

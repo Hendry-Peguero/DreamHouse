@@ -9,6 +9,9 @@ namespace DreamHouse.Infrastructure.Identity.Seeds
         {
             await roleManager.CreateAsync(new IdentityRole(ERoles.SUPERADMIN.ToString()));
             await roleManager.CreateAsync(new IdentityRole(ERoles.ADMIN.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(ERoles.DEVELOPER.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(ERoles.AGENT.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(ERoles.CLIENT.ToString()));
         }
     }
 }
