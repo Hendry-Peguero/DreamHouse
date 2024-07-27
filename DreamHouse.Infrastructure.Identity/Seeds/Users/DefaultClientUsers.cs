@@ -8,26 +8,57 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
     {
         public static async Task SeedAsync(UserManager<ApplicationUser> userManager)
         {
-            ApplicationUser defaultUser = new()
+            List<ApplicationUser> clients = new List<ApplicationUser>
             {
-                Id = "CCCCC-vxztp-yub64-qm7fr-1298z",
-                UserName = "client",
-                Email = "client@email.com",
-                FirstName = "client",
-                LastName = "client",
-                IdCard = "402-402-4002",
-                Status = (int)EUserStatus.ACTIVE,
-                EmailConfirmed = true,
-                PhoneNumberConfirmed = true
+                new ApplicationUser
+                {
+                    Id = "CCCCC-vxztp-yub64-qm7fr-1298z",
+                    UserName = "client",
+                    Email = "client1@email.com",
+                    FirstName = "client",
+                    LastName = "client",
+                    IdCard = "402-402-4002",
+                    Status = (int)EUserStatus.ACTIVE,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true
+                },
+                    new ApplicationUser
+                    {
+                    Id = "DDDDD-vxztp-yub64-qm7fr-1298z",
+                    UserName = "client",
+                    Email = "client2@email.com",
+                    FirstName = "client",
+                    LastName = "client",
+                    IdCard = "402-402-4002",
+                    Status = (int)EUserStatus.ACTIVE,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true
+                },
+                    {
+                    new ApplicationUser
+                    {
+                    Id = "FFFFF-vxztp-yub64-qm7fr-1298z",
+                    UserName = "client",
+                    Email = "client3@email.com",
+                    FirstName = "client",
+                    LastName = "client",
+                    IdCard = "402-402-4002",
+                    Status = (int)EUserStatus.ACTIVE,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true
+                }
+                }
             };
-
-            var client = await userManager.FindByEmailAsync(defaultUser.Email);
-
-            if (client == null)
+            foreach (var defaultUser in clients)
             {
-                // Si el usuario no existe, créalo
-                await userManager.CreateAsync(defaultUser, "123Pa$$Word!");
-                await userManager.AddToRoleAsync(defaultUser, ERoles.CLIENT.ToString());
+                var client = await userManager.FindByEmailAsync(defaultUser.Email);
+
+                if (client == null)
+                {
+                    // Si el usuario no existe, créalo
+                    await userManager.CreateAsync(defaultUser, "123Pa$$Word!");
+                    await userManager.AddToRoleAsync(defaultUser, ERoles.CLIENT.ToString());
+                }
             }
         }
     }

@@ -12,7 +12,7 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
             {
                 Id = "DDDDD-vxztp-yub64-qm7fr-1298z",
                 UserName = "developer",
-                Email = "developer@email.com",
+                Email = "developer1@email.com",
                 FirstName = "developer",
                 LastName = "developer",
                 IdCard = "402-402-4002",

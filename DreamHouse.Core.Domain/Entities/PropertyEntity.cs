@@ -11,7 +11,7 @@
         public int Bathrooms { get; set; }
         public int TypePropertyId { get; set; }
         public int TypeSaleId { get; set; } 
-        public int AgentId { get; set; }
+        public string AgentId { get; set; }
 
         //NAV 
         public PropertyTypeEntity? TypeProperty { get; set; }

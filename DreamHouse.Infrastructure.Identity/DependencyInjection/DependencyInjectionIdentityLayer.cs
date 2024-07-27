@@ -3,6 +3,7 @@ using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Infrastructure.Identity.Context;
 using DreamHouse.Infrastructure.Identity.Entities;
 using DreamHouse.Infrastructure.Identity.Seeds;
+using DreamHouse.Infrastructure.Identity.Seeds.Users;
 using DreamHouse.Infrastructure.Identity.Services;
 using DreamHouse.Infrastructure.Persistence.Seeds.Users;
 using Microsoft.AspNetCore.Identity;
@@ -71,6 +72,9 @@ namespace DreamHouse.Infrastructure.Identity.DependencyInjection
 
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     await DefaultAdminUsers.SeedAsync(userManager);
+                    await DefaultAgentUsers.SeedAsync(userManager);
+                    await DefaultClientUsers.SeedAsync(userManager);
+                    await DefaultDeveloperUsers.SeedAsync(userManager);
                 }
                 catch (Exception ex)
                 {

@@ -8,27 +8,46 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
     {
         public static async Task SeedAsync(UserManager<ApplicationUser> userManager)
         {
-            ApplicationUser defaultUser = new()
+            List<ApplicationUser> agents = new List<ApplicationUser>
             {
-                Id = "AAAAA-vxztp-yub64-qm7fr-1298z",
-                UserName = "agent",
-                Email = "agent@email.com",
-                FirstName = "agent",
-                LastName = "agent",
-                IdCard = "402-402-4002",
-                Status = (int)EUserStatus.ACTIVE,
-                EmailConfirmed = true,
-                PhoneNumberConfirmed = true
+                new ApplicationUser
+                {
+                    Id = "AAAAA-vxztp-yub64-qm7fr-1298z",
+                    UserName = "agent",
+                    Email = "agent1@email.com",
+                    FirstName = "agent",
+                    LastName = "agent",
+                    IdCard = "402-402-4002",
+                    Status = (int)EUserStatus.ACTIVE,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true
+                },
+                new ApplicationUser
+                {
+                    Id = "EEEEE-vxztp-yub64-qm7fr-1298z",
+                    UserName = "agent",
+                    Email = "agent2@email.com",
+                    FirstName = "agent",
+                    LastName = "agent",
+                    IdCard = "402-402-4002",
+                    Status = (int)EUserStatus.ACTIVE,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true
+                }
             };
 
-            var agent = await userManager.FindByEmailAsync(defaultUser.Email);
-
-            if (agent == null)
+            foreach (var defaultUser in agents)
             {
-                // Si el usuario no existe, créalo
-                await userManager.CreateAsync(defaultUser, "123Pa$$Word!");
-                await userManager.AddToRoleAsync(defaultUser, ERoles.AGENT.ToString());
+                var agent = await userManager.FindByEmailAsync(defaultUser.Email);
+
+                if (agent == null)
+                {
+                    // Si el usuario no existe, créalo
+                    await userManager.CreateAsync(defaultUser, "123Pa$$Word!");
+                    await userManager.AddToRoleAsync(defaultUser, ERoles.AGENT.ToString());
+                }
             }
+
         }
     }
 }

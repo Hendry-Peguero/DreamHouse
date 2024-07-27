@@ -12,7 +12,7 @@ namespace DreamHouse.Infrastructure.Persistence.Seeds.Users
             {
                 Id = "g5k2l-vxztp-yub64-qm7fr-1298z",
                 UserName = "admin",
-                Email = "admin@email.com",
+                Email = "admin1@email.com",
                 FirstName = "admin",
                 LastName = "admin",
                 IdCard = "402-402-4002",
