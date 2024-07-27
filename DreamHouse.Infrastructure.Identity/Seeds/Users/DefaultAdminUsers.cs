@@ -11,7 +11,7 @@ namespace DreamHouse.Infrastructure.Persistence.Seeds.Users
             ApplicationUser defaultUser = new()
             {
                 Id = "g5k2l-vxztp-yub64-qm7fr-1298z",
-                UserName = "admin",
+                UserName = "admin1",
                 Email = "admin1@email.com",
                 FirstName = "admin",
                 LastName = "admin",

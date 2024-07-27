@@ -13,7 +13,7 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
                 new ApplicationUser
                 {
                     Id = "CCCCC-vxztp-yub64-qm7fr-1298z",
-                    UserName = "client",
+                    UserName = "client1",
                     Email = "client1@email.com",
                     FirstName = "client",
                     LastName = "client",
@@ -25,7 +25,7 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
                     new ApplicationUser
                     {
                     Id = "DDDDD-vxztp-yub64-qm7fr-1298z",
-                    UserName = "client",
+                    UserName = "client2",
                     Email = "client2@email.com",
                     FirstName = "client",
                     LastName = "client",
@@ -38,7 +38,7 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
                     new ApplicationUser
                     {
                     Id = "FFFFF-vxztp-yub64-qm7fr-1298z",
-                    UserName = "client",
+                    UserName = "client3",
                     Email = "client3@email.com",
                     FirstName = "client",
                     LastName = "client",

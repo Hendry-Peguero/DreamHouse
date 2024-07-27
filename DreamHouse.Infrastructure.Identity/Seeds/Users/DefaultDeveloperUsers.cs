@@ -11,7 +11,7 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
             ApplicationUser defaultUser = new()
             {
                 Id = "DDDDD-vxztp-yub64-qm7fr-1298z",
-                UserName = "developer",
+                UserName = "developer1",
                 Email = "developer1@email.com",
                 FirstName = "developer",
                 LastName = "developer",

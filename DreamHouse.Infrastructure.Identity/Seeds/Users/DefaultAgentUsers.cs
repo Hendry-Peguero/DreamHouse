@@ -13,7 +13,7 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
                 new ApplicationUser
                 {
                     Id = "AAAAA-vxztp-yub64-qm7fr-1298z",
-                    UserName = "agent",
+                    UserName = "agent1",
                     Email = "agent1@email.com",
                     FirstName = "agent",
                     LastName = "agent",
@@ -25,7 +25,7 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
                 new ApplicationUser
                 {
                     Id = "EEEEE-vxztp-yub64-qm7fr-1298z",
-                    UserName = "agent",
+                    UserName = "agent2",
                     Email = "agent2@email.com",
                     FirstName = "agent",
                     LastName = "agent",
