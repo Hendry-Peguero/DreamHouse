@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DreamHouse.Core.Application.Dtos.Account
+﻿namespace DreamHouse.Core.Application.Dtos.Account
 {
     public class ResetPasswordRequest
     {

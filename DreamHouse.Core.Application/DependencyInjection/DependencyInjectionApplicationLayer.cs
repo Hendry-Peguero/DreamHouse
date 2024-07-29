@@ -16,6 +16,7 @@ namespace DreamHouse.Core.Application.DependencyInjection
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IGenericService<,,>), typeof(GenericService<,,>));
             services.AddTransient<IJsonHelper, JsonHelper>();
+            services.AddTransient<IUserHelper, UserHelper>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserValidationService, UserValidationService>();
         }
