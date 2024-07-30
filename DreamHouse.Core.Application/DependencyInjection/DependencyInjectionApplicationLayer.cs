@@ -1,7 +1,9 @@
 ﻿using DreamHouse.Core.Application.Helpers;
 using DreamHouse.Core.Application.Interfaces.Helpers;
+using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.Interfaces.Services.Commons;
 using DreamHouse.Core.Application.Interfaces.Services.User;
+using DreamHouse.Core.Application.Services;
 using DreamHouse.Core.Application.Services.Commons;
 using DreamHouse.Core.Application.Services.User;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,7 @@ namespace DreamHouse.Core.Application.DependencyInjection
             services.AddTransient<IJsonHelper, JsonHelper>();
             services.AddTransient<IUserHelper, UserHelper>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IPropertyService, PropertyService>();
             services.AddTransient<IUserValidationService, UserValidationService>();
         }
     }
