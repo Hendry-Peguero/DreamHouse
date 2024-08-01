@@ -29,7 +29,7 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
                     Email = "agent2@email.com",
                     FirstName = "agent",
                     LastName = "agent",
-                    IdCard = "402-402-4002",
+                    IdCard = "402-402-4003",
                     Status = (int)EUserStatus.ACTIVE,
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true

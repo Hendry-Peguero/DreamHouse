@@ -8,26 +8,26 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
     {
         public static async Task SeedAsync(UserManager<ApplicationUser> userManager)
         {
-            ApplicationUser defaultUser = new()
+            ApplicationUser defaultDeveloper = new()
             {
-                Id = "DDDDD-vxztp-yub64-qm7fr-1298z",
+                Id = "HHHHH-vxztp-yub64-qm7fr-1298z",
                 UserName = "developer1",
                 Email = "developer1@email.com",
                 FirstName = "developer",
                 LastName = "developer",
-                IdCard = "402-402-4002",
+                IdCard = "402-402-4008",
                 Status = (int)EUserStatus.ACTIVE,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
             };
 
-            var developer = await userManager.FindByEmailAsync(defaultUser.Email);
+            var developer = await userManager.FindByEmailAsync(defaultDeveloper.Email);
 
             if (developer == null)
             {
                 // Si el usuario no existe, créalo
-                await userManager.CreateAsync(defaultUser, "123Pa$$Word!");
-                await userManager.AddToRoleAsync(defaultUser, ERoles.DEVELOPER.ToString());
+                await userManager.CreateAsync(defaultDeveloper, "123Pa$$Word!");
+                await userManager.AddToRoleAsync(defaultDeveloper, ERoles.DEVELOPER.ToString());
             }
         }
     }

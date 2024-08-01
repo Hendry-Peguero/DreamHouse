@@ -55,5 +55,15 @@ namespace DreamHouse.Controllers
                 return View(loginVm);
             }
         }
+        public async Task<IActionResult> SignOut()
+        {
+            await userService.SignOutAsync();
+            userHelper.RemoveUser();
+            return RedirectToRoute(new { controller = "Authorization", action = "Login" });
+        }
+        public async Task<IActionResult> AccessDenied()
+        {
+            return View();
+        }
     }
 }
