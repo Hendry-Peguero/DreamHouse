@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DreamHouse.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly IUserHelper userHelper;
@@ -21,7 +20,7 @@ namespace DreamHouse.Controllers
             this.propertyService = propertyService;
         }
 
-        public async Task<IActionResult> HomeBasic()
+        public async Task<IActionResult> HomeBasic(string code, string type, decimal? minPrice, decimal? maxPrice, int? bedrooms, int? bathrooms)
         {
             // Check for denied action
             if (TempData.ContainsKey("LoginAccessDenied"))
@@ -30,9 +29,11 @@ namespace DreamHouse.Controllers
             }
 
             var user = userHelper.GetUser();
+            var properties = await propertyService.GetFilteredPropertiesAsync(code, type, minPrice, maxPrice, bedrooms, bathrooms);
+
             ClientHomeViewModel ClientHomeVm = new ClientHomeViewModel
             {
-                Properties = await propertyService.GetAllWithTypePropertyAndSaleAsync()
+                Properties = properties
             };
 
             return View(ClientHomeVm);
