@@ -6,6 +6,6 @@ namespace DreamHouse.Core.Application.Interfaces.Services
 {
     public interface IPropertyService : IGenericService<PropertySaveViewModel, PropertyViewModel, PropertyEntity>
     {
-
+        Task<List<PropertyViewModel>> GetAllWithTypePropertyAndSaleAsync();
     }
 }

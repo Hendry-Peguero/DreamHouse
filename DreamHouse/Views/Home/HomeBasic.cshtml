@@ -1,0 +1,44 @@
+﻿@model DreamHouse.Core.Application.ViewModels.Home.ClientHomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="products">
+    @if (Model.Properties != null && Model.Properties.Any())
+    {
+        <table class="table shadow mb-2 rounded-3">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Tipo</th>
+                    <th>Código</th>
+                    <th>Tipo de Venta</th>
+                    <th>Valor</th>
+                    <th>Habitaciones</th>
+                    <th>Baños</th>
+                    <th>Tamaño</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var property in Model.Properties)
+                {
+                    <tr>
+                        <td><!-- Aquí iría la imagen de la propiedad --></td>
+                        <td>@property.TypePropertyName</td>
+                        <td>@property.Code</td>
+                        <td>@property.TypeSaleName</td>
+                        <td>@property.Price</td>
+                        <td>@property.Bedrooms</td>
+                        <td>@property.Bathrooms</td>
+                        <td>@property.SquareMeter</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No hay propiedades publicadas.</p>
+    }
+</div>

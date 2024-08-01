@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
 using DreamHouse.Core.Application.Dtos.Account;
 using DreamHouse.Core.Application.ViewModels.Auth;
+using DreamHouse.Core.Application.ViewModels.Property;
+using DreamHouse.Core.Application.ViewModels.PropertyType;
+using DreamHouse.Core.Application.ViewModels.SaleType;
 using DreamHouse.Core.Application.ViewModels.User;
+using DreamHouse.Core.Domain.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DreamHouse.Core.Application.Mappings
 {
@@ -38,6 +43,15 @@ namespace DreamHouse.Core.Application.Mappings
 
             #endregion
 
+            #region Property
+            CreateMap<PropertyEntity, PropertyViewModel>()
+                .ForMember(dest => dest.TypePropertyName, opt => opt.MapFrom(src => src.TypeProperty.Name))
+                .ForMember(dest => dest.TypeSaleName, opt => opt.MapFrom(src => src.TypeSale.Name))
+                .ReverseMap();
+
+            CreateMap<PropertyTypeEntity, PropertyTypeViewModel>().ReverseMap();
+            CreateMap<SaleTypeEntity, SaleTypeViewModel>().ReverseMap();
+            #endregion
         }
     }
 }
