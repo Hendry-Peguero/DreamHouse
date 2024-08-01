@@ -15,7 +15,7 @@ namespace DreamHouse.Infrastructure.Persistence.Seeds.Users
                 Email = "admin1@email.com",
                 FirstName = "admin",
                 LastName = "admin",
-                IdCard = "402-402-4002",
+                IdCard = "402-402-4012",
                 Status = (int)EUserStatus.ACTIVE,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true

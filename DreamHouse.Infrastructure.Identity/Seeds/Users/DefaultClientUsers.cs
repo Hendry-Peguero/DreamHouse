@@ -17,7 +17,7 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
                     Email = "client1@email.com",
                     FirstName = "client",
                     LastName = "client",
-                    IdCard = "402-402-4002",
+                    IdCard = "402-402-4004",
                     Status = (int)EUserStatus.ACTIVE,
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true
@@ -29,7 +29,7 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
                     Email = "client2@email.com",
                     FirstName = "client",
                     LastName = "client",
-                    IdCard = "402-402-4002",
+                    IdCard = "402-402-4005",
                     Status = (int)EUserStatus.ACTIVE,
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true
@@ -42,7 +42,7 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
                     Email = "client3@email.com",
                     FirstName = "client",
                     LastName = "client",
-                    IdCard = "402-402-4002",
+                    IdCard = "402-402-4006",
                     Status = (int)EUserStatus.ACTIVE,
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true

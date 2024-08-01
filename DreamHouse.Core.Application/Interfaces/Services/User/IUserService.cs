@@ -20,5 +20,6 @@ namespace DreamHouse.Core.Application.Interfaces.Services.User
         Task<AuthenticationResponse> LoginAsync(LoginViewModel vm);
         Task<bool> DuplicateUserName(string userName);
         Task<bool> DuplicateEmail(string email);
+        Task<List<UserViewModel>> GetAdmins();
     }
 }

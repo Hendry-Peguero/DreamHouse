@@ -1,6 +1,5 @@
 ﻿using DreamHouse.Core.Application.Interfaces.Helpers;
 using DreamHouse.Core.Application.Interfaces.Services;
-using DreamHouse.Core.Application.Services;
 using DreamHouse.Core.Application.ViewModels.Home;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

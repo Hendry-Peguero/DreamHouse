@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DreamHouse.Core.Application.Dtos.Account;
+using DreamHouse.Core.Application.Enums;
 using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Core.Application.ViewModels.Auth;
 using DreamHouse.Core.Application.ViewModels.User;
@@ -15,13 +16,20 @@ namespace DreamHouse.Core.Application.Services.User
             this._accountService = _accountService;
             this._mapper = _mapper;
         }
+
         public async Task<bool> DuplicateUserName(string userName)
         {
             return await _accountService.DuplicateUserName(userName);
         }
+
         public async Task<bool> DuplicateEmail(string email)
         {
             return await _accountService.DuplicateEmail(email);
+        }
+
+        public async Task<List<UserViewModel>> GetAdmins()
+        {
+            return (await GetAllAsync()).Where(user => user.Roles[0] == ERoles.ADMIN.ToString()).ToList();
         }
 
         public async Task<IEnumerable<UserViewModel>> GetAllAsync()
