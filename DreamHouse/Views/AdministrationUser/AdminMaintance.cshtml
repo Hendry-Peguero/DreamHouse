@@ -30,7 +30,7 @@
             <div class="col p-0">
                 <div class="card border-0">
                     <div class="card-body">
-                        <table id="usersTable" class="table">
+                        <table id="adminsTable" class="table">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -50,8 +50,8 @@
                                         <td>@item.IdCard</td>
                                         <td>@item.Email</td>
 
-                                        <td>
-                                            <span class=" @(item.Status == (int)EUserStatus.ACTIVE ? "bg-success" : "bg-danger") p-2 mt-3 rounded-2 text-light">@((EUserStatus)item.Status)</span>
+                                        <td class="">
+                                            <span class=" @(item.Status == (int)EUserStatus.ACTIVE ? "bg-success" : "bg-danger") p-1 mt-3 rounded-2 text-light">@((EUserStatus)item.Status)</span>
                                         </td>
 
                                         <td>
@@ -81,7 +81,7 @@
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#usersTable').DataTable({
+            $('#adminsTable').DataTable({
                 language: {
                     "decimal": "",
                     "emptyTable": "No hay información",

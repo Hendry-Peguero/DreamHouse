@@ -1,0 +1,20 @@
+﻿@using DreamHouse.Core.Application.ViewModels.User;
+@using DreamHouse.Core.Application.Enums;
+
+@model UserSaveViewModel;
+
+@{
+    ViewData["Title"] = "ChangeUser State";
+}
+
+<div class="container-fluid">
+    <div class="shadow col-4 offset-4 p-3">
+        <h2 class="text-center fw-bold ">Are you sure to <span class="bg-danger text-light pe-2 ps-2 rounded-3">@(Model.Status == (int)EUserStatus.ACTIVE ? "Deactivate" : "Activate")?</span></h2>
+        <h4 class="text-center fw-light"> the user: <span class="fw-bold">@Model.FirstName @Model.LastName</span></h4>
+
+        <div class="mt-3 d-flex justify-content-center gap-2">
+            <a asp-controller="AdministrationUser" asp-action="AdminMaintance" class="btn btn-danger m-0 ps-2 pe-2 pt-0 pb-0 grow-button"><i class="bi bi-x fa-2x"></i></a>
+            <a asp-controller="AdministrationUser" asp-route-id="@Model.Id" asp-action="ChangeUserStatePost" class="btn btn-success m-0 ps-2 pe-2 pt-0 pb-0 grow-button"><i class="bi bi-check fa-2x"></i></a>
+        </div>
+    </div>
+</div>

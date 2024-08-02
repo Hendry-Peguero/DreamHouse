@@ -64,8 +64,8 @@ namespace DreamHouse.Core.Application.Services.User
             //bool initialAmountNull = (userSaveViewModel.InitialAmount == null ? true : false);
             //if (initialAmountNull) errors.Add("InitialAmountNull", "Debes introducir un valor numerico");
 
-            bool invalidUserType = (userSaveViewModel.UserType.ToString() == string.Empty ? true : false);
-            if (invalidUserType) errors.Add("InvalidUserType", "Debes eligir un rol valido");
+            //bool invalidUserType = (userSaveViewModel.UserType.ToString() == string.Empty ? true : false);
+            //if (invalidUserType) errors.Add("InvalidUserType", "Debes eligir un rol valido");
 
             return errors;
         }

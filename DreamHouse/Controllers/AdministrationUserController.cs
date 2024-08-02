@@ -8,7 +8,7 @@ using QuickBank.Helpers;
 
 namespace DreamHouse.Controllers
 {
-    [Authorize (Roles ="ADMIN")]
+    [Authorize(Roles = "ADMIN")]
     public class AdministrationUserController : Controller
     {
         private readonly IUserService userService;
@@ -41,7 +41,7 @@ namespace DreamHouse.Controllers
             };
             return View("SaveUser", userSaveVm);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> AddUser(UserSaveViewModel userSaveVm)
         {
@@ -64,5 +64,40 @@ namespace DreamHouse.Controllers
             return RedirectRoutesHelper.adminMaintanceHome;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ChangeUserState(string id)
+        {
+            return View(await userService.FindyByIdAsync(id));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangeUserStatePost(string id)
+        {
+            var user = await userService.FindyByIdAsync(id);
+            user.Status = (user.Status != (int)EUserStatus.ACTIVE) ? (int)EUserStatus.ACTIVE : (int)EUserStatus.INACTIVE;
+
+            return View(await userService.UpdateUserAsync(user));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            return View("SaveUser",await userService.FindyByIdAsync(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserSaveViewModel userSaveVm)
+        {
+            ModelState.AddModelErrorRange(await userValidationService.UserUpdateValidation(userSaveVm));
+            ModelState.AddModelErrorRange(await userValidationService.PasswordValidation(userSaveVm));
+
+            
+            if (!ModelState.IsValid)
+                return View("SaveUser", userSaveVm);
+
+            await userService.UpdateUserAsync(userSaveVm);
+
+            return RedirectRoutesHelper.adminMaintanceHome;
+        }
     }
 }
