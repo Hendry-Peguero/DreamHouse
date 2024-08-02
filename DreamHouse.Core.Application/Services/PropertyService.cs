@@ -39,5 +39,43 @@ namespace DreamHouse.Core.Application.Services
 
             return propertyViewModels;
         }
+
+        public async Task<List<PropertyViewModel>> GetFilteredPropertiesAsync(string code, string type, decimal? minPrice, decimal? maxPrice, int? bedrooms, int? bathrooms)
+        {
+            var properties = await GetAllWithTypePropertyAndSaleAsync();
+
+            if (!string.IsNullOrEmpty(code))
+            {
+                properties = properties.Where(p => p.Code == code).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(type))
+            {
+                properties = properties.Where(p => p.TypePropertyName == type).ToList();
+            }
+
+            if (minPrice.HasValue)
+            {
+                properties = properties.Where(p => Convert.ToDecimal(p.Price) <= minPrice.Value).ToList();
+            }
+
+            if (maxPrice.HasValue)
+            {
+                properties = properties.Where(p => Convert.ToDecimal(p.Price) <= maxPrice.Value).ToList();
+            }
+
+            if (bedrooms.HasValue)
+            {
+                properties = properties.Where(p => p.Bedrooms == bedrooms.Value).ToList();
+            }
+
+            if (bathrooms.HasValue)
+            {
+                properties = properties.Where(p => p.Bathrooms == bathrooms.Value).ToList();
+            }
+
+            return properties;
+        }
+
     }
 }
