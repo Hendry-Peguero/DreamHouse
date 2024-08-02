@@ -9,7 +9,8 @@ namespace DreamHouse.Core.Application.Services.User
         protected readonly IAccountService accountService;
         protected readonly IUserService userService;
 
-        public UserValidationService(IAccountService accountService, IUserService userService)
+        public UserValidationService(IAccountService accountService, 
+            IUserService userService)
         {
             this.accountService = accountService;
             this.userService = userService;
@@ -28,11 +29,11 @@ namespace DreamHouse.Core.Application.Services.User
                 bool duplicateUserName = await userService.DuplicateUserName(userSaveViewModel.UserName);
                 if (duplicateUserName) errors.Add("DuplicateUserName", "Username already in use");
             }
-            bool initialAmountNull = (userSaveViewModel.InitialAmount == null ? true : false);
-            if (initialAmountNull) errors.Add("InitialAmountNull", "Debes introducir un valor numerico");
+            //bool initialAmountNull = (userSaveViewModel.InitialAmount == null ? true : false);
+            //if (initialAmountNull) errors.Add("InitialAmountNull", "Debes introducir un valor numerico");
 
-            bool invalidUserType = (userSaveViewModel.UserType.ToString() == string.Empty ? true : false);
-            if (invalidUserType) errors.Add("InvalidUserType", "Debes eligir un rol valido");
+            //bool invalidUserType = (userSaveViewModel.UserType.ToString() == string.Empty ? true : false);
+            //if (invalidUserType) errors.Add("InvalidUserType", "Debes eligir un rol valido");
 
             return errors;
         }
@@ -60,8 +61,8 @@ namespace DreamHouse.Core.Application.Services.User
                 if (duplicateUserName) errors.Add("DuplicateUserName", "Username already in use");
             }
 
-            bool initialAmountNull = (userSaveViewModel.InitialAmount == null ? true : false);
-            if (initialAmountNull) errors.Add("InitialAmountNull", "Debes introducir un valor numerico");
+            //bool initialAmountNull = (userSaveViewModel.InitialAmount == null ? true : false);
+            //if (initialAmountNull) errors.Add("InitialAmountNull", "Debes introducir un valor numerico");
 
             bool invalidUserType = (userSaveViewModel.UserType.ToString() == string.Empty ? true : false);
             if (invalidUserType) errors.Add("InvalidUserType", "Debes eligir un rol valido");

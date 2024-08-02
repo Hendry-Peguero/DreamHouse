@@ -16,7 +16,7 @@
             <div class="rounded-3 bg-primary p-1 flex-grow-1">
                 <h1 class="fw-bold text-light m-0 p-0 ms-4">User List</h1>
             </div>
-            <a asp-controller="Admin" asp-action="Add" class="btn btn-success text-light d-flex align-items-center"><i class="bi bi-plus"></i>Add Admin</a>
+            <a asp-controller="AdministrationUser" asp-route-roles="@Model[0].Roles[0]" asp-action="Add" class="btn btn-success text-light d-flex align-items-center"><i class="bi bi-plus"></i>Add Admin</a>
         </div>
     </div>
 
@@ -37,6 +37,8 @@
                                     <th>User Name</th>
                                     <th>IdCard</th>
                                     <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,13 +51,13 @@
                                         <td>@item.Email</td>
 
                                         <td>
-                                            <span class=" @(item.Status == (int)EUserStatus.ACTIVE ? "bg-success" : "bg-danger") pe-2 ps-2 rounded-3 text-light">@((EUserStatus)item.Status)</span>
+                                            <span class=" @(item.Status == (int)EUserStatus.ACTIVE ? "bg-success" : "bg-danger") p-2 mt-3 rounded-2 text-light">@((EUserStatus)item.Status)</span>
                                         </td>
 
                                         <td>
                                             @if (item.Id != userLoged.Id)
                                             {
-                                                <a asp-controller="AdministrationUser" asp-route-id="@item.Id" asp-action="ChangeUserState" class="btn col-3 me-2 @(item.Status ==(int)EUserStatus.ACTIVE ? "btn-danger" : "btn-success")">
+                                                <a asp-controller="AdministrationUser" asp-route-id="@item.Id" asp-action="ChangeUserState" class="btn col-6 me-2 @(item.Status ==(int)EUserStatus.ACTIVE ? "btn-danger" : "btn-success")">
                                                     @(item.Status == (int)EUserStatus.ACTIVE ? "deactivate" : "activate")
                                                 </a>
                                                 <a asp-controller="AdministrationUser" asp-route-id="@item.Id" asp-action="Edit" class="btn btn-primary me-2">Edit</a>
