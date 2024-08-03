@@ -1,4 +1,5 @@
 ﻿@using DreamHouse.Core.Application.ViewModels.User
+@using DreamHouse.Core.Application.Enums;
 
 @model UserSaveViewModel;
 
@@ -106,13 +107,22 @@
                         }
                     
                     </div>
+
                     <input type="hidden" asp-for="Id"/>
-                    <input type="hidden" asp-for="UserType"/>
+                    @if(Model.Roles !=null)
+                    {
+                        <input type="hidden" asp-for="UserType" value="@Model.Roles[0]" />
+                        <input type="hidden" asp-for="Roles[0]" />
+                    }
+                    else
+                    {
+                        <input type="hidden" asp-for="UserType" />
+                    }
                     <input type="hidden" asp-for="Status" />
 
 
                     <div class="d-flex justify-content-end gap-2">
-                        <a asp-controller="AdministrationUser" asp-action="AdminMaintance" class="btn btn-warning">Cancel</a>
+                            <a asp-controller="AdministrationUser" asp-action="@(Model.UserType == ERoles.ADMIN.ToString() ? "AdminMaintance" : "DeveloperMaintance")" class="btn btn-warning">Cancel</a>
                         <button type="submit" class="btn btn-primary"> Save </button>
                     </div>
                 </form>

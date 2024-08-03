@@ -33,6 +33,12 @@ namespace DreamHouse.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> DeveloperMaintance()
+        {
+            return View(await userService.GetDevelopers());
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Add(ERoles roles)
         {
             var userSaveVm = new UserSaveViewModel()
@@ -49,9 +55,7 @@ namespace DreamHouse.Controllers
             ModelState.AddModelErrorRange(await userValidationService.UserSaveValidation(userSaveVm));
 
             if (!ModelState.IsValid)
-            {
                 return View("SaveUser", userSaveVm);
-            }
 
             var response = await userService.RegisterAsync(userSaveVm);
 
@@ -61,7 +65,16 @@ namespace DreamHouse.Controllers
                 userSaveVm.ErrorDescription = response.ErrorDescription;
                 return View("SaveUser", userSaveVm);
             }
-            return RedirectRoutesHelper.adminMaintanceHome;
+
+            switch (userSaveVm.UserType)
+            {
+                case "ADMIN":
+                    return RedirectRoutesHelper.adminMaintanceHome;
+                case "DEVELOPER":
+                    return RedirectRoutesHelper.developerMaintanceHome;
+                default:
+                    return RedirectRoutesHelper.routeUndefiniedHome;
+            }
         }
 
         [HttpGet]
@@ -97,7 +110,15 @@ namespace DreamHouse.Controllers
 
             await userService.UpdateUserAsync(userSaveVm);
 
-            return RedirectRoutesHelper.adminMaintanceHome;
+            switch (userSaveVm.UserType)
+            {
+                case "ADMIN":
+                    return RedirectRoutesHelper.adminMaintanceHome;
+                case "DEVELOPER":
+                    return RedirectRoutesHelper.developerMaintanceHome;
+                default :
+                    return RedirectRoutesHelper.routeUndefiniedHome;
+            }
         }
     }
 }

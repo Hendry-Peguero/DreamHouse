@@ -29,7 +29,6 @@ namespace DreamHouse.Infrastructure.Identity.Services
             this.emailService = emailService;
         }
 
-
         public async Task<IEnumerable<AuthenticationResponse>> GetAllAsync()
         {
             var applicationUsers = userManager.Users.ToList();

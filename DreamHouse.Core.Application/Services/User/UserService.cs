@@ -32,6 +32,11 @@ namespace DreamHouse.Core.Application.Services.User
             return (await GetAllAsync()).Where(user => user.Roles[0] == ERoles.ADMIN.ToString()).ToList();
         }
 
+        public async Task<List<UserViewModel>> GetDevelopers()
+        {
+            return (await GetAllAsync()).Where(user => user.Roles[0] == ERoles.DEVELOPER.ToString()).ToList();
+        }
+
         public async Task<IEnumerable<UserViewModel>> GetAllAsync()
         {
             var usersResponse = await _accountService.GetAllAsync();
@@ -47,6 +52,7 @@ namespace DreamHouse.Core.Application.Services.User
 
         public async Task<RegisterResponse> RegisterAsync(UserSaveViewModel vm)
         {
+
             RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(vm);
             RegisterResponse registerResponse = await _accountService.RegisterUserAsync(registerRequest);
             return registerResponse;
