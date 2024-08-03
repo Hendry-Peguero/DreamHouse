@@ -77,5 +77,22 @@ namespace DreamHouse.Core.Application.Services
             return properties;
         }
 
+        public async Task<PropertyViewModel?> GetPropertyDetailsAsync(int id)
+        {
+            var properties = await propertyRepository.GetAllWithIncludeAsync(new List<string> { "TypeProperty", "TypeSale", "ImprovementProperties.Improvement" });
+            var property = properties.FirstOrDefault(p => p.Id == id);
+            if (property == null)
+            {
+                return null;
+            }
+
+            var propertyViewModel = mapper.Map<PropertyViewModel>(property);
+            propertyViewModel.TypePropertyName = property.TypeProperty?.Name;
+            propertyViewModel.TypeSaleName = property.TypeSale?.Name;
+            propertyViewModel.Improvements = property.ImprovementProperties?.Select(ip => ip.Improvement.Name).ToList() ?? new List<string>();
+
+            return propertyViewModel;
+        }
+
     }
 }

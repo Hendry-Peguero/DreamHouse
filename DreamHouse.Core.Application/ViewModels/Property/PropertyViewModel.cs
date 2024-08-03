@@ -13,8 +13,11 @@
         public int TypeSaleId { get; set; }
         public string AgentId { get; set; }
 
+
+
         //
         public string TypePropertyName { get; set; }
         public string TypeSaleName { get; set; }
+        public List<string> Improvements { get; set; }
     }
 }

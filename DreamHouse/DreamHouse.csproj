@@ -23,4 +23,8 @@
     <ProjectReference Include="..\DreamHouse.Infrastructure.Shared\DreamHouse.Infrastructure.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Agent\" />
+  </ItemGroup>
+
 </Project>
