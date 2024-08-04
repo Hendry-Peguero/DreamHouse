@@ -2,6 +2,7 @@
 using DreamHouse.Core.Application.Dtos.Account;
 using DreamHouse.Core.Application.Enums;
 using DreamHouse.Core.Application.Interfaces.Services.User;
+using DreamHouse.Core.Application.ViewModels.Agent;
 using DreamHouse.Core.Application.ViewModels.Auth;
 using DreamHouse.Core.Application.ViewModels.User;
 
@@ -35,6 +36,10 @@ namespace DreamHouse.Core.Application.Services.User
         public async Task<List<UserViewModel>> GetDevelopers()
         {
             return (await GetAllAsync()).Where(user => user.Roles[0] == ERoles.DEVELOPER.ToString()).ToList();
+        }
+        public async Task<List<AgentViewModel>> GetAgentsWithInlude()
+        {
+            return _mapper.Map<List<AgentViewModel>>((await GetAllAsync()).Where(user => user.Roles[0] == ERoles.AGENT.ToString()).ToList());
         }
 
         public async Task<IEnumerable<UserViewModel>> GetAllAsync()

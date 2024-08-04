@@ -39,6 +39,12 @@ namespace DreamHouse.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> AgentMaintance()
+        {
+            return View(await userService.GetDevelopers());
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Add(ERoles roles)
         {
             var userSaveVm = new UserSaveViewModel()

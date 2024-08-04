@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DreamHouse.Core.Application.Dtos.Account;
+using DreamHouse.Core.Application.ViewModels.Agent;
 using DreamHouse.Core.Application.ViewModels.Auth;
 using DreamHouse.Core.Application.ViewModels.Property;
 using DreamHouse.Core.Application.ViewModels.PropertyType;
@@ -41,6 +42,11 @@ namespace DreamHouse.Core.Application.Mappings
                 .ForMember(destino => destino.Password, otp => otp.Ignore())
                 .ForMember(destino => destino.ConfirmPassword, otp => otp.Ignore());
 
+            CreateMap<UserViewModel, AgentViewModel>()
+                .ForMember(destino => destino.NumberPropertiesAssigned, otp => otp.Ignore())
+                .ReverseMap();
+
+
             #endregion
 
             #region Property
@@ -49,7 +55,10 @@ namespace DreamHouse.Core.Application.Mappings
                 .ForMember(dest => dest.TypeSaleName, opt => opt.MapFrom(src => src.TypeSale.Name))
                 .ReverseMap();
 
-            CreateMap<PropertyTypeEntity, PropertyTypeViewModel>().ReverseMap();
+            CreateMap<PropertyTypeEntity, PropertyTypeViewModel>()
+                .ForMember(destino => destino.CuantityPropertiesAssigned, otp => otp.Ignore())
+                .ReverseMap();
+
             CreateMap<SaleTypeEntity, SaleTypeViewModel>().ReverseMap();
             #endregion
         }

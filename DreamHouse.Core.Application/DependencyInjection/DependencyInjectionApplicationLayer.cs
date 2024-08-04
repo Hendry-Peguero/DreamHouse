@@ -22,6 +22,7 @@ namespace DreamHouse.Core.Application.DependencyInjection
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPropertyService, PropertyService>();
             services.AddTransient<IUserValidationService, UserValidationService>();
+            services.AddTransient<IPropertyTypeService, PropertyTypeService>();
         }
     }
 }

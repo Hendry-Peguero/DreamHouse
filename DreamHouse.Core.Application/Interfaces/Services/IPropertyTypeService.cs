@@ -6,6 +6,6 @@ namespace DreamHouse.Core.Application.Interfaces.Services
 {
     public interface IPropertyTypeService : IGenericService<PropertyTypeSaveViewModel, PropertyTypeViewModel, PropertyTypeEntity>
     {
-
+        Task<List<PropertyTypeViewModel>> GetAllViewModelWithInclude();
     }
 }
