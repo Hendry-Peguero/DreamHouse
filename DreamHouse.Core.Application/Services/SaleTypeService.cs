@@ -21,5 +21,17 @@ namespace DreamHouse.Core.Application.Services
             this.saleTypeRepository = saleTypeRepository;
             this.mapper = mapper;
         }
+
+        public async Task<List<SaleTypeViewModel>> GetAllViewModelWithInclude()
+        {
+            var propertyTypelist = await saleTypeRepository.GetAllWithIncludeAsync(new List<string> { "Properties" });
+            return propertyTypelist.Select(s => new SaleTypeViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Description = s.Description,
+                CuantitySalesAssigned = s.Properties.Count()
+            }).ToList();
+        }
     }
 }

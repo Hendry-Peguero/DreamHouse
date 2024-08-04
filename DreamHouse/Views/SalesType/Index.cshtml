@@ -1,0 +1,102 @@
+﻿@using DreamHouse.Core.Application.ViewModels.PropertyType
+@using DreamHouse.Core.Application.ViewModels.SaleType
+@using DreamHouse.Core.Application.ViewModels.User;
+@using DreamHouse.Core.Application.Enums;
+@using DreamHouse.Core.Application.Interfaces.Helpers;
+
+@model List<SaleTypeViewModel>;
+
+@{
+    ViewData["Title"] = "Sales type";
+}
+
+<div class="container">
+    <div class="row mb-3 mt-4">
+        <div class="d-flex gap-2 p-0">
+            <div class="rounded-3 bg-primary p-1 flex-grow-1">
+                <h1 class="fw-bold text-light m-0 p-0 ms-4">Sales types</h1>
+            </div>
+            <a asp-controller="SalesType" asp-action="Save" class="btn btn-success text-light d-flex align-items-center"><i class="bi bi-plus"></i>Add Type</a>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (Model == null || Model.Count == 0)
+        {
+            <h3>there are not sales types</h3>
+        }
+        else
+        {
+            <div class="col p-0">
+                <div class="card border-0">
+                    <div class="card-body">
+                        <table id="SalesTypeTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Used by</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td>@item.Description</td>
+                                        <td>@item.CuantitySalesAssigned</td>
+                                        <td>
+                                            <a asp-controller="SalesType" asp-route-id="@item.Id" asp-action="Delete" class="btn col-6 me-2 btn-danger">Delete</a>
+                                            <a asp-controller="SalesType" asp-route-id="@item.Id" asp-action="Edit" class="btn btn-primary me-2">Edit</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#PropertiesTypeTable').DataTable({
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Show 0 a 0 de 0 entries",
+                    "infoFiltered": "(filtrado de _MAX_ entradas totales)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Show _MENU_ Entries",
+                    "loadingRecords": "charging...",
+                    "processing": "procesing...",
+                    "search": "Search:",
+                    "zeroRecords": "Without Resutls",
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Next",
+                        "previous": "previous"
+                    }
+                }
+            });
+            console.log("Vista cargada y DataTable inicializado.");
+        });
+    </script>
+}
+
+<style>
+    .card {
+        transition: box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+</style>

@@ -70,6 +70,16 @@ namespace DreamHouse.Core.Application.Mappings
                 .ForMember(destino => destino.Properties, otp => otp.Ignore());
 
             #endregion
+
+            #region SalesType
+            CreateMap<SaleTypeEntity, SaleTypeViewModel>()
+                .ForMember(destino => destino.CuantitySalesAssigned, otp => otp.Ignore())
+                .ReverseMap();
+
+            CreateMap<SaleTypeEntity, SaleTypeSaveViewModel>().ReverseMap();
+
+            #endregion
+
         }
     }
 }

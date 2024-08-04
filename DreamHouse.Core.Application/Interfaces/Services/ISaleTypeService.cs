@@ -6,6 +6,6 @@ namespace DreamHouse.Core.Application.Interfaces.Services
 {
     public interface ISaleTypeService : IGenericService<SaleTypeSaveViewModel, SaleTypeViewModel, SaleTypeEntity>
     {
-
+        Task<List<SaleTypeViewModel>> GetAllViewModelWithInclude();
     }
 }
