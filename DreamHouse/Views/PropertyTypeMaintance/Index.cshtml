@@ -12,16 +12,16 @@
     <div class="row mb-3 mt-4">
         <div class="d-flex gap-2 p-0">
             <div class="rounded-3 bg-primary p-1 flex-grow-1">
-                <h1 class="fw-bold text-light m-0 p-0 ms-4">User List</h1>
+                <h1 class="fw-bold text-light m-0 p-0 ms-4">Property types</h1>
             </div>
-            <a asp-controller="AdministrationUser" asp-action="Add" class="btn btn-success text-light d-flex align-items-center"><i class="bi bi-plus"></i>Add Admin</a>
+            <a asp-controller="PropertyTypeMaintance" asp-action="Save" class="btn btn-success text-light d-flex align-items-center"><i class="bi bi-plus"></i>Add Type</a>
         </div>
     </div>
 
     <div class="row">
         @if (Model == null || Model.Count == 0)
         {
-            <h3>No hay Administradores</h3>
+            <h3>there are not property types</h3>
         }
         else
         {
@@ -34,6 +34,7 @@
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>Used by</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,6 +44,10 @@
                                         <td>@item.Name</td>
                                         <td>@item.Description</td>
                                         <td>@item.CuantityPropertiesAssigned</td>
+                                        <td>
+                                            <a asp-controller="PropertyTypeMaintance" asp-route-id="@item.Id" asp-action="Delete" class="btn col-6 me-2 btn-danger">Delete</a>
+                                            <a asp-controller="PropertyTypeMaintance" asp-route-id="@item.Id" asp-action="Edit" class="btn btn-primary me-2">Edit</a>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
