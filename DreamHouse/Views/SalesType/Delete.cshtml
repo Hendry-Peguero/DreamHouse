@@ -1,0 +1,29 @@
+﻿@using DreamHouse.Core.Application.ViewModels.PropertyType
+@using DreamHouse.Core.Application.ViewModels.SaleType
+
+@model SaleTypeSaveViewModel;
+@{
+    ViewData["Title"] = "Eliminar sale type";
+}
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="card">
+            <div class="card-header bg-dark text-light">
+                <h4>Are you sure to delete this sale type: "@Model.Name"?</h4>
+                <h4 class="text-danger">All related properties are going to be deleted</h4>
+
+            </div>
+            <div class="card-body">
+                <form method="post" asp-controller="SalesType" asp-action="DeletePost">
+
+                    <input type="hidden" asp-for="Id" />
+
+                    <a asp-controller="SalesType" asp-action="Index" class="btn btn-warning">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

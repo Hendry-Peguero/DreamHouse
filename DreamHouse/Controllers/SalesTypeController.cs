@@ -39,35 +39,35 @@ namespace DreamHouse.Controllers
             return RedirectRoutesHelper.routeSalesTypeIndex;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(int id)
-        //{
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
 
-        //    return View("Save", await saleTypeService.GetByIdAsync(id));
-        //}
+            return View("Save", await saleTypeService.GetByIdAsync(id));
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(PropertyTypeSaveViewModel propertyTypeSaveVm)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(propertyTypeSaveVm);
-        //    }
-        //    await propertyTypeService.UpdateAsync(propertyTypeSaveVm, propertyTypeSaveVm.Id.Value);
-        //    return RedirectRoutesHelper.routePropertyTypeIndex;
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Edit(SaleTypeSaveViewModel saleTypeSaveVm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(saleTypeSaveVm);
+            }
+            await saleTypeService.UpdateAsync(saleTypeSaveVm, saleTypeSaveVm.Id.Value);
+            return RedirectRoutesHelper.routeSalesTypeIndex;
+        }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    return View(await propertyTypeService.GetByIdAsync(id));
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return View(await saleTypeService.GetByIdAsync(id));
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> DeletePost(int id)
-        //{
-        //    await propertyTypeService.DeleteAsync(id);
-        //    return RedirectRoutesHelper.routePropertyTypeIndex;
-        //}
+        [HttpPost]
+        public async Task<IActionResult> DeletePost(int id)
+        {
+            await saleTypeService.DeleteAsync(id);
+            return RedirectRoutesHelper.routeSalesTypeIndex;
+        }
     }
 }
