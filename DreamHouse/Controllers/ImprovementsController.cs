@@ -58,17 +58,17 @@ namespace DreamHouse.Controllers
             return RedirectRoutesHelper.routeImprovementMaintance;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    return View(await propertyTypeService.GetByIdAsync(id));
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return View(await improvementService.GetByIdAsync(id));
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> DeletePost(int id)
-        //{
-        //    await propertyTypeService.DeleteAsync(id);
-        //    return RedirectRoutesHelper.routePropertyTypeIndex;
-        //}
+        [HttpPost]
+        public async Task<IActionResult> DeletePost(int id)
+        {
+            await improvementService.DeleteAsync(id);
+            return RedirectRoutesHelper.routeImprovementMaintance;
+        }
     }
 }
