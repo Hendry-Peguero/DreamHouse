@@ -11,7 +11,9 @@ namespace DreamHouse.Core.Application.Helpers
         public static RedirectToRouteResult developerMaintanceHome = new RedirectToRouteResult(new { controller = "AdministrationUser", action = "DeveloperMaintance" });
         public static RedirectToRouteResult routePropertyTypeIndex = new RedirectToRouteResult(new { controller = "PropertyTypeMaintance", action = "Index" });
         public static RedirectToRouteResult routeSalesTypeIndex = new RedirectToRouteResult(new { controller = "SalesType", action = "Index" });
-        
+        public static RedirectToRouteResult routeAgentMaintance = new RedirectToRouteResult(new { controller = "AdministrationUser", action = "AgentMaintance" });
+
+
 
         public static RedirectToRouteResult routeUndefiniedHome = new RedirectToRouteResult(new { controller = "", action = "" });
     }

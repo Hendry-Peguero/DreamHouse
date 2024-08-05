@@ -18,6 +18,7 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
                     FirstName = "agent",
                     LastName = "agent",
                     IdCard = "402-402-4002",
+                    ImageUrl = "https://www.shutterstock.com/image-photo/portrait-confident-man-arms-crossed-260nw-2333089669.jpg",
                     Status = (int)EUserStatus.ACTIVE,
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true
@@ -30,6 +31,46 @@ namespace DreamHouse.Infrastructure.Identity.Seeds.Users
                     FirstName = "agent",
                     LastName = "agent",
                     IdCard = "402-402-4003",
+                    ImageUrl ="https://c0.klipartz.com/pngpicture/40/822/gratis-png-persona-con-camisa-de-vestir-gris-hombre-mostrando.png",
+                    Status = (int)EUserStatus.ACTIVE,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true
+                },
+                new ApplicationUser
+                {
+                    Id = "sa12E-vxztp-yub64-qm7fr-1298z",
+                    UserName = "agent3",
+                    Email = "agent3@email.com",
+                    FirstName = "agent",
+                    LastName = "agent",
+                    IdCard = "402-402-4023",
+                    ImageUrl ="https://c0.klipartz.com/pngpicture/40/822/gratis-png-persona-con-camisa-de-vestir-gris-hombre-mostrando.png",
+                    Status = (int)EUserStatus.ACTIVE,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true
+                },
+                new ApplicationUser
+                {
+                    Id = "sasa-vxztp-yub64-qm7fr-1298z",
+                    UserName = "agent4",
+                    Email = "agent4@email.com",
+                    FirstName = "agent",
+                    LastName = "agent",
+                    IdCard = "402-402-4026",
+                    ImageUrl ="https://c0.klipartz.com/pngpicture/40/822/gratis-png-persona-con-camisa-de-vestir-gris-hombre-mostrando.png",
+                    Status = (int)EUserStatus.ACTIVE,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true
+                },
+                new ApplicationUser
+                {
+                    Id = "sas2a-vxztp-yub64-qm7fr-1298z",
+                    UserName = "agent5",
+                    Email = "agent5@email.com",
+                    FirstName = "agent5",
+                    LastName = "agent",
+                    IdCard = "402-402-4926",
+                    ImageUrl ="https://c0.klipartz.com/pngpicture/40/822/gratis-png-persona-con-camisa-de-vestir-gris-hombre-mostrando.png",
                     Status = (int)EUserStatus.ACTIVE,
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true

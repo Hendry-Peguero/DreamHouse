@@ -1,0 +1,44 @@
+﻿@using DreamHouse.Core.Application.ViewModels.PropertyType
+@using DreamHouse.Core.Application.ViewModels.User
+
+@model UserSaveViewModel;
+@{
+    ViewData["Title"] = "Eliminar property type";
+    string action = string.Empty;
+}
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="card">
+            <div class="card-header bg-dark text-light">
+                <h4>Are you sure to delete this agent: "@Model.FirstName @Model.LastName"?</h4>
+                <h4 class="text-danger">All related properties are going to be deleted</h4>
+
+            </div>
+            <div class="card-body">
+                <form method="post" asp-controller="AdministrationUser" asp-action="DeletePost">
+
+                    <input type="hidden" asp-for="Id" />
+                    @switch (Model.Roles[0])
+                    {
+                        case "AGENT":
+                            action = "AgentMaintance";
+                            break;
+                        case "ADMIN":
+                            action = "AdminMaintance";
+                            break;
+                        case "DEVELOPER":
+                            action = "DeveloperMaintance";
+                            break;
+                        default:
+                            action = "";
+                            break;
+                    }
+                    <a asp-controller="AdministrationUser" asp-action="@action" class="btn btn-warning">Cancel</a>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

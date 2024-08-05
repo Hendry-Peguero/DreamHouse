@@ -94,5 +94,10 @@ namespace DreamHouse.Core.Application.Services
             return propertyViewModel;
         }
 
+        public async Task<int> GetAllFromAgentAsync(string agentId)
+        {
+            return (await base.GetAllAsync()).Where(property => property.AgentId == agentId).Count();
+        }
+
     }
 }

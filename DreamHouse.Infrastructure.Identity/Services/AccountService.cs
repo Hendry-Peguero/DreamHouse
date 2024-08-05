@@ -94,10 +94,6 @@ namespace DreamHouse.Infrastructure.Identity.Services
             return responseWithData;
         }
 
-        public async Task SignOutAsync()
-        {
-            await signInManager.SignOutAsync();
-        }
 
         public async Task<bool> DuplicateUserName(string userName)
         {
@@ -138,7 +134,6 @@ namespace DreamHouse.Infrastructure.Identity.Services
             return response;
         }
 
-
         public async Task<AuthenticationResponse> UpdateUserAsync(AuthenticationResponse request)
         {
             // Resources
@@ -170,5 +165,14 @@ namespace DreamHouse.Infrastructure.Identity.Services
             return response;
         }
 
+        public async Task SignOutAsync()
+        {
+            await signInManager.SignOutAsync();
+        }
+
+        public async Task DeleteUserAsync(string id)
+        {
+            await userManager.DeleteAsync(await userManager.FindByIdAsync(id));
+        }
     }
 }
