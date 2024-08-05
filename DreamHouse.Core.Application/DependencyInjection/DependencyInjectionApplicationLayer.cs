@@ -24,6 +24,7 @@ namespace DreamHouse.Core.Application.DependencyInjection
             services.AddTransient<IUserValidationService, UserValidationService>();
             services.AddTransient<IPropertyTypeService, PropertyTypeService>();
             services.AddTransient<ISaleTypeService, SaleTypeService>();
+            services.AddTransient<IImprovementService, ImprovementService>();
             
         }
     }

@@ -2,6 +2,7 @@
 using DreamHouse.Core.Application.Dtos.Account;
 using DreamHouse.Core.Application.ViewModels.Agent;
 using DreamHouse.Core.Application.ViewModels.Auth;
+using DreamHouse.Core.Application.ViewModels.Improvement;
 using DreamHouse.Core.Application.ViewModels.Property;
 using DreamHouse.Core.Application.ViewModels.PropertyType;
 using DreamHouse.Core.Application.ViewModels.SaleType;
@@ -79,6 +80,17 @@ namespace DreamHouse.Core.Application.Mappings
             CreateMap<SaleTypeEntity, SaleTypeSaveViewModel>().ReverseMap();
 
             #endregion
+
+            #region Improvements
+            CreateMap<ImprovementEntity, ImprovementViewModel>()
+                .ReverseMap();
+
+            CreateMap<ImprovementEntity, ImprovementSaveViewModel>()
+                .ReverseMap()
+                .ForMember(destino => destino.ImprovementProperties, otp => otp.Ignore());
+
+            #endregion
+
 
         }
     }
