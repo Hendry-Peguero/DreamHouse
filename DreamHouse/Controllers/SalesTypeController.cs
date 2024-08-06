@@ -1,11 +1,13 @@
 ﻿using DreamHouse.Core.Application.Helpers;
 using DreamHouse.Core.Application.Interfaces.Services;
+using DreamHouse.Core.Application.Interfaces.Services.Validations;
 using DreamHouse.Core.Application.Services;
 using DreamHouse.Core.Application.ViewModels.PropertyType;
 using DreamHouse.Core.Application.ViewModels.SaleType;
 using DreamHouse.Core.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using QuickBank.Helpers;
 
 namespace DreamHouse.Controllers
 {
@@ -13,10 +15,13 @@ namespace DreamHouse.Controllers
     public class SalesTypeController : Controller
     {
         private readonly ISaleTypeService saleTypeService;
+        private readonly ISalesTypeValidationService duplicateNameValidationService;
 
-        public SalesTypeController(ISaleTypeService saleTypeService)
+        public SalesTypeController(ISaleTypeService saleTypeService,
+            ISalesTypeValidationService duplicateNameValidationService)
         {
             this.saleTypeService = saleTypeService;
+            this.duplicateNameValidationService = duplicateNameValidationService;
         }
 
         public async Task<IActionResult> Index()
@@ -33,6 +38,8 @@ namespace DreamHouse.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(SaleTypeSaveViewModel saleTypeSaveVm)
         {
+            ModelState.AddModelErrorRange(await duplicateNameValidationService.DuplicateName(saleTypeSaveVm));
+
             if (!ModelState.IsValid)
             {
                 return View(saleTypeSaveVm);
@@ -51,9 +58,11 @@ namespace DreamHouse.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(SaleTypeSaveViewModel saleTypeSaveVm)
         {
+            ModelState.AddModelErrorRange(await duplicateNameValidationService.UpdateDuplicateName(saleTypeSaveVm));
+
             if (!ModelState.IsValid)
             {
-                return View(saleTypeSaveVm);
+                return View("Save", saleTypeSaveVm);
             }
             await saleTypeService.UpdateAsync(saleTypeSaveVm, saleTypeSaveVm.Id.Value);
             return RedirectRoutesHelper.routeSalesTypeIndex;

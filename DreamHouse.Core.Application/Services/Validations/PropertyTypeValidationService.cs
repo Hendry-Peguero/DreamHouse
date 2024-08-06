@@ -7,7 +7,7 @@ using DreamHouse.Core.Application.ViewModels.User;
 
 namespace DreamHouse.Core.Application.Services.Validations
 {
-    public class PropertyTypeValidationService : IDuplicateNameValidationService
+    public class PropertyTypeValidationService : IPropertyTypeValidationService
     {
         private readonly IPropertyTypeService propertyTypeService;
 
@@ -19,11 +19,13 @@ namespace DreamHouse.Core.Application.Services.Validations
         public async Task<Dictionary<string, string>> DuplicateName(PropertyTypeSaveViewModel propertyTypeVm)
         {
             var errors = new Dictionary<string, string>();
+            if (propertyTypeVm.Name != null)
+            {
+                var duplicateName = (await propertyTypeService.GetAllAsync())
+                    .FirstOrDefault(propertyType => propertyType.Name == propertyTypeVm.Name);
 
-            var duplicateName = (await propertyTypeService.GetAllAsync())
-                .FirstOrDefault(propertyType=> propertyType.Name == propertyTypeVm.Name);
-
-            if (duplicateName.Name != null) errors.Add("DuplicateName", "Name already in use");
+                if (duplicateName.Name != null) errors.Add("DuplicateName", "Name already in use");
+            }
 
             return errors;
         }

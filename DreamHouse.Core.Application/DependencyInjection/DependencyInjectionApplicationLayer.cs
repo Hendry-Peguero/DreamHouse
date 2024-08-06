@@ -8,6 +8,7 @@ using DreamHouse.Core.Application.Services;
 using DreamHouse.Core.Application.Services.Commons;
 using DreamHouse.Core.Application.Services.User;
 using DreamHouse.Core.Application.Services.Validations;
+using DreamHouse.Core.Application.ViewModels.SaleType;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -27,7 +28,9 @@ namespace DreamHouse.Core.Application.DependencyInjection
             services.AddTransient<IPropertyTypeService, PropertyTypeService>();
             services.AddTransient<ISaleTypeService, SaleTypeService>();
             services.AddTransient<IImprovementService, ImprovementService>();
-            services.AddTransient<IDuplicateNameValidationService, PropertyTypeValidationService>();
+            services.AddTransient<IPropertyTypeValidationService, PropertyTypeValidationService>();
+            services.AddTransient<ISalesTypeValidationService, SalesTypeValidationService>();
+            services.AddTransient<IImprovementValidationService, ImprovementValidationService>();
             
         }
     }

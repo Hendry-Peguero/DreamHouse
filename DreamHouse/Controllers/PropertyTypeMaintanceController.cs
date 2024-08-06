@@ -14,10 +14,10 @@ namespace DreamHouse.Controllers
     public class PropertyTypeMaintanceController : Controller
     {
         private readonly IPropertyTypeService propertyTypeService;
-        private readonly IDuplicateNameValidationService duplicateNameValidationService;
+        private readonly IPropertyTypeValidationService duplicateNameValidationService;
 
         public PropertyTypeMaintanceController(IPropertyTypeService propertyTypeService,
-            IDuplicateNameValidationService duplicateNameValidationService)
+            IPropertyTypeValidationService duplicateNameValidationService)
         {
             this.propertyTypeService = propertyTypeService;
             this.duplicateNameValidationService = duplicateNameValidationService;
@@ -60,9 +60,11 @@ namespace DreamHouse.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(PropertyTypeSaveViewModel propertyTypeSaveVm)
         {
+            ModelState.AddModelErrorRange(await duplicateNameValidationService.UpdateDuplicateName(propertyTypeSaveVm));
+
             if (!ModelState.IsValid)
             {
-                return View(propertyTypeSaveVm);
+                return View("Save", propertyTypeSaveVm);
             }
             await propertyTypeService.UpdateAsync(propertyTypeSaveVm,propertyTypeSaveVm.Id.Value);
             return RedirectRoutesHelper.routePropertyTypeIndex;
