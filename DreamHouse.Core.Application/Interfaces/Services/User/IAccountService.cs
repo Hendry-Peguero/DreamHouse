@@ -18,5 +18,6 @@ namespace DreamHouse.Core.Application.Interfaces.Services.User
         Task SignOutAsync();
         Task<bool> DuplicateUserName(string userName);
         Task<bool> DuplicateEmail(string email);
+
     }
 }

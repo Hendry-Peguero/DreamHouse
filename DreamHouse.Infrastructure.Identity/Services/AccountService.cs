@@ -139,7 +139,6 @@ namespace DreamHouse.Infrastructure.Identity.Services
             return response;
         }
 
-
         public async Task<AuthenticationResponse> UpdateUserAsync(AuthenticationResponse request)
         {
             // Resources
