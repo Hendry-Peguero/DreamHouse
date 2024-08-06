@@ -1,9 +1,12 @@
-﻿using DreamHouse.Core.Application.Dtos.Account;
+﻿using AutoMapper;
+using DreamHouse.Core.Application.Dtos.Account;
 using DreamHouse.Core.Application.Enums;
 using DreamHouse.Core.Application.Helpers;
 using DreamHouse.Core.Application.Interfaces.Helpers;
 using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Core.Application.ViewModels.Auth;
+using DreamHouse.Core.Application.ViewModels.User;
+using DreamHouse.Infrastructure.Identity.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DreamHouse.Controllers
@@ -12,11 +15,19 @@ namespace DreamHouse.Controllers
     {
         private readonly IUserService userService;
         private readonly IUserHelper userHelper;
+        private readonly IAccountService accountService;
+        private readonly IMapper mapper;
 
-        public AuthorizationController(IUserService userService, IUserHelper userHelper)
+        public AuthorizationController(
+            IUserService userService, 
+            IUserHelper userHelper,
+            IAccountService accountService,
+            IMapper mapper)
         {
             this.userService = userService;
             this.userHelper = userHelper;
+            this.accountService = accountService;
+            this.mapper = mapper;
         }
 
         public IActionResult Login()
@@ -66,6 +77,32 @@ namespace DreamHouse.Controllers
         public async Task<IActionResult> AccessDenied()
         {
             return View();
+        }
+
+
+        public IActionResult Register()
+        {
+            return View(new UserSaveViewModel());
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(UserSaveViewModel userSaveViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(userSaveViewModel);
+            }
+
+            RegisterResponse response = await userService.RegisterAsync(userSaveViewModel);
+
+            if (response.HasError)
+            {
+                ModelState.AddModelError(string.Empty, response.ErrorDescription);
+                return View(userSaveViewModel);
+            }
+
+            return RedirectToAction("Login");
         }
     }
 }

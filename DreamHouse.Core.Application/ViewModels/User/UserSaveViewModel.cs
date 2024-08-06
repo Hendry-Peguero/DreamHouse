@@ -18,6 +18,7 @@ namespace DreamHouse.Core.Application.ViewModels.User
         [Required(ErrorMessage = "The idcard field cannot be empty")]
         [DataType(DataType.Text)]
         public string? IdCard { get; set; }
+        public string? PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "The Email field cannot be empty")]
         [DataType(DataType.EmailAddress)]
@@ -34,6 +35,8 @@ namespace DreamHouse.Core.Application.ViewModels.User
         [DataType(DataType.Password)]
         public string? ConfirmPassword { get; set; }
         public string? UserType { get; set; }
+
+        public string? ImageUrl { get; set; }
 
         public List<string>? Roles { get; set; }
         public int? Status { get; set; }

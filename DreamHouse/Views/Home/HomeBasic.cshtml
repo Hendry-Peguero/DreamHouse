@@ -1,30 +1,30 @@
-﻿@model DreamHouse.Core.Application.ViewModels.Home.ClientHomeViewModel
-
+﻿@using DreamHouse.Core.Application.ViewModels.Home;
 @{
     ViewData["Title"] = "Home Page";
 }
+@model HomeBasicViewModel
 
 
 <div class="container mt-4">
     <form method="get" asp-action="HomeBasic">
         <div class="row mb-3">
             <div class="col-md-2">
-                <input type="text" class="form-control" name="code" placeholder="Código" value="@ViewContext.HttpContext.Request.Query["code"]">
+                <input asp-for="filter.Code" type="text" class="form-control" name="code" placeholder="Código">
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control" name="type" placeholder="Tipo de Propiedad" value="@ViewContext.HttpContext.Request.Query["type"]">
+                <input asp-for="filter.Type" type="text" class="form-control" name="type" placeholder="Tipo de Propiedad">
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control" name="minPrice" placeholder="Precio Mínimo" value="@ViewContext.HttpContext.Request.Query["minPrice"]">
+                <input asp-for="filter.MinPrice" type="number" class="form-control" name="minPrice" placeholder="Precio Mínimo">
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control" name="maxPrice" placeholder="Precio Máximo" value="@ViewContext.HttpContext.Request.Query["maxPrice"]">
+                <input asp-for="filter.MaxPrice" type="number" class="form-control" name="maxPrice" placeholder="Precio Máximo">
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control" name="bedrooms" placeholder="Habitaciones" value="@ViewContext.HttpContext.Request.Query["bedrooms"]">
+                <input asp-for="filter.Bedrooms" type="number" class="form-control" name="bedrooms" placeholder="Habitaciones">
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control" name="bathrooms" placeholder="Baños" value="@ViewContext.HttpContext.Request.Query["bathrooms"]">
+                <input asp-for="filter.Bathrooms" type="number" class="form-control" name="bathrooms" placeholder="Baños">
             </div>
         </div>
         <div class="row mb-3">
@@ -52,6 +52,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">@property.TypePropertyName</h5>
                                 <p class="card-text">
+                                    Code: @property.Code<br />
                                     Habitaciones: @property.Bedrooms<br />
                                     Baños: @property.Bathrooms<br />
                                     Tamaño: @property.SquareMeter m²<br />
@@ -82,6 +83,7 @@
     }
 
     .card-img-top {
-        height: 150px; 
+        height: 150px; /* Ajusta esta altura según sea necesario */
+    }
 </style>
 
