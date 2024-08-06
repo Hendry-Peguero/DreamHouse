@@ -2,6 +2,7 @@
 using DreamHouse.Core.Application.Dtos.Account;
 using DreamHouse.Core.Application.Enums;
 using DreamHouse.Core.Application.Interfaces.Services.User;
+using DreamHouse.Core.Application.ViewModels.Agent;
 using DreamHouse.Core.Application.ViewModels.Auth;
 using DreamHouse.Core.Application.ViewModels.User;
 
@@ -37,6 +38,11 @@ namespace DreamHouse.Core.Application.Services.User
             return (await GetAllAsync()).Where(user => user.Roles[0] == ERoles.DEVELOPER.ToString()).ToList();
         }
 
+        public async Task<List<AgentViewModel>> GetAgents()
+        {
+            return _mapper.Map<List<AgentViewModel>>((await GetAllAsync()).Where(user => user.Roles[0] == ERoles.AGENT.ToString()).ToList());
+        }
+
         public async Task<IEnumerable<UserViewModel>> GetAllAsync()
         {
             var usersResponse = await _accountService.GetAllAsync();
@@ -66,6 +72,16 @@ namespace DreamHouse.Core.Application.Services.User
             return userUpdated;
         }
 
+        public async Task<UserSaveViewModel> ChangeUserState(string id)
+        {
+            var user = await FindyByIdAsync(id);
+            user.Status = (user.Status != (int)EUserStatus.ACTIVE) ? (int)EUserStatus.ACTIVE : (int)EUserStatus.INACTIVE;
+            user = await UpdateUserAsync(user);
+            user.UserType = user.Roles[0];
+            return user;
+        }
+
+
         public async Task<AuthenticationResponse> LoginAsync(LoginViewModel vm)
         {
             AuthenticationRequest authenticationRequest = _mapper.Map<AuthenticationRequest>(vm);
@@ -78,6 +94,9 @@ namespace DreamHouse.Core.Application.Services.User
             await _accountService.SignOutAsync();
         }
 
-
+        public async Task DeleteAsync(string id)
+        {
+            await _accountService.DeleteUserAsync(id);
+        }
     }
 }

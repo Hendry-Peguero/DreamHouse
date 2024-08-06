@@ -9,5 +9,6 @@ namespace DreamHouse.Core.Application.Interfaces.Services
         Task<List<PropertyViewModel>> GetAllWithTypePropertyAndSaleAsync();
         Task<List<PropertyViewModel>> GetFilteredPropertiesAsync(string code, string type, decimal? minPrice, decimal? maxPrice, int? bedrooms, int? bathrooms);
         Task<PropertyViewModel?> GetPropertyDetailsAsync(int id);
+        Task<int> GetAllFromAgentAsync(string agentId);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using DreamHouse.Core.Application.Dtos.Account;
+using DreamHouse.Core.Application.ViewModels.Agent;
 using DreamHouse.Core.Application.ViewModels.Auth;
+using DreamHouse.Core.Application.ViewModels.Improvement;
 using DreamHouse.Core.Application.ViewModels.Property;
 using DreamHouse.Core.Application.ViewModels.PropertyType;
 using DreamHouse.Core.Application.ViewModels.SaleType;
@@ -41,6 +43,11 @@ namespace DreamHouse.Core.Application.Mappings
                 .ForMember(destino => destino.Password, otp => otp.Ignore())
                 .ForMember(destino => destino.ConfirmPassword, otp => otp.Ignore());
 
+            CreateMap<UserViewModel, AgentViewModel>()
+                .ForMember(destino => destino.NumberPropertiesAssigned, otp => otp.Ignore())
+                .ReverseMap();
+
+
             #endregion
 
             #region Property
@@ -49,9 +56,42 @@ namespace DreamHouse.Core.Application.Mappings
                 .ForMember(dest => dest.TypeSaleName, opt => opt.MapFrom(src => src.TypeSale.Name))
                 .ReverseMap();
 
-            CreateMap<PropertyTypeEntity, PropertyTypeViewModel>().ReverseMap();
+
+
             CreateMap<SaleTypeEntity, SaleTypeViewModel>().ReverseMap();
             #endregion
+
+            #region PropertyType
+            CreateMap<PropertyTypeEntity, PropertyTypeViewModel>()
+                .ForMember(destino => destino.CuantityPropertiesAssigned, otp => otp.Ignore())
+                .ReverseMap();
+
+            CreateMap<PropertyTypeEntity, PropertyTypeSaveViewModel>()
+                .ReverseMap()
+                .ForMember(destino => destino.Properties, otp => otp.Ignore());
+
+            #endregion
+
+            #region SalesType
+            CreateMap<SaleTypeEntity, SaleTypeViewModel>()
+                .ForMember(destino => destino.CuantitySalesAssigned, otp => otp.Ignore())
+                .ReverseMap();
+
+            CreateMap<SaleTypeEntity, SaleTypeSaveViewModel>().ReverseMap();
+
+            #endregion
+
+            #region Improvements
+            CreateMap<ImprovementEntity, ImprovementViewModel>()
+                .ReverseMap();
+
+            CreateMap<ImprovementEntity, ImprovementSaveViewModel>()
+                .ReverseMap()
+                .ForMember(destino => destino.ImprovementProperties, otp => otp.Ignore());
+
+            #endregion
+
+
         }
     }
 }

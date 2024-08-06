@@ -5,6 +5,7 @@ using DreamHouse.Core.Application.Interfaces.Services.Facilities;
 using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace DreamHouse.Infrastructure.Identity.Services
 {
@@ -14,7 +15,6 @@ namespace DreamHouse.Infrastructure.Identity.Services
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IMapper mapper;
         private readonly IEmailService emailService;
-
 
         public AccountService(
             UserManager<ApplicationUser> userManager,
@@ -41,7 +41,6 @@ namespace DreamHouse.Infrastructure.Identity.Services
                 response.Roles = rolesList.ToList();
                 authResponses.Add(response);
             }
-
             return authResponses;
         }
 
@@ -95,10 +94,6 @@ namespace DreamHouse.Infrastructure.Identity.Services
             return responseWithData;
         }
 
-        public async Task SignOutAsync()
-        {
-            await signInManager.SignOutAsync();
-        }
 
         public async Task<bool> DuplicateUserName(string userName)
         {
@@ -170,5 +165,14 @@ namespace DreamHouse.Infrastructure.Identity.Services
             return response;
         }
 
+        public async Task SignOutAsync()
+        {
+            await signInManager.SignOutAsync();
+        }
+
+        public async Task DeleteUserAsync(string id)
+        {
+            await userManager.DeleteAsync(await userManager.FindByIdAsync(id));
+        }
     }
 }

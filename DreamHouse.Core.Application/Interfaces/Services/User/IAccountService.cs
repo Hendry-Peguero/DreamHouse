@@ -16,6 +16,8 @@ namespace DreamHouse.Core.Application.Interfaces.Services.User
         Task<AuthenticationResponse> UpdateUserAsync(AuthenticationResponse user);
         Task<RegisterResponse> RegisterUserAsync(RegisterRequest request);
         Task SignOutAsync();
+        Task DeleteUserAsync(string id);
+
         Task<bool> DuplicateUserName(string userName);
         Task<bool> DuplicateEmail(string email);
 

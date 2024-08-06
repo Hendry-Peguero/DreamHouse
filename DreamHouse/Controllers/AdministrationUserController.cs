@@ -1,6 +1,8 @@
 ﻿using DreamHouse.Core.Application.Enums;
 using DreamHouse.Core.Application.Helpers;
+using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.Interfaces.Services.User;
+using DreamHouse.Core.Application.Services;
 using DreamHouse.Core.Application.ViewModels.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +15,15 @@ namespace DreamHouse.Controllers
     {
         private readonly IUserService userService;
         private readonly IUserValidationService userValidationService;
+        private readonly IPropertyService propertyService;
 
         public AdministrationUserController(IUserService userService,
-            IUserValidationService userValidationService)
+            IUserValidationService userValidationService,
+            IPropertyService propertyService)
         {
             this.userService = userService;
             this.userValidationService = userValidationService;
+            this.propertyService = propertyService;
         }
 
         public IActionResult Home()
@@ -36,6 +41,17 @@ namespace DreamHouse.Controllers
         public async Task<IActionResult> DeveloperMaintance()
         {
             return View(await userService.GetDevelopers());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AgentMaintance()
+        {
+            var agents = await userService.GetAgents();
+            foreach (var agent in agents)
+            {
+                agent.NumberPropertiesAssigned = await propertyService.GetAllFromAgentAsync(agent.Id);
+            }
+            return View(agents);
         }
 
         [HttpGet]
@@ -86,10 +102,18 @@ namespace DreamHouse.Controllers
         [HttpGet]
         public async Task<IActionResult> ChangeUserStatePost(string id)
         {
-            var user = await userService.FindyByIdAsync(id);
-            user.Status = (user.Status != (int)EUserStatus.ACTIVE) ? (int)EUserStatus.ACTIVE : (int)EUserStatus.INACTIVE;
-
-            return View(await userService.UpdateUserAsync(user));
+            var user = await userService.ChangeUserState(id);
+            switch (user.UserType) 
+            {
+                case "AGENT":
+                    return RedirectRoutesHelper.routeAgentMaintance;
+                case "ADMIN":
+                    return RedirectRoutesHelper.adminMaintanceHome;
+                case "DEVELOPER":
+                    return RedirectRoutesHelper.developerMaintanceHome;
+                default:
+                    return RedirectRoutesHelper.routeUndefiniedHome;
+            }
         }
 
         [HttpGet]
@@ -120,5 +144,19 @@ namespace DreamHouse.Controllers
                     return RedirectRoutesHelper.routeUndefiniedHome;
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            return View(await userService.FindyByIdAsync(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePost(string id)
+        {
+            await userService.DeleteAsync(id);
+            return RedirectRoutesHelper.routeAgentMaintance;
+        }
+
     }
 }

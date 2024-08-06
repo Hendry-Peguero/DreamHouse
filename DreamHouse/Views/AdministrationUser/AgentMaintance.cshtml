@@ -1,0 +1,72 @@
+﻿@using DreamHouse.Core.Application.ViewModels.PropertyType
+@using DreamHouse.Core.Application.ViewModels.User;
+@using DreamHouse.Core.Application.Enums;
+@using DreamHouse.Core.Application.Interfaces.Helpers;
+@using DreamHouse.Core.Application.ViewModels.Agent;
+
+@model List<AgentViewModel>;
+@{
+    ViewData["Title"] = "Agent List";
+}
+
+<div class="container">
+    <div class="row mb-3 mt-4">
+        <div class="d-flex gap-2 p-0">
+            <div class="rounded-3 bg-primary p-1 flex-grow-1">
+                <h1 class="fw-bold text-light m-0 p-0 ms-4">Agents List</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (Model == null || Model.Count == 0)
+        {
+            <h3>There are no agents.</h3>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <img src="@item.ImageUrl" alt="@item.FirstName @item.LastName" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
+                            <h5 class="card-title fw-bold">@item.FirstName @item.LastName</h5>
+                            <p class="card-text">@item.Email</p>
+                            <p class="card-text"><strong>Properties Assigned:</strong> @item.NumberPropertiesAssigned</p>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-controller="AdministrationUser" asp-route-id="@item.Id" asp-action="ChangeUserState" class="btn col-6 me-1 @(item.Status == (int)EUserStatus.ACTIVE ? "btn-danger" : "btn-success")">
+                                @(item.Status == (int)EUserStatus.ACTIVE ? "Deactivate" : "Activate")
+                            </a>
+                            <a asp-controller="AdministrationUser" asp-route-id="@item.Id" asp-action="Delete" class="btn col-4 ms-1 btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            console.log("Vista cargada y DataTable inicializado.");
+        });
+    </script>
+}
+
+<style>
+    .card {
+        transition: box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+    .rounded-circle {
+        object-fit: cover;
+        border: 2px solid #ddd;
+    }
+</style>
