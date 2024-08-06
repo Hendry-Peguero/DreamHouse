@@ -4,10 +4,12 @@ using DreamHouse.Core.Application.Services;
 using DreamHouse.Core.Application.ViewModels.PropertyType;
 using DreamHouse.Core.Application.ViewModels.SaleType;
 using DreamHouse.Core.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DreamHouse.Controllers
 {
+    [Authorize(Roles = "ADMIN")]
     public class SalesTypeController : Controller
     {
         private readonly ISaleTypeService saleTypeService;

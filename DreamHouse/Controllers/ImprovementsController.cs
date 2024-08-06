@@ -1,13 +1,12 @@
 ﻿using DreamHouse.Core.Application.Helpers;
 using DreamHouse.Core.Application.Interfaces.Services;
-using DreamHouse.Core.Application.Services;
 using DreamHouse.Core.Application.ViewModels.Improvement;
-using DreamHouse.Core.Application.ViewModels.PropertyType;
-using DreamHouse.Core.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DreamHouse.Controllers
 {
+    [Authorize(Roles ="ADMIN")]
     public class ImprovementsController : Controller
     {
         private readonly IImprovementService improvementService;
@@ -16,7 +15,7 @@ namespace DreamHouse.Controllers
         {
             this.improvementService = improvementService;
         }
-        
+
         public async Task<IActionResult> Index()
         {
             return View(await improvementService.GetAllAsync());
