@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DreamHouse.Core.Application.Dtos.Filters;
 using DreamHouse.Core.Application.Interfaces.Repositories;
 using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.Services.Commons;
@@ -40,38 +41,38 @@ namespace DreamHouse.Core.Application.Services
             return propertyViewModels;
         }
 
-        public async Task<List<PropertyViewModel>> GetFilteredPropertiesAsync(string code, string type, decimal? minPrice, decimal? maxPrice, int? bedrooms, int? bathrooms)
+        public async Task<List<PropertyViewModel>> GetFilteredPropertiesAsync(PropertiesFilter filter)
         {
             var properties = await GetAllWithTypePropertyAndSaleAsync();
 
-            if (!string.IsNullOrEmpty(code))
+            if (!string.IsNullOrEmpty(filter.Code))
             {
-                properties = properties.Where(p => p.Code == code).ToList();
+                properties = properties.Where(p => p.Code == filter.Code).ToList();
             }
 
-            if (!string.IsNullOrEmpty(type))
+            if (!string.IsNullOrEmpty(filter.Type))
             {
-                properties = properties.Where(p => p.TypePropertyName == type).ToList();
+                properties = properties.Where(p => p.TypePropertyName == filter.Type).ToList();
             }
 
-            if (minPrice.HasValue)
+            if (filter.MinPrice.HasValue)
             {
-                properties = properties.Where(p => Convert.ToDecimal(p.Price) <= minPrice.Value).ToList();
+                properties = properties.Where(p => p.Price <= filter.MinPrice.Value).ToList();
             }
 
-            if (maxPrice.HasValue)
+            if (filter.MaxPrice.HasValue)
             {
-                properties = properties.Where(p => Convert.ToDecimal(p.Price) <= maxPrice.Value).ToList();
+                properties = properties.Where(p => p.Price <= filter.MaxPrice.Value).ToList();
             }
 
-            if (bedrooms.HasValue)
+            if (filter.Bedrooms.HasValue)
             {
-                properties = properties.Where(p => p.Bedrooms == bedrooms.Value).ToList();
+                properties = properties.Where(p => p.Bedrooms == filter.Bedrooms.Value).ToList();
             }
 
-            if (bathrooms.HasValue)
+            if (filter.Bathrooms.HasValue)
             {
-                properties = properties.Where(p => p.Bathrooms == bathrooms.Value).ToList();
+                properties = properties.Where(p => p.Bathrooms == filter.Bathrooms.Value).ToList();
             }
 
             return properties;

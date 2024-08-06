@@ -1,4 +1,5 @@
-﻿using DreamHouse.Core.Application.Interfaces.Helpers;
+﻿using DreamHouse.Core.Application.Dtos.Filters;
+using DreamHouse.Core.Application.Interfaces.Helpers;
 using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.ViewModels.Home;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +20,7 @@ namespace DreamHouse.Controllers
             this.propertyService = propertyService;
         }
 
-        public async Task<IActionResult> HomeBasic(string code, string type, decimal? minPrice, decimal? maxPrice, int? bedrooms, int? bathrooms)
+        public async Task<IActionResult> HomeBasic(PropertiesFilter filter)
         {
             // Check for denied action
             if (TempData.ContainsKey("LoginAccessDenied"))
@@ -28,18 +29,20 @@ namespace DreamHouse.Controllers
             }
 
             var user = userHelper.GetUser();
-            var properties = await propertyService.GetFilteredPropertiesAsync(code, type, minPrice, maxPrice, bedrooms, bathrooms);
+            var properties = await propertyService.GetFilteredPropertiesAsync(filter);
 
-            ClientHomeViewModel ClientHomeVm = new ClientHomeViewModel
-            {
+            HomeBasicViewModel ClientHomeVm = new () {
+                filter = filter,
                 Properties = properties
             };
 
             return View(ClientHomeVm);
         }
 
+
+        ////////////////////////////////////////////////////////////////////////// AQUIIIIII
         [Authorize(Roles = "CLIENT")]
-        public async Task<IActionResult> ClientHome()
+        public async Task<IActionResult> ClientHome(PropertiesFilter filter)
         {
             // Check for denied action
             if (TempData.ContainsKey("LoginAccessDenied"))
@@ -48,10 +51,17 @@ namespace DreamHouse.Controllers
             }
 
             var user = userHelper.GetUser();
-            ClientHomeViewModel ClientHomeVm = new();
+            var properties = await propertyService.GetFilteredPropertiesAsync(filter);
+
+            HomeBasicViewModel ClientHomeVm = new()
+            {
+                filter = filter,
+                Properties = properties
+            };
 
             return View(ClientHomeVm);
         }
+
 
         [Authorize(Roles = "AGENT")]
         public async Task<IActionResult> AgentHome()
@@ -63,7 +73,7 @@ namespace DreamHouse.Controllers
             }
 
             var user = userHelper.GetUser();
-            AgentHomeViewModel AgentHomeVm = new();
+            HomeBasicViewModel AgentHomeVm = new();
 
             return View(AgentHomeVm);
         }
