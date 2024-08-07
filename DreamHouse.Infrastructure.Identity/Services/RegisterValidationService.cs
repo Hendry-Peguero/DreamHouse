@@ -1,9 +1,12 @@
-﻿using DreamHouse.Core.Application.Interfaces.Services;
+﻿using DreamHouse.Core.Application.Helpers;
+using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.ViewModels.User;
 using DreamHouse.Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
+using QuickBank.Core.Application.Helpers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DreamHouse.Infrastructure.Identity.Services
@@ -23,33 +26,71 @@ namespace DreamHouse.Infrastructure.Identity.Services
 
             #region Email Validation
 
-            bool emailIsNullOrEmpty = string.IsNullOrEmpty(usvm.Email);
-            bool emailIsValid = !emailIsNullOrEmpty && new System.ComponentModel.DataAnnotations.EmailAddressAttribute().IsValid(usvm.Email);
-
-            if (emailIsNullOrEmpty) errors.Add("InvalidEmail", "Email cannot be empty");
-            else if (!emailIsValid) errors.Add("InvalidEmailFormat", "Invalid email format");
-            else if (await IsEmailRegisteredAsync(usvm.Email)) errors.Add("EmailExists", "Email is already registered");
+            if (string.IsNullOrEmpty(usvm.Email))
+            {
+                errors.Add("InvalidEmail", "Email cannot be empty");
+            }
+            else if (await IsEmailRegisteredAsync(usvm.Email))
+            {
+                errors.Add("EmailExists", "Email is already registered");
+            }
 
             #endregion
 
             #region UserName Validation
 
-            bool userNameIsNullOrEmpty = string.IsNullOrEmpty(usvm.UserName);
-            if (userNameIsNullOrEmpty) errors.Add("InvalidUserName", "Username cannot be empty");
-            else if (await IsUserNameRegisteredAsync(usvm.UserName)) errors.Add("UserNameExists", "Username is already registered");
+            if (string.IsNullOrEmpty(usvm.UserName))
+            {
+                errors.Add("InvalidUserName", "Username cannot be empty");
+            }
+            else if (await IsUserNameRegisteredAsync(usvm.UserName))
+            {
+                errors.Add("UserNameExists", "Username is already registered");
+            }
 
             #endregion
 
             #region Password Validation
 
-            bool passwordIsNullOrEmpty = string.IsNullOrEmpty(usvm.Password);
-            if (passwordIsNullOrEmpty) errors.Add("InvalidPassword", "Password cannot be empty");
+            var lowerCasePattern = @"[a-z]";
+            var upperCasePattern = @"[A-Z]";
+            var hasNumberPattern = @"\d";
+            var nonAlphanumericPattern = @"\W";
+
+            if (string.IsNullOrEmpty(usvm.Password))
+            {
+                errors.Add("PasswordRequired", "Password is required");
+            }
             else
             {
-                var passwordErrors = await ValidatePasswordAsync(usvm.Password);
-                foreach (var error in passwordErrors)
+                // Check if password meets the minimum length requirement
+                if (usvm.Password.Length < BusinessLogicConstantsHelper.MinPasswordLength)
                 {
-                    errors.Add($"Password_{error}", error);
+                    errors.Add("MinPasswordLength", $"The minimum length is {BusinessLogicConstantsHelper.MinPasswordLength}");
+                }
+
+                // Check if password contains at least one lowercase letter
+                if (!Regex.IsMatch(usvm.Password, lowerCasePattern))
+                {
+                    errors.Add("LowerCase", "Password must contain at least one lowercase letter");
+                }
+
+                // Check if password contains at least one uppercase letter
+                if (!Regex.IsMatch(usvm.Password, upperCasePattern))
+                {
+                    errors.Add("UpperCase", "Password must contain at least one uppercase letter");
+                }
+
+                // Check if password contains at least one digit
+                if (!Regex.IsMatch(usvm.Password, hasNumberPattern))
+                {
+                    errors.Add("RequireDigit", "Password needs digits [1234567890]");
+                }
+
+                // Check if password contains at least one non-alphanumeric character
+                if (!Regex.IsMatch(usvm.Password, nonAlphanumericPattern))
+                {
+                    errors.Add("RequireNonAlphanumeric", "Password must contain special characters [_,#@$]");
                 }
 
                 if (usvm.Password != usvm.ConfirmPassword)
@@ -88,6 +129,13 @@ namespace DreamHouse.Infrastructure.Identity.Services
 
             #endregion
 
+            #region Photo
+
+            if (string.IsNullOrEmpty(usvm.ImageUrl))
+                errors.Add("InvalidImageUrl", "Post a profile photo");
+
+            #endregion
+
             #region UserType Validation
 
             if (string.IsNullOrEmpty(usvm.UserType))
@@ -106,14 +154,6 @@ namespace DreamHouse.Infrastructure.Identity.Services
         private async Task<bool> IsUserNameRegisteredAsync(string userName)
         {
             return await _userManager.FindByNameAsync(userName) != null;
-        }
-
-        private async Task<IEnumerable<string>> ValidatePasswordAsync(string password)
-        {
-            var passwordValidator = new PasswordValidator<ApplicationUser>();
-            var result = await passwordValidator.ValidateAsync(_userManager, null, password);
-
-            return result.Succeeded ? Enumerable.Empty<string>() : result.Errors.Select(e => e.Description);
         }
     }
 }

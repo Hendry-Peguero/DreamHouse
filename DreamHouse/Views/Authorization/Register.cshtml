@@ -52,13 +52,13 @@
         <div class="col-md-6">
             <label asp-for="Password" class="form-label">Password</label>
             <input asp-for="Password" type="password" class="form-control">
-            @Html.ValidationMessage("InvalidPassword", "", new { @class = "text-danger" })
-            @Html.ValidationMessage("PasswordMismatch", "", new { @class = "text-danger" })
-            @Html.ValidationMessage("Password_TooShort", "", new { @class = "text-danger" })
-            @Html.ValidationMessage("Password_RequiresNonAlphanumeric", "", new { @class = "text-danger" })
-            @Html.ValidationMessage("Password_RequiresDigit", "", new { @class = "text-danger" })
-            @Html.ValidationMessage("Password_RequiresLower", "", new { @class = "text-danger" })
-            @Html.ValidationMessage("Password_RequiresUpper", "", new { @class = "text-danger" })
+                @Html.ValidationMessage("PasswordRequired", "", new { @class = "text-danger" })
+                @Html.ValidationMessage("MinPasswordLength", "", new { @class = "text-danger" })
+                @Html.ValidationMessage("LowerCase", "", new { @class = "text-danger" })
+                @Html.ValidationMessage("UpperCase", "", new { @class = "text-danger" })
+                @Html.ValidationMessage("RequireDigit", "", new { @class = "text-danger" })
+                @Html.ValidationMessage("RequireNonAlphanumeric", "", new { @class = "text-danger" })
+                @Html.ValidationMessage("PasswordMismatch", "", new { @class = "text-danger" })
         </div>
 
         <div class="col-md-6">
@@ -78,8 +78,8 @@
 
             <div class="mb-3">
                 <label asp-for="File" class="form-label">Select a photo</label>
-                <input asp-for="File" class="form-control" required/>
-                <span asp-validation-for="File" class="text-danger"></span>
+                <input asp-for="File" class="form-control"/>
+                @Html.ValidationMessage("InvalidImageUrl", "", new { @class = "text-danger" })
             </div>
 
         </div>
