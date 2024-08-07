@@ -1,5 +1,4 @@
 ﻿using DreamHouse.Core.Application.Helpers.FOR_DELETE;
-using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Infrastructure.Identity.Context;
 using DreamHouse.Infrastructure.Identity.Entities;
@@ -58,7 +57,6 @@ namespace DreamHouse.Infrastructure.Identity.DependencyInjection
             #region Services
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<IRegisterValidationService, RegisterValidationService>();
             #endregion
         }
 

@@ -9,76 +9,69 @@
         <div class="row g-3">
             <div class="col-sm-6">
                 <label asp-for="FirstName" class="form-label">First name</label>
-                <input asp-for="FirstName" class="form-control">
-                @Html.ValidationMessage("InvalidFirstName", "", new { @class = "text-danger" })
+                <input asp-for="FirstName" class="form-control" >
+                <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
 
             <div class="col-sm-6">
                 <label asp-for="LastName" class="form-label">Last name</label>
-                <input asp-for="LastName" class="form-control">
-                @Html.ValidationMessage("InvalidLastName", "", new { @class = "text-danger" })
+                <input asp-for="LastName" class="form-control" >
+                <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
 
             <div class="col-12">
                 <label asp-for="UserName" class="form-label">Username</label>
                 <div class="input-group has-validation">
                     <span class="input-group-text"></span>
-                    <input asp-for="UserName" class="form-control">
-                    @Html.ValidationMessage("InvalidUserName", "", new { @class = "text-danger" })
-                    @Html.ValidationMessage("UserNameExists", "", new { @class = "text-danger" })
+                    <input asp-for="UserName" class="form-control" >
+                    <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="col-12">
                 <label asp-for="Email" class="form-label">Email</label>
                 <input asp-for="Email" class="form-control">
-                @Html.ValidationMessage("InvalidEmail", "", new { @class = "text-danger" })
-                @Html.ValidationMessage("InvalidEmailFormat", "", new { @class = "text-danger" })
-                @Html.ValidationMessage("EmailExists", "", new { @class = "text-danger" })
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="col-12">
                 <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
-                <input asp-for="PhoneNumber" class="form-control">
-                @Html.ValidationMessage("InvalidPhoneNumber", "", new { @class = "text-danger" })
+                <input asp-for="PhoneNumber" class="form-control" >
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
 
             <div class="col-12">
                 <label asp-for="IdCard" class="form-label">ID Card</label>
-                <input asp-for="IdCard" class="form-control">
-                @Html.ValidationMessage("InvalidIdCard", "", new { @class = "text-danger" })
+                <input asp-for="IdCard" class="form-control" >
+                <span asp-validation-for="IdCard" class="text-danger"></span>
             </div>
 
             <div class="col-md-6">
                 <label asp-for="Password" class="form-label">Password</label>
-                <input asp-for="Password" type="password" class="form-control">
-                @Html.ValidationMessage("InvalidPassword", "", new { @class = "text-danger" })
-                @Html.ValidationMessage("PasswordMismatch", "", new { @class = "text-danger" })
-                @Html.ValidationMessage("Password_TooShort", "", new { @class = "text-danger" })
-                @Html.ValidationMessage("Password_RequiresNonAlphanumeric", "", new { @class = "text-danger" })
-                @Html.ValidationMessage("Password_RequiresDigit", "", new { @class = "text-danger" })
-                @Html.ValidationMessage("Password_RequiresLower", "", new { @class = "text-danger" })
-                @Html.ValidationMessage("Password_RequiresUpper", "", new { @class = "text-danger" })
+                <input asp-for="Password" type="password" class="form-control" >
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
             <div class="col-md-6">
                 <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
-                <input asp-for="ConfirmPassword" type="password" class="form-control">
+                <input asp-for="ConfirmPassword" type="password" class="form-control" >
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
 
             <div class="col-md-4">
                 <label asp-for="UserType" class="form-label">User Type</label>
-                <select asp-for="UserType" class="form-select">
+                <select asp-for="UserType" class="form-select" >
                     <option value="">Choose...</option>
                     <option value="CLIENT">CLIENT</option>
                     <option value="AGENT">AGENT</option>
                 </select>
-                @Html.ValidationMessage("InvalidUserType", "", new { @class = "text-danger" })
+                <span asp-validation-for="UserType" class="text-danger"></span>
             </div>
 
             <div class="col-12">
                 <label asp-for="ImageUrl" class="form-label">Image URL</label>
                 <input asp-for="ImageUrl" class="form-control">
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
         </div>
 
