@@ -1,6 +1,8 @@
 ﻿using DreamHouse.Core.Application.Dtos.Filters;
 using DreamHouse.Core.Application.Interfaces.Helpers;
 using DreamHouse.Core.Application.Interfaces.Services;
+using DreamHouse.Core.Application.Interfaces.Services.AdminHome;
+using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Core.Application.ViewModels.Home;
 using DreamHouse.Core.Application.ViewModels.Property;
 using Microsoft.AspNetCore.Authorization;
@@ -12,11 +14,15 @@ namespace DreamHouse.Controllers
     {
         private readonly IUserHelper userHelper;
         private readonly IPropertyService propertyService;
+        private readonly IUserService userService;
+        private readonly IAdminHomeService adminHomeService;
         private readonly IJsonHelper jsonHelper;
 
         public HomeController(
             IUserHelper userHelper,
             IPropertyService propertyService,
+            IUserService userService,
+            IAdminHomeService adminHomeService,
             IJsonHelper jsonHelper
         )
         {
@@ -65,7 +71,7 @@ namespace DreamHouse.Controllers
             }
 
             var user = userHelper.GetUser();
-            AdminHomeViewModel AdminHomeVm = new();
+            AdminHomeViewModel AdminHomeVm = await adminHomeService.DisplayValuesHome();
 
             return View(AdminHomeVm);
         }

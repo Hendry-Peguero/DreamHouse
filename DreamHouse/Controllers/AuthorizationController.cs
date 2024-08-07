@@ -66,12 +66,14 @@ namespace DreamHouse.Controllers
                 return View(loginVm);
             }
         }
+
         public async Task<IActionResult> SignOut()
         {
             await userService.SignOutAsync();
             userHelper.RemoveUser();
             return RedirectRoutesHelper.routeBasicHome;
         }
+
         public async Task<IActionResult> AccessDenied()
         {
             return View();
