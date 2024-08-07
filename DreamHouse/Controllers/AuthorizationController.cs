@@ -3,11 +3,18 @@ using DreamHouse.Core.Application.Dtos.Account;
 using DreamHouse.Core.Application.Enums;
 using DreamHouse.Core.Application.Helpers;
 using DreamHouse.Core.Application.Interfaces.Helpers;
+using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.Interfaces.Services.User;
+using DreamHouse.Core.Application.Services.User;
 using DreamHouse.Core.Application.ViewModels.Auth;
 using DreamHouse.Core.Application.ViewModels.User;
+using DreamHouse.Infrastructure.Identity.Entities;
 using DreamHouse.Infrastructure.Identity.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
+using QuickBank.Helpers;
+using System.Text;
 
 namespace DreamHouse.Controllers
 {
@@ -17,17 +24,20 @@ namespace DreamHouse.Controllers
         private readonly IUserHelper userHelper;
         private readonly IAccountService accountService;
         private readonly IMapper mapper;
+        private readonly IRegisterValidationService registerValidationService;
 
         public AuthorizationController(
             IUserService userService, 
             IUserHelper userHelper,
             IAccountService accountService,
-            IMapper mapper)
+            IMapper mapper,
+            IRegisterValidationService registerValidationService)
         {
             this.userService = userService;
             this.userHelper = userHelper;
             this.accountService = accountService;
             this.mapper = mapper;
+            this.registerValidationService = registerValidationService;
         }
 
         public IActionResult Login()
@@ -87,22 +97,34 @@ namespace DreamHouse.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(UserSaveViewModel userSaveViewModel)
+        public async Task<IActionResult> Register(UserSaveViewModel vm)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(userSaveViewModel);
-            }
+            ModelState.AddModelErrorRange(await registerValidationService.ValidateUserRegistrationAsync(vm));
+            if (!ModelState.IsValid) return View("Register", vm);
 
-            RegisterResponse response = await userService.RegisterAsync(userSaveViewModel);
+            var origin = Request.Headers["origin"];
+            RegisterResponse response = await userService.RegisterClienAndAgentAsync(vm, origin);
 
             if (response.HasError)
             {
-                ModelState.AddModelError(string.Empty, response.ErrorDescription);
-                return View(userSaveViewModel);
+                vm.HasError = response.HasError;
+                vm.ErrorDescription = response.ErrorDescription;
+                return View(vm);
             }
 
             return RedirectToAction("Login");
         }
+
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            string response = await userService.ConfirmEmailAsync(userId, token);
+            if (response == "Success")
+            {
+                return RedirectToAction("Login");
+            }
+
+            return View("Error", response); // Puedes mostrar un mensaje de error específico aquí
+        }
+
     }
 }
