@@ -1,12 +1,18 @@
 ﻿using AutoMapper;
 using DreamHouse.Core.Application.Dtos.Account;
+using DreamHouse.Core.Application.Dtos.Token;
 using DreamHouse.Core.Application.Enums;
 using DreamHouse.Core.Application.Interfaces.Services.Facilities;
 using DreamHouse.Core.Application.Interfaces.Services.User;
+using DreamHouse.Core.Domain.Settings;
 using DreamHouse.Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace DreamHouse.Infrastructure.Identity.Services
@@ -17,18 +23,21 @@ namespace DreamHouse.Infrastructure.Identity.Services
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IMapper mapper;
         private readonly IEmailService emailService;
+        private readonly JWTSettings jWTSettings;
 
         public AccountService(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IMapper mapper,
-            IEmailService emailService
+            IEmailService emailService,
+            IOptions<JWTSettings> JWTSettings
         )
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.mapper = mapper;
             this.emailService = emailService;
+            jWTSettings = JWTSettings.Value;
         }
 
         public async Task<IEnumerable<AuthenticationResponse>> GetAllAsync()
@@ -93,7 +102,72 @@ namespace DreamHouse.Infrastructure.Identity.Services
             var responseWithData = mapper.Map<AuthenticationResponse>(applicationUser);
             responseWithData.Roles = (await userManager.GetRolesAsync(applicationUser).ConfigureAwait(false)).ToList();
 
+            //JWT
+            JwtSecurityToken jwtSecurityToken = await GenerateJWToken(applicationUser);
+            responseWithData.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+
+            var refreshTokenObject = GenerateRefreshToken();
+            responseWithData.RefreshToken = refreshTokenObject.Token;
+
             return responseWithData;
+
+        }
+
+        #region privates
+        private async Task<JwtSecurityToken> GenerateJWToken(ApplicationUser user)
+        {
+            var userClaims = await userManager.GetClaimsAsync(user);
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            var roleClaims = new List<Claim>();
+            foreach (var role in userRoles)
+            {
+                roleClaims.Add(new Claim("roles", role));
+            }
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim("userId",user.Id)
+            }
+            .Union(userClaims)
+            .Union(roleClaims);
+
+            var symmectricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jWTSettings.Key));
+
+            var signinCredentials = new SigningCredentials(symmectricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+            var jwtSecurityToken = new JwtSecurityToken(
+                issuer: jWTSettings.Issuer,
+                audience: jWTSettings.Audience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(jWTSettings.DurationInMinutes),
+                signingCredentials: signinCredentials
+                );
+
+            return jwtSecurityToken;
+        }
+
+        private RefreshToken GenerateRefreshToken()
+        {
+            return new RefreshToken()
+            {
+                Token = RandomTokenString(),
+                Expires = DateTime.UtcNow.AddDays(7),
+                Created = DateTime.UtcNow,
+            };
+        }
+        #endregion
+
+        private string RandomTokenString()
+        {
+            using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
+            var randomBytes = new Byte[40];
+            rngCryptoServiceProvider.GetBytes(randomBytes);
+
+            return BitConverter.ToString(randomBytes).Replace("-", "");
         }
 
 

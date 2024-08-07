@@ -21,6 +21,8 @@ namespace DreamHouse.Core.Application.DependencyInjection
         public static void AddApplicationDependency(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            //for meditr
+
             services.AddTransient(typeof(IGenericService<,,>), typeof(GenericService<,,>));
             services.AddTransient<IJsonHelper, JsonHelper>();
             services.AddTransient<IUserHelper, UserHelper>();

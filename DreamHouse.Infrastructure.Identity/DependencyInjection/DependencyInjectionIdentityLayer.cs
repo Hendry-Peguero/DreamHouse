@@ -1,18 +1,25 @@
-﻿using DreamHouse.Core.Application.Helpers.FOR_DELETE;
+﻿using DreamHouse.Core.Application.Dtos.Token;
+using DreamHouse.Core.Application.Helpers.FOR_DELETE;
 using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.Interfaces.Services.User;
+using DreamHouse.Core.Domain.Settings;
 using DreamHouse.Infrastructure.Identity.Context;
 using DreamHouse.Infrastructure.Identity.Entities;
 using DreamHouse.Infrastructure.Identity.Seeds;
 using DreamHouse.Infrastructure.Identity.Seeds.Users;
 using DreamHouse.Infrastructure.Identity.Services;
 using DreamHouse.Infrastructure.Persistence.Seeds.Users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.Reflection;
+using System.Text;
 
 namespace DreamHouse.Infrastructure.Identity.DependencyInjection
 {
@@ -52,7 +59,54 @@ namespace DreamHouse.Infrastructure.Identity.DependencyInjection
                 options.AccessDeniedPath = "/Auth/AccessDenied";
             });
 
-            services.AddAuthentication();
+            services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
+                    ValidIssuer = configuration["JWTSettings:Issuer"],
+                    ValidAudience = configuration["JWTSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTSettings:Key"]))
+                };
+                options.Events = new JwtBearerEvents()
+                {
+                    OnAuthenticationFailed = c =>
+                    {
+                        c.NoResult();
+                        c.Response.StatusCode = 500;
+                        c.Response.ContentType = "text/plain";
+                        return c.Response.WriteAsync(c.Exception.ToString());
+                    },
+                    OnChallenge = c =>
+                    {
+                        c.HandleResponse();
+                        c.Response.StatusCode = 401;
+                        c.Response.ContentType = "application/json";
+                        var result = JsonConvert.SerializeObject(new JwtResponse { HasError = true, ErrorDescription = "Arent authorized" });
+                        return c.Response.WriteAsync(result);
+                    },
+                    OnForbidden = c =>
+                    {
+                        c.Response.StatusCode = 403;
+                        c.Response.ContentType = "application/json";
+                        var result = JsonConvert.SerializeObject(new JwtResponse { HasError = true, ErrorDescription = "Arent authorized to access these resources" });
+                        return c.Response.WriteAsync(result);
+                    }
+
+                };
+            });
             #endregion
 
             #region Services
