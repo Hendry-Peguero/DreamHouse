@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Agent\" />
+    <Folder Include="wwwroot\Images\USERS\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using DreamHouse.Core.Application.Enums;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace DreamHouse.Core.Application.ViewModels.User
@@ -39,7 +40,11 @@ namespace DreamHouse.Core.Application.ViewModels.User
         public string? ConfirmPassword { get; set; }
         public string? UserType { get; set; }
 
+
+        [DataType(DataType.Upload)]
+        public IFormFile? File { get; set; }
         public string? ImageUrl { get; set; }
+
 
         public List<string>? Roles { get; set; }
         public int? Status { get; set; }

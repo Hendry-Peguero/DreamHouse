@@ -148,6 +148,7 @@ namespace DreamHouse.Infrastructure.Identity.Services
             userToUpdate.Status = request.Status;
             userToUpdate.Email = request.Email;
             userToUpdate.PhoneNumber = request.PhoneNumber;
+            userToUpdate.ImageUrl = request.ImageUrl;
 
             // Try to update the user
             var resultUpdate = await userManager.UpdateAsync(userToUpdate);

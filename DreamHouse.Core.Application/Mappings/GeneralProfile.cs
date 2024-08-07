@@ -11,7 +11,6 @@ using DreamHouse.Core.Application.ViewModels.PropertyType;
 using DreamHouse.Core.Application.ViewModels.SaleType;
 using DreamHouse.Core.Application.ViewModels.User;
 using DreamHouse.Core.Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DreamHouse.Core.Application.Mappings
 {
@@ -37,12 +36,14 @@ namespace DreamHouse.Core.Application.Mappings
 
             CreateMap<UserSaveViewModel, RegisterRequest>()
                 .ReverseMap()
+                .ForMember(destino => destino.File, otp => otp.Ignore())
                 .ForMember(destino => destino.HasError, otp => otp.Ignore())
                 .ForMember(destino => destino.ErrorDescription, otp => otp.Ignore());
 
             CreateMap<UserSaveViewModel, AuthenticationResponse>()
-                .ForMember(destino => destino.PhoneNumber, otp => otp.Ignore())
+                //.ForMember(destino => destino.PhoneNumber, otp => otp.Ignore())   FUI YO RAFAELLL
                 .ReverseMap()
+                .ForMember(destino => destino.File, otp => otp.Ignore())
                 .ForMember(destino => destino.Password, otp => otp.Ignore())
                 .ForMember(destino => destino.ConfirmPassword, otp => otp.Ignore());
 

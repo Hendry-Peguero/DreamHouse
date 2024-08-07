@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DreamHouse.Core.Application.Dtos.Account;
 using DreamHouse.Core.Application.Enums;
+using DreamHouse.Core.Application.Interfaces.Helpers;
 using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Core.Application.ViewModels.Agent;
 using DreamHouse.Core.Application.ViewModels.Auth;
@@ -10,12 +11,19 @@ namespace DreamHouse.Core.Application.Services.User
 {
     public class UserService : IUserService
     {
-        protected readonly IAccountService _accountService;
-        protected readonly IMapper _mapper;
-        public UserService(IAccountService _accountService, 
-            IMapper _mapper)
+        private readonly IAccountService _accountService;
+        private readonly IImageHelper _imageHelper;
+        private readonly IMapper _mapper;
+
+        public UserService(
+            IAccountService _accountService,
+            IImageHelper _imageHelper,
+            IMapper _mapper
+
+        )
         {
             this._accountService = _accountService;
+            this._imageHelper = _imageHelper;
             this._mapper = _mapper;
         }
 
@@ -59,9 +67,17 @@ namespace DreamHouse.Core.Application.Services.User
 
         public async Task<RegisterResponse> RegisterAsync(UserSaveViewModel vm)
         {
-
+            // Register
             RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(vm);
             RegisterResponse registerResponse = await _accountService.RegisterUserAsync(registerRequest);
+
+            // Create Image
+            vm.ImageUrl = _imageHelper.SaveImage(vm.File, registerResponse.Id, EGroupImage.USERS);
+            
+            // Update User
+            vm.Id = registerResponse.Id;
+            await UpdateUserAsync(vm);
+
             return registerResponse;
         }
 
@@ -71,6 +87,14 @@ namespace DreamHouse.Core.Application.Services.User
             response = await _accountService.UpdateUserAsync(response);
             UserSaveViewModel userUpdated = _mapper.Map<UserSaveViewModel>(response);
             return userUpdated;
+        }
+
+        public async Task<UserSaveViewModel> UpdateAgentAsync(UserSaveViewModel saveUserViewModel)
+        {
+            // Update Image
+            saveUserViewModel.ImageUrl = _imageHelper.UpdateImage(saveUserViewModel.File, saveUserViewModel.ImageUrl);
+
+            return await UpdateUserAsync(saveUserViewModel);
         }
 
         public async Task<UserSaveViewModel> ChangeUserState(string id)

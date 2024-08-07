@@ -11,6 +11,7 @@ namespace DreamHouse.Core.Application.Interfaces.Services.User
         Task<UserSaveViewModel> FindyByIdAsync(string id);
         Task<RegisterResponse> RegisterAsync(UserSaveViewModel vm);
         Task<UserSaveViewModel> UpdateUserAsync(UserSaveViewModel saveUserViewModel);
+        Task<UserSaveViewModel> UpdateAgentAsync(UserSaveViewModel saveUserViewModel);
         Task<UserSaveViewModel> ChangeUserState(string id);
         Task SignOutAsync();
         Task DeleteAsync(string id);
