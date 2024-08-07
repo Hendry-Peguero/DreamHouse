@@ -22,5 +22,6 @@ namespace DreamHouse.Core.Application.Interfaces.Services.User
         Task<List<UserViewModel>> GetAdmins();
         Task<List<UserViewModel>> GetDevelopers();
         Task<List<AgentViewModel>> GetAgents();
+
     }
 }

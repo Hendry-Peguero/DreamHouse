@@ -7,9 +7,12 @@ namespace DreamHouse.Core.Application.Interfaces.Services
 {
     public interface IPropertyService : IGenericService<PropertySaveViewModel, PropertyViewModel, PropertyEntity>
     {
-        Task<List<PropertyViewModel>> GetAllWithTypePropertyAndSaleAsync();
+        Task<List<PropertyViewModel>> GetAllWithIncludeAsync(List<string> includs);
         Task<List<PropertyViewModel>> GetFilteredPropertiesAsync(PropertiesFilter filter);
-        Task<PropertyViewModel?> GetPropertyDetailsAsync(int id);
+        Task<List<PropertyViewModel>> GetFilteredPropertiesByRoleAsync(PropertiesFilter filter);
+        Task<List<PropertyViewModel>> GetFilteredPropertiesByFavoriteAsync(PropertiesFilter filter);
+        Task<PropertyViewModel?> GetPropertyDetailsAsync(int porpertyId);
         Task<int> GetAllFromAgentAsync(string agentId);
+        Task ConfigFavorite(int propertyId);
     }
 }

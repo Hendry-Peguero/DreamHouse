@@ -12,7 +12,8 @@ namespace DreamHouse.Core.Application.Services.User
     {
         protected readonly IAccountService _accountService;
         protected readonly IMapper _mapper;
-        public UserService(IAccountService _accountService, IMapper _mapper)
+        public UserService(IAccountService _accountService, 
+            IMapper _mapper)
         {
             this._accountService = _accountService;
             this._mapper = _mapper;

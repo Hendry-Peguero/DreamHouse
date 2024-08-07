@@ -20,7 +20,6 @@
 
             <div class="card border-0">
                 <div class="card-body">
-                    @Html.ValidationMessage("UserDoesntExists", "", new { @class = "text-danger" })
 
                     <form method="post" asp-controller="Improvements" asp-action="@(editMode ? "Edit" : "Save")">
                         <div >
@@ -28,6 +27,8 @@
                                 <label asp-for="Name" class="form-label">Name: </label>
                                 <input asp-for="Name" class="form-control">
                                 <span asp-validation-for="Name" class="text-danger"></span>
+                                @Html.ValidationMessage("DuplicateName", "", new { @class = "text-danger" })
+
                             </div>
 
                             <div class="mb-3">

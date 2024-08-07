@@ -45,7 +45,7 @@ namespace DreamHouse.Infrastructure.Identity.DependencyInjection
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/Auth/Login";
+                options.LoginPath = "/Authorization/Login";
                 //falta el de acceso denegado
 
                 options.AccessDeniedPath = "/Auth/AccessDenied";

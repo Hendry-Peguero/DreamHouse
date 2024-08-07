@@ -52,8 +52,8 @@ namespace DreamHouse.Controllers
 
                 switch (principalRole)
                 {
-                    case nameof(ERoles.CLIENT): return RedirectRoutesHelper.routeClientHome;
-                    case nameof(ERoles.AGENT): return RedirectRoutesHelper.routeAgentHome;
+                    case nameof(ERoles.CLIENT): return RedirectRoutesHelper.routeBasicHome;
+                    case nameof(ERoles.AGENT): return RedirectRoutesHelper.routeBasicHome;
                     case nameof(ERoles.ADMIN): return RedirectRoutesHelper.routeAdminHome;
                     default: return RedirectRoutesHelper.routeUndefiniedHome;
                 }
@@ -71,7 +71,7 @@ namespace DreamHouse.Controllers
         {
             await userService.SignOutAsync();
             userHelper.RemoveUser();
-            return RedirectToRoute(new { controller = "Authorization", action = "Login" });
+            return RedirectRoutesHelper.routeBasicHome;
         }
 
         public async Task<IActionResult> AccessDenied()
