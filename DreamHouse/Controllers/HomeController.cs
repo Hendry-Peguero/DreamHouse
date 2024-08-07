@@ -28,6 +28,7 @@ namespace DreamHouse.Controllers
             this.userHelper = userHelper;
             this.propertyService = propertyService;
             this.jsonHelper = jsonHelper;
+            this.adminHomeService = adminHomeService;
         }
 
 
@@ -80,7 +81,7 @@ namespace DreamHouse.Controllers
 
             var user = userHelper.GetUser();
             AdminHomeViewModel AdminHomeVm = await adminHomeService.DisplayValuesHome();
-
+            //var AdminHomeVm = new AdminHomeViewModel();
             return View(AdminHomeVm);
         }
     }
