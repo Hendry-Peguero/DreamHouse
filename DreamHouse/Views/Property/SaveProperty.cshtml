@@ -1,0 +1,133 @@
+﻿@using DreamHouse.Core.Application.ViewModels.Property
+@using DreamHouse.Core.Application.Enums;
+
+@model PropertySaveViewModel;
+
+@{
+    bool editMode = Model.Id == 0 ? false : true;
+    ViewData["Title"] = editMode ? "Editing property" : "Creating property";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-8 offset-2">
+
+            <div class="rounded-3 p-1 bg-primary mb-2" >
+                <h2 class="fw-bold text-light m-0 p-0 ms-4">@(editMode ? $"Editing the property {Model.Code}" : "Creating a property")</h2>
+            </div>
+
+            <div class="card border-0">
+                <div class="card-body">
+                    <form method="post" asp-controller="Property" asp-action="Add" id="FormSaveUser" enctype="multipart/form-data">
+                        <div class="row">
+
+                            <div class="mb-3">
+                                <label asp-for="SelectedPropertyTypeId" class="form-label">Property Type</label>
+                                <select asp-for="SelectedPropertyTypeId" asp-items="@(new SelectList(Model.PropertyTypes,"Id","Name"))" class="form-control">
+                                    <option value="0">Select an option</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="SelectedSaleTypeId" class="form-label">Sale Type</label>
+                                <select asp-for="SelectedSaleTypeId" asp-items="@(new SelectList(Model.SaleTypes,"Id","Name"))" class="form-control">
+                                    <option value="0">Select an option</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="IdSelectedImprovements" class="form-label">Improvements</label>
+                                <select asp-for="IdSelectedImprovements" asp-items="@(new SelectList(Model.PropertyTypes,"Id","Name"))" multiple="multiple" class="form-control">
+                                    <option value="0">Select an option</option>
+                                </select>
+                            </div>
+                            
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Price" class="form-label">Price</label>
+                            <input asp-for="Price" class="form-control">
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Description" class="form-label">Description</label>
+                            <input asp-for="Description" class="form-control">
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="SquareMeter" class="form-label">SquareMeter</label>
+                            <input asp-for="SquareMeter" class="form-control">
+                            <span asp-validation-for="SquareMeter" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <label asp-for="Bedrooms" class="form-label">Bedrooms</label>
+                                <input asp-for="Bedrooms" class="form-control">
+                                <span asp-validation-for="Bedrooms" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Bathrooms" class="form-label">Bathrooms</label>
+                                <input asp-for="Bathrooms" class="form-control">
+                                <span asp-validation-for="Bathrooms" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Images" class="form-label">Image/s</label>
+                            <input asp-for="Images" class="form-control" multiple />
+                            <span asp-validation-for="Images" class="text-danger"></span>
+                        </div>
+ 
+                        @* Hidden properties *@
+                        <input type="hidden" asp-for="Id"/>
+
+                        @* Load the necesary data for the PropertyTypes list*@
+                        @if (Model.PropertyTypes.Count == 0)
+                        {
+                            <input type="hidden" asp-for="@Model.PropertyTypes" />
+                        }
+                        @for (int i = 0; i < Model.PropertyTypes.Count; i++)
+                        {
+                            <input type="hidden" asp-for="@Model.PropertyTypes[i].Id" />
+                            <input type="hidden" asp-for="@Model.PropertyTypes[i].Name" />
+                        }
+
+                        @* Load the necesary data for the SaleTypes list*@
+                        @if (Model.SaleTypes.Count == 0)
+                        {
+                            <input type="hidden" asp-for="@Model.SaleTypes" />
+                        }
+                        @for (int i = 0; i < Model.SaleTypes.Count; i++)
+                        {
+                            <input type="hidden" asp-for="@Model.SaleTypes[i].Id" />
+                            <input type="hidden" asp-for="@Model.SaleTypes[i].Name" />
+                        }
+
+                        @* Load the necesary data for the Improvements list*@
+                        @if (Model.Improvements.Count == 0)
+                        {
+                            <input type="hidden" asp-for="@Model.Improvements" />
+                        }
+                        @for (int i = 0; i < Model.Improvements.Count; i++)
+                        {
+                            <input type="hidden" asp-for="@Model.Improvements[i].Id" />
+                            <input type="hidden" asp-for="@Model.Improvements[i].Name" />
+                        }
+
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-controller="Property" asp-action="PropertyMaintenance" class="btn btn-warning">Cancel</a>
+                            <button type="submit" class="btn btn-primary"> Save </button>
+                        </div>
+
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
