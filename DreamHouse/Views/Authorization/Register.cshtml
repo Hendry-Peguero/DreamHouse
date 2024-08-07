@@ -5,7 +5,7 @@
 
 <div class="col-md-7 col-lg-8 mx-auto mt-5">
     <h4 class="mb-3">@ViewData["Title"]</h4>
-    <form asp-action="Register" method="post">
+    <form asp-action="Register" method="post" enctype="multipart/form-data">
         <div class="row g-3">
             <div class="col-sm-6">
                 <label asp-for="FirstName" class="form-label">First name</label>
@@ -68,11 +68,12 @@
                 <span asp-validation-for="UserType" class="text-danger"></span>
             </div>
 
-            <div class="col-12">
-                <label asp-for="ImageUrl" class="form-label">Image URL</label>
-                <input asp-for="ImageUrl" class="form-control">
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            <div class="mb-3">
+                <label asp-for="File" class="form-label">Select a photo</label>
+                <input asp-for="File" class="form-control" required/>
+                <span asp-validation-for="File" class="text-danger"></span>
             </div>
+
         </div>
 
         <hr class="my-4">

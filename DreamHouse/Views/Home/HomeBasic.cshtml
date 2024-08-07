@@ -8,12 +8,48 @@
     // User things
     var user = userHelper.GetUser();
     string? userPrincipalRole = user?.Roles![^1];
+
+    // Set the controller and action for filtering depending the context
+    string controllerForFiltering;
+    string actionForFiltering;
+
+    // Default values
+    controllerForFiltering = "Home";
+    actionForFiltering = "HomeBasic";
+
+    // When we are in Only favorites from client
+    if (ViewBag.OnlyFavorites)
+    {
+        controllerForFiltering = "Property";
+        actionForFiltering = "FavoriteProperties";
+    }
+    // When we are in property maintenance from agent
+    if (ViewBag.PropertyMaintenance)
+    {
+        controllerForFiltering = "Property";
+        actionForFiltering = "PropertyMaintenance";
+    }
+
 }
 @model HomeBasicViewModel
 
 
 <div class="container mt-4">
-    <form method="get" asp-action="@(ViewBag.OnlyFavorites ? "FavoriteProperties" : "HomeBasic")" asp-controller="@(ViewBag.OnlyFavorites ? "Property" : "Home")">
+
+    @* Put the title and add boton when is mainteniment of porperties *@
+    @if (ViewBag.PropertyMaintenance)
+    {
+        <div class="row mb-3 mt-4">
+            <div class="d-flex gap-2 p-0">
+                <div class="rounded-3 bg-primary p-1 flex-grow-1">
+                    <h1 class="fw-bold text-light m-0 p-0 ms-4">Properties</h1>
+                </div>
+                <a asp-controller="Property" asp-action="Add" class="btn btn-success text-light d-flex align-items-center"><i class="bi bi-plus"></i>Add Property</a>
+            </div>
+        </div>
+    }
+
+    <form method="get" asp-action="@actionForFiltering" asp-controller="@controllerForFiltering">
         <div class="row mb-3">
             <div class="col-md-2">
                 <input asp-for="filter!.Code" type="text" class="form-control" name="code" placeholder="Código">
@@ -37,7 +73,7 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 <button type="submit" class="btn btn-primary">Filtrar</button>
-                <a href="@(ViewBag.OnlyFavorites ? Url.Action("FavoriteProperties", "Property") : Url.Action("HomeBasic"))" class="btn btn-secondary">
+                <a asp-controller="@controllerForFiltering" asp-action="@actionForFiltering" class="btn btn-secondary">
                     Limpiar Filtros
                 </a>
             </div>
@@ -79,6 +115,8 @@
                                         </div>
                                     </div>
                                     <div>
+
+                                        @* Check and Uncheck the favorite *@
                                         @if (user != null && userPrincipalRole == ERoles.CLIENT.ToString() && !ViewBag.OnlyFavorites)
                                         {
                                             @if (property.MarkedAsFavorite)
@@ -94,10 +132,26 @@
                                                 </a>
                                             }
                                         }
+                                        
+                                        @* Show the start *@
                                         @if (ViewBag.OnlyFavorites)
                                         {
                                             <i class="bi bi-star-fill text-warning"></i>
                                         }
+
+                                        @* Show the 2 buttons, edit and delete *@
+                                        @if (ViewBag.PropertyMaintenance)
+                                        {
+                                            <div class="input-group">
+                                                <a class="btn btn-warning rounded-3" asp-controller="Property" asp-action="Edit" asp-route-propertyId="@property.Id">
+                                                    <i class="bi bi-pencil-fill"></i>
+                                                </a>
+                                                <a class="btn btn-danger rounded-3" asp-controller="Property" asp-action="Delete" asp-route-propertyId="@property.Id">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </a>
+                                            </div>
+                                        }
+
                                     </div>
                                 </div>
 
@@ -120,7 +174,7 @@
     }
 
     .card-img-top {
-        height: 150px; /* Ajusta esta altura según sea necesario */
+        height: 150px;
     }
 </style>
 

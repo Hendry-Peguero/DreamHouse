@@ -4,7 +4,6 @@ using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.Interfaces.Services.AdminHome;
 using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Core.Application.ViewModels.Home;
-using DreamHouse.Core.Application.ViewModels.Property;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,11 +47,20 @@ namespace DreamHouse.Controllers
                 ViewBag.OnlyFavorites = true;
             }
 
+            // Check if the option [PropertyMaintenance is created]
+            ViewBag.PropertyMaintenance = false;
+            if (TempData.ContainsKey("PropertyMaintenance"))
+            {
+                filter = jsonHelper.Deserialize<PropertiesFilter>((TempData["PropertyMaintenance"] as string)!)!;
+                ViewBag.PropertyMaintenance = true;
+            }
+
             var properties = ViewBag.OnlyFavorites ?
                   await propertyService.GetFilteredPropertiesByFavoriteAsync(filter)
                 : await propertyService.GetFilteredPropertiesByRoleAsync(filter);
 
-            HomeBasicViewModel ClientHomeVm = new () {
+            HomeBasicViewModel ClientHomeVm = new()
+            {
                 filter = filter,
                 Properties = properties
             };

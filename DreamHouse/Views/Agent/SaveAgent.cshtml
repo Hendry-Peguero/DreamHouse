@@ -1,0 +1,65 @@
+﻿@using DreamHouse.Core.Application.ViewModels.User
+@using DreamHouse.Core.Application.Enums;
+
+@model UserSaveViewModel;
+
+@{
+    ViewData["Title"] = "Editing Agent";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-8 offset-2">
+            <div class="rounded-3 p-1 bg-primary mb-2" >
+                <h2 class="fw-bold text-light m-0 p-0 ms-4">@($"Editing the agent: {Model.FirstName} {Model.LastName}")</h2>
+            </div>
+
+            <div class="card border-0">
+                <div class="card-body">
+                    <form method="post" asp-controller="Agent" asp-action="EditAgentProfile" id="FormSaveUser" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="FirstName" class="form-label">FirstName: </label>
+                                <input asp-for="FirstName" class="form-control">
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="LastName" class="form-label">LastName: </label>
+                                <input asp-for="LastName" class="form-control">
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                            <input asp-for="PhoneNumber" class="form-control">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="File" class="form-label">Select a photo (Optional)</label>
+                            <input asp-for="File" class="form-control" />
+                            <span asp-validation-for="File" class="text-danger"></span>
+                        </div>
+ 
+                        <input type="hidden" asp-for="Id"/>
+                        <input type="hidden" asp-for="UserName" />
+                        <input type="hidden" asp-for="IdCard" />
+                        <input type="hidden" asp-for="Email" />
+                        <input type="hidden" asp-for="UserName" />
+                        <input type="hidden" asp-for="Status" />
+                        <input type="hidden" asp-for="ImageUrl" />
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-controller="Home" asp-action="HomeBasic" class="btn btn-warning">Cancel</a>
+                            <button type="submit" class="btn btn-primary"> Save </button>
+                        </div>
+
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
