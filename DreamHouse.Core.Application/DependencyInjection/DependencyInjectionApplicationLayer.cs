@@ -1,10 +1,12 @@
 ﻿using DreamHouse.Core.Application.Helpers;
 using DreamHouse.Core.Application.Interfaces.Helpers;
 using DreamHouse.Core.Application.Interfaces.Services;
+using DreamHouse.Core.Application.Interfaces.Services.AdminHome;
 using DreamHouse.Core.Application.Interfaces.Services.Commons;
 using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Core.Application.Interfaces.Services.Validations;
 using DreamHouse.Core.Application.Services;
+using DreamHouse.Core.Application.Services.AdminHome;
 using DreamHouse.Core.Application.Services.Commons;
 using DreamHouse.Core.Application.Services.User;
 using DreamHouse.Core.Application.Services.Validations;
@@ -31,6 +33,7 @@ namespace DreamHouse.Core.Application.DependencyInjection
             services.AddTransient<IPropertyTypeValidationService, PropertyTypeValidationService>();
             services.AddTransient<ISalesTypeValidationService, SalesTypeValidationService>();
             services.AddTransient<IImprovementValidationService, ImprovementValidationService>();
+            services.AddTransient<IAdminHomeService, AdminHomeService>();
             
         }
     }

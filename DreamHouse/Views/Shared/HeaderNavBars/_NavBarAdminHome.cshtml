@@ -5,11 +5,14 @@
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="d-flex justify-content-end">
+
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
             <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item">
-                    <a class="nav-link fw-bold" asp-area="" asp-controller="AdministrationUser" asp-action="AgentMaintance">Agent List</a>
-                </li><li class="nav-item">
+                    <a class="nav-link fw-bold" asp-area="" asp-controller="Home" asp-action="AdminHome">Home</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link fw-bold" asp-area="" asp-controller="AdministrationUser" asp-action="AdminMaintance">Admins</a>
                 </li> 
                 <li class="nav-item">
@@ -27,6 +30,7 @@
                     <a class="nav-link fw-bold" asp-area="" asp-controller="Authorization" asp-action="SignOut">SignOut</a>
                 </li>
             </ul>
+        </div>
         </div>
     </div>
 </nav>
