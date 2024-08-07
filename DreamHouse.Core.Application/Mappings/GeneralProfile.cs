@@ -4,6 +4,9 @@ using DreamHouse.Core.Application.ViewModels.Agent;
 using DreamHouse.Core.Application.ViewModels.Auth;
 using DreamHouse.Core.Application.ViewModels.Improvement;
 using DreamHouse.Core.Application.ViewModels.Property;
+using DreamHouse.Core.Application.ViewModels.PropertyFavorite;
+using DreamHouse.Core.Application.ViewModels.PropertyImage;
+using DreamHouse.Core.Application.ViewModels.PropertyImprovement;
 using DreamHouse.Core.Application.ViewModels.PropertyType;
 using DreamHouse.Core.Application.ViewModels.SaleType;
 using DreamHouse.Core.Application.ViewModels.User;
@@ -51,14 +54,34 @@ namespace DreamHouse.Core.Application.Mappings
             #endregion
 
             #region Property
+
             CreateMap<PropertyEntity, PropertyViewModel>()
-                .ForMember(dest => dest.TypePropertyName, opt => opt.MapFrom(src => src.TypeProperty.Name))
-                .ForMember(dest => dest.TypeSaleName, opt => opt.MapFrom(src => src.TypeSale.Name))
+                .ForMember(destino => destino.MarkedAsFavorite, otp => otp.Ignore())
                 .ReverseMap();
 
+            //CreateMap<SaleTypeEntity, SaleTypeViewModel>().ReverseMap();
 
+            #endregion
 
-            CreateMap<SaleTypeEntity, SaleTypeViewModel>().ReverseMap();
+            #region PropertyFavoriteViewModel
+
+            CreateMap<PropertyFavoriteEntity, PropertyFavoriteViewModel>()
+                .ReverseMap();
+
+            #endregion
+
+            #region PropertyImageViewModel
+
+            CreateMap<PropertyImageEntity, PropertyImageViewModel>()
+                .ReverseMap();
+
+            #endregion
+
+            #region PropertyImprovementViewModel
+
+            CreateMap<PropertyImprovementEntity, PropertyImprovementViewModel>()
+                .ReverseMap();
+
             #endregion
 
             #region PropertyType

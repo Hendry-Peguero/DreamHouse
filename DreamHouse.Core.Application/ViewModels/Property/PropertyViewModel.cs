@@ -1,4 +1,10 @@
-﻿namespace DreamHouse.Core.Application.ViewModels.Property
+﻿using DreamHouse.Core.Application.ViewModels.PropertyFavorite;
+using DreamHouse.Core.Application.ViewModels.PropertyImage;
+using DreamHouse.Core.Application.ViewModels.PropertyImprovement;
+using DreamHouse.Core.Application.ViewModels.PropertyType;
+using DreamHouse.Core.Application.ViewModels.SaleType;
+
+namespace DreamHouse.Core.Application.ViewModels.Property
 {
     public class PropertyViewModel
     {
@@ -13,10 +19,14 @@
         public int TypeSaleId { get; set; }
         public string AgentId { get; set; }
 
+        // Extras
+        public bool MarkedAsFavorite { get; set; }
 
 
-        public string TypePropertyName { get; set; }
-        public string TypeSaleName { get; set; }
-        public List<string> Improvements { get; set; }
+        public PropertyTypeViewModel? TypeProperty { get; set; }
+        public SaleTypeViewModel? TypeSale { get; set; }
+        public ICollection<PropertyFavoriteViewModel>? Favorites { get; set; }
+        public ICollection<PropertyImageViewModel>? Images { get; set; }
+        public ICollection<PropertyImprovementViewModel>? ImprovementProperties { get; set; }
     }
 }

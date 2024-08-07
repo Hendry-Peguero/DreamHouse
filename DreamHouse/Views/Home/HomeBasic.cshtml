@@ -1,36 +1,45 @@
-﻿@using DreamHouse.Core.Application.ViewModels.Home;
+﻿@using DreamHouse.Core.Application.ViewModels.Home
+@using DreamHouse.Core.Application.Interfaces.Helpers
+@using DreamHouse.Core.Application.Enums
+@inject IUserHelper userHelper
 @{
     ViewData["Title"] = "Home Page";
+
+    // User things
+    var user = userHelper.GetUser();
+    string? userPrincipalRole = user?.Roles![^1];
 }
 @model HomeBasicViewModel
 
 
 <div class="container mt-4">
-    <form method="get" asp-action="HomeBasic">
+    <form method="get" asp-action="HomeBasic" asp-controller="@(ViewBag.OnlyFavorites ? "Property" : "Home")">
         <div class="row mb-3">
             <div class="col-md-2">
-                <input asp-for="filter.Code" type="text" class="form-control" name="code" placeholder="Código">
+                <input asp-for="filter!.Code" type="text" class="form-control" name="code" placeholder="Código">
             </div>
             <div class="col-md-2">
-                <input asp-for="filter.Type" type="text" class="form-control" name="type" placeholder="Tipo de Propiedad">
+                <input asp-for="filter!.Type" type="text" class="form-control" name="type" placeholder="Tipo de Propiedad">
             </div>
             <div class="col-md-2">
-                <input asp-for="filter.MinPrice" type="number" class="form-control" name="minPrice" placeholder="Precio Mínimo">
+                <input asp-for="filter!.MinPrice" type="number" class="form-control" name="minPrice" placeholder="Precio Mínimo">
             </div>
             <div class="col-md-2">
-                <input asp-for="filter.MaxPrice" type="number" class="form-control" name="maxPrice" placeholder="Precio Máximo">
+                <input asp-for="filter!.MaxPrice" type="number" class="form-control" name="maxPrice" placeholder="Precio Máximo">
             </div>
             <div class="col-md-2">
-                <input asp-for="filter.Bedrooms" type="number" class="form-control" name="bedrooms" placeholder="Habitaciones">
+                <input asp-for="filter!.Bedrooms" type="number" class="form-control" name="bedrooms" placeholder="Habitaciones">
             </div>
             <div class="col-md-2">
-                <input asp-for="filter.Bathrooms" type="number" class="form-control" name="bathrooms" placeholder="Baños">
+                <input asp-for="filter!.Bathrooms" type="number" class="form-control" name="bathrooms" placeholder="Baños">
             </div>
         </div>
         <div class="row mb-3">
             <div class="col-md-6">
                 <button type="submit" class="btn btn-primary">Filtrar</button>
-                <a href="@Url.Action("HomeBasic")" class="btn btn-secondary">Limpiar Filtros</a>
+                <a href="@(ViewBag.OnlyFavorites ? Url.Action("FavoriteProperties", "Property") : Url.Action("HomeBasic"))" class="btn btn-secondary">
+                    Limpiar Filtros
+                </a>
             </div>
         </div>
     </form>
@@ -42,28 +51,52 @@
                 @foreach (var property in Model.Properties)
                 {
                     <div class="col">
-                        <div class="card shadow-sm" onclick="location.href='@Url.Action("HomeDetail", "DetailProperties", new { id = property.Id })'" style="cursor: pointer;">
-                            <!-- Aquí deberías incluir la imagen de la propiedad -->
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <title>Placeholder</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                                <text x="45%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
-                            </svg>
+                        @* 
+                            METODO DE HENDRY PARA HACER CLICK EN UNA TARJETA Y REDIRIGIR AL DETALLE
+
+                            onclick="location.href='@Url.Action("HomeDetail", "DetailProperties", new { id = property.Id })'" 
+                        *@
+                        <div class="card shadow-sm" style="cursor: pointer;">
+                            
+                            <img class="card-img-top img-product-size" src="https://steamuserimages-a.akamaihd.net/ugc/2047482034935865852/3C1717031CD5D57BFF84DE20EB2FB6B26AF628AC/" />
+
                             <div class="card-body">
-                                <h5 class="card-title">@property.TypePropertyName</h5>
-                                <p class="card-text">
-                                    Code: @property.Code<br />
-                                    Habitaciones: @property.Bedrooms<br />
-                                    Baños: @property.Bathrooms<br />
-                                    Tamaño: @property.SquareMeter m²<br />
-                                    Tipo de Venta: @property.TypeSaleName<br />
-                                    Valor: @property.Price$
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a href="@Url.Action("HomeDetail", "DetailProperties", new { id = property.Id })" class="btn btn-sm btn-outline-secondary">Ver</a>
+                                <div class="d-flex p-0 m-0 justify-content-between">
+                                    <div>
+                                        <h5 class="card-title">@property.TypeProperty!.Name</h5>
+                                        <p class="card-text">
+                                            Code: @property.Code<br />
+                                            Habitaciones: @property.Bedrooms<br />
+                                            Baños: @property.Bathrooms<br />
+                                            Tamaño: @property.SquareMeter m²<br />
+                                            Tipo de Venta: @property.TypeSale!.Name<br />
+                                            Valor: @property.Price$
+                                        </p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <a href="@Url.Action("HomeDetail", "DetailProperties", new { id = property.Id })" class="btn btn-sm btn-outline-secondary">Ver</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        @if (user != null && userPrincipalRole == ERoles.CLIENT.ToString() && !ViewBag.OnlyFavorites)
+                                        {
+                                            @if (property.MarkedAsFavorite)
+                                            {
+                                                <a class="btn btn-warning rounded-3" asp-controller="Property" asp-action="ConfigFavorite" asp-route-propertyId="@property.Id">
+                                                    <i class="bi bi-star-fill"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-outline-warning rounded-3" asp-controller="Property" asp-action="ConfigFavorite" asp-route-propertyId="@property.Id">
+                                                    <i class="bi bi-star"></i>
+                                                </a>
+                                            }
+                                        }
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

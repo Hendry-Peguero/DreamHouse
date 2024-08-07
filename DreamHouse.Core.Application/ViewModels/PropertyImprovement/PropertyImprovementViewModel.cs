@@ -1,6 +1,5 @@
 ﻿using DreamHouse.Core.Application.ViewModels.Improvement;
 using DreamHouse.Core.Application.ViewModels.Property;
-using DreamHouse.Core.Domain.Entities;
 
 namespace DreamHouse.Core.Application.ViewModels.PropertyImprovement
 {

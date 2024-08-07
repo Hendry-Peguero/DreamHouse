@@ -36,7 +36,10 @@
             @switch (principalUserRol)
             {
                 case nameof(ERoles.AGENT):
-                    await Html.RenderPartialAsync("HeaderNavBars/_NavBarAgentcHome");
+                    await Html.RenderPartialAsync("HeaderNavBars/_NavBarAgentHome");
+                    break;
+                case nameof(ERoles.CLIENT):
+                    await Html.RenderPartialAsync("HeaderNavBars/_NavBarClientHome");
                     break;
                 case nameof(ERoles.ADMIN):
                     await Html.RenderPartialAsync("HeaderNavBars/_NavBarAdminHome");

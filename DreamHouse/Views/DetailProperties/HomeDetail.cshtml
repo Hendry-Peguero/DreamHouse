@@ -26,8 +26,8 @@
             </div>
             <div class="col-md-4">
                 <h3>Código: @Model.Code</h3>
-                <p>Tipo de Propiedad: @Model.TypePropertyName</p>
-                <p>Tipo de Venta: @Model.TypeSaleName</p>
+                <p>Tipo de Propiedad: @Model.TypeProperty!.Name</p>
+                <p>Tipo de Venta: @Model.TypeSale!.Name</p>
                 <p>Precio: @Model.Price$</p>
                 <p>Habitaciones: @Model.Bedrooms</p>
                 <p>Baños: @Model.Bathrooms</p>
@@ -35,9 +35,9 @@
                 <p>Descripción: @Model.Description</p>
                 <h4>Mejoras:</h4>
                 <ul>
-                    @foreach (var improvement in Model.Improvements)
+                    @foreach (var improvement in Model.ImprovementProperties!)
                     {
-                        <li>@improvement</li>
+                        <li>@improvement.Improvement.Name</li>
                     }
                 </ul>
             </div>
