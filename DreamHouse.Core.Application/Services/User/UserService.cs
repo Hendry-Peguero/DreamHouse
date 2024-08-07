@@ -123,5 +123,16 @@ namespace DreamHouse.Core.Application.Services.User
         {
             await _accountService.DeleteUserAsync(id);
         }
+
+        public async Task<RegisterResponse> RegisterClienAndAgentAsync(UserSaveViewModel vm, string origin)
+        {
+            RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(vm);
+            return await _accountService.RegisterUserAndagentAsync(registerRequest, origin);
+        }
+
+        public async Task<string> ConfirmEmailAsync(string userId, string token)
+        {
+            return await _accountService.ConfirmAccountAsync(userId, token);
+        }
     }
 }
