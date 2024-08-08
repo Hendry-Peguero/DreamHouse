@@ -66,6 +66,7 @@ namespace DreamHouse.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUser(UserSaveViewModel userSaveVm)
         {
+            ModelState.Remove(nameof(userSaveVm.PhoneNumber));
             ModelState.AddModelErrorRange(await userValidationService.PasswordValidation(userSaveVm));
             ModelState.AddModelErrorRange(await userValidationService.UserSaveValidation(userSaveVm));
 
@@ -124,9 +125,9 @@ namespace DreamHouse.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(UserSaveViewModel userSaveVm)
         {
+            ModelState.Remove(nameof(userSaveVm.PhoneNumber));
             ModelState.AddModelErrorRange(await userValidationService.UserUpdateValidation(userSaveVm));
             ModelState.AddModelErrorRange(await userValidationService.PasswordValidation(userSaveVm));
-
 
             if (!ModelState.IsValid)
                 return View("SaveUser", userSaveVm);

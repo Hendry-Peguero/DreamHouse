@@ -3,6 +3,7 @@ using DreamHouse.Core.Application.Dtos.Account;
 using DreamHouse.Core.Application.Dtos.Filters;
 using DreamHouse.Core.Application.Enums;
 using DreamHouse.Core.Application.Interfaces.Helpers;
+using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Core.Application.ViewModels.Agent;
 using DreamHouse.Core.Application.ViewModels.Auth;
@@ -13,17 +14,20 @@ namespace DreamHouse.Core.Application.Services.User
     public class UserService : IUserService
     {
         private readonly IAccountService _accountService;
+        private readonly IPropertyService _propertyService;
         private readonly IImageHelper _imageHelper;
         private readonly IMapper _mapper;
 
         public UserService(
             IAccountService _accountService,
+            IPropertyService _propertyService,
             IImageHelper _imageHelper,
             IMapper _mapper
 
         )
         {
             this._accountService = _accountService;
+            this._propertyService = _propertyService;
             this._imageHelper = _imageHelper;
             this._mapper = _mapper;
         }
@@ -113,6 +117,26 @@ namespace DreamHouse.Core.Application.Services.User
 
         public async Task DeleteAsync(string id)
         {
+            // Resources
+            var user = await _accountService.FindByIdAsync(id);
+            string principalRole = user.Roles![^1];
+
+            // Delete Image
+            if (principalRole == ERoles.AGENT.ToString() || principalRole == ERoles.CLIENT.ToString())
+            {
+                _imageHelper.RemoveImage(user.Id,EGroupImage.USERS);
+            }
+
+            // Delete Properties
+            if (principalRole == ERoles.AGENT.ToString())
+            {
+                var properties = (await _propertyService.GetAllAsync()).Where(p => p.AgentId == user.Id);
+                foreach (var property in properties)
+                {
+                    await _propertyService.DeleteAsync(property.Id);
+                }
+            }
+
             await _accountService.DeleteUserAsync(id);
         }
 
