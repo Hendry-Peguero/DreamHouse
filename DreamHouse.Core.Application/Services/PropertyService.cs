@@ -45,12 +45,14 @@ namespace DreamHouse.Core.Application.Services
         public async Task<List<PropertyViewModel>> GetAllWithIncludeAsync(List<string> includs)
         {
             var properties = await propertyRepository.GetAllWithIncludeAsync(includs);
-            return mapper.Map<List<PropertyViewModel>>(properties);
+            var propertiesMapped = mapper.Map<List<PropertyViewModel>>(properties);
+            propertiesMapped.Reverse();
+            return propertiesMapped;
         }
 
         public async Task<List<PropertyViewModel>> GetFilteredPropertiesAsync(PropertiesFilter filter)
         {
-            var properties = await GetAllWithIncludeAsync(new List<string> { "TypeProperty", "TypeSale", "Favorites" });
+            var properties = await GetAllWithIncludeAsync(new List<string> { "TypeProperty", "TypeSale", "Favorites", "Images" });
 
             if (!string.IsNullOrEmpty(filter.Code)) properties = properties.Where(p => p.Code == filter.Code).ToList();
             if (!string.IsNullOrEmpty(filter.Type)) properties = properties.Where(p => p.TypeProperty!.Name == filter.Type).ToList();
@@ -62,47 +64,39 @@ namespace DreamHouse.Core.Application.Services
             return properties;
         }
 
-        public async Task<List<PropertyViewModel>> GetFilteredPropertiesByRoleAsync(PropertiesFilter filter)
+
+        public async Task<List<PropertyViewModel>> GetFilteredPropertiesForAgentAsync(PropertiesFilter filter)
         {
             var user = userHelper.GetUser();
-            string? userPrincipalRole = user?.Roles![^1];
+            return await GetFilteredPropertiesByAgentIdAsync(filter, user.Id);
+        }
 
-            // Filter and return the properties in home by the role of the current user logged
-            if (user == null)
+        public async Task<List<PropertyViewModel>> GetFilteredPropertiesForClientAsync(PropertiesFilter filter)
+        {
+            var user = userHelper.GetUser();
+            var properties = await GetFilteredPropertiesAsync(filter);
+            foreach (var property in properties)
             {
-                // No user logged 
-                return await GetFilteredPropertiesAsync(filter);
+                bool isMarkedAsFavorite = property.Favorites?.Any(p => p.UserId == user.Id) ?? false;
+                if (isMarkedAsFavorite) property.MarkedAsFavorite = true;
             }
-            else
-            {
-                // User logged 
-                switch (userPrincipalRole!.ToUpper())
-                {
-                    case nameof(ERoles.CLIENT):
-
-                        // Get the properties and mark as favorites if it have them
-                        var properties = await GetFilteredPropertiesAsync(filter);
-                        foreach (var property in properties) {
-                            bool isMarkedAsFavorite = property.Favorites?.Any(p => p.UserId == user.Id) ?? false;
-                            if (isMarkedAsFavorite) property.MarkedAsFavorite = true;
-                        }
-                        return properties;
-
-                    case nameof(ERoles.AGENT): return (await GetFilteredPropertiesAsync(filter)).Where(p => p.AgentId == user!.Id).ToList();
-                    default: return await GetFilteredPropertiesAsync(filter);
-                }
-            }
+            return properties;
         }
 
         public async Task<List<PropertyViewModel>> GetFilteredPropertiesByFavoriteAsync(PropertiesFilter filter)
         {
-            var properties = await GetFilteredPropertiesByRoleAsync(filter);
+            var properties = await GetFilteredPropertiesForClientAsync(filter);
             return properties.Where(p => p.MarkedAsFavorite).ToList();
+        }
+
+        public async Task<List<PropertyViewModel>> GetFilteredPropertiesByAgentIdAsync(PropertiesFilter filter, string agentId)
+        {
+            return (await GetFilteredPropertiesAsync(filter)).Where(p => p.AgentId == agentId).ToList();
         }
 
         public async Task<PropertyViewModel?> GetPropertyDetailsAsync(int porpertyId)
         {
-            var properties = await GetAllWithIncludeAsync(new List<string> { "TypeProperty", "TypeSale", "ImprovementProperties.Improvement" });
+            var properties = await GetAllWithIncludeAsync(new List<string> { "TypeProperty", "TypeSale", "ImprovementProperties.Improvement", "Images" });
             return properties.FirstOrDefault(p => p.Id == porpertyId);
         }
 

@@ -57,8 +57,8 @@ namespace DreamHouse.Controllers
 
                 switch (principalRole)
                 {
-                    case nameof(ERoles.CLIENT): return RedirectRoutesHelper.routeBasicHome;
-                    case nameof(ERoles.AGENT): return RedirectRoutesHelper.routeBasicHome;
+                    case nameof(ERoles.CLIENT): return RedirectRoutesHelper.routeClientHome;
+                    case nameof(ERoles.AGENT): return RedirectRoutesHelper.routeAgentHome;
                     case nameof(ERoles.ADMIN): return RedirectRoutesHelper.routeAdminHome;
                     default: return RedirectRoutesHelper.routeUndefiniedHome;
                 }

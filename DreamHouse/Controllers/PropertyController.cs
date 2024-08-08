@@ -41,14 +41,6 @@ namespace DreamHouse.Controllers
 
         #region Agent
 
-        [Authorize(Roles = "AGENT")]
-        public async Task<IActionResult> PropertyMaintenance(PropertiesFilter filter)
-        {
-            // Create the key and save the filter
-            TempData["PropertyMaintenance"] = jsonHelper.Serialize(filter);
-            return RedirectRoutesHelper.routeBasicHome;
-        }
-
         [HttpGet]
         [Authorize(Roles = "AGENT")]
         public async Task<IActionResult> Add()
@@ -81,7 +73,7 @@ namespace DreamHouse.Controllers
             // Add the property
             await propertyService.AddAsync(propertySaveViewModel);
 
-            return RedirectRoutesHelper.routePropertyMaintance;
+            return RedirectRoutesHelper.routePropertyMaintanceHome;
         }
 
         [HttpGet]
@@ -95,7 +87,7 @@ namespace DreamHouse.Controllers
             property.Improvements = await improvementService.GetAllAsync();
 
             // Load the improvements Selected
-            property.IdSelectedImprovements = 
+            property.IdSelectedImprovements =
                 (await propertyImprovementRepository.GetAllAsync())
                 .Where(i => i.PropertyId == propertyId)
                 .Select(i => i.ImprovementId)
@@ -105,7 +97,7 @@ namespace DreamHouse.Controllers
             var images = (await propertyImageRepository.GetAllAsync()).Where(img => img.PropertyId == propertyId);
             property.ImagesUrl = new();
             foreach (var img in images) property.ImagesUrl.Add(img.ImageUrl);
-            
+
             return View("SaveProperty", property);
         }
 
@@ -128,7 +120,7 @@ namespace DreamHouse.Controllers
             // Update the property
             await propertyService.UpdateAsync(propertySaveViewModel, propertySaveViewModel.Id);
 
-            return RedirectRoutesHelper.routePropertyMaintance;
+            return RedirectRoutesHelper.routePropertyMaintanceHome;
         }
 
         [HttpGet]
@@ -143,7 +135,7 @@ namespace DreamHouse.Controllers
         public async Task<IActionResult> DeleteConfirmed(int propertyId)
         {
             await propertyService.DeleteAsync(propertyId);
-            return RedirectRoutesHelper.routePropertyMaintance;
+            return RedirectRoutesHelper.routePropertyMaintanceHome;
         }
 
         #endregion
@@ -151,21 +143,50 @@ namespace DreamHouse.Controllers
         #region Client
 
         [Authorize(Roles = "CLIENT")]
-        public IActionResult FavoriteProperties(PropertiesFilter filter)
-        {
-            // Create the key and save the filter
-            TempData["OnlyFavorites"] = jsonHelper.Serialize(filter);
-            return RedirectRoutesHelper.routeBasicHome;
-        }
-
-        [Authorize(Roles = "CLIENT")]
         public async Task<IActionResult> ConfigFavorite(int propertyId)
         {
             await propertyService.ConfigFavorite(propertyId);
-            return RedirectRoutesHelper.routeBasicHome;
+            return RedirectRoutesHelper.routeClientHome;
         }
 
         #endregion
 
+
+        #region PropertiesFor...
+
+
+        [Authorize(Roles = "CLIENT")]
+        public IActionResult PropertiesForClient(PropertiesFilter filter)
+        {
+            // Create the key and save the filter
+            TempData["PropertiesForClient"] = jsonHelper.Serialize(filter);
+            return RedirectRoutesHelper.routeBasicHome;
+        }
+
+        [Authorize(Roles = "AGENT")]
+        public IActionResult PropertiesForAgent(PropertiesFilter filter)
+        {
+            // Create the key and save the filter
+            TempData["PropertiesForAgent"] = jsonHelper.Serialize(filter);
+            return RedirectRoutesHelper.routeBasicHome;
+        }
+
+        [Authorize(Roles = "CLIENT")]
+        public IActionResult PropertiesForFavorites(PropertiesFilter filter)
+        {
+            // Create the key and save the filter
+            TempData["PropertiesForFavorites"] = jsonHelper.Serialize(filter);
+            return RedirectRoutesHelper.routeBasicHome;
+        }
+
+        [Authorize(Roles = "AGENT")]
+        public IActionResult PropertiesForMaintenance(PropertiesFilter filter)
+        {
+            // Create the key and save the filter
+            TempData["PropertiesForMaintenance"] = jsonHelper.Serialize(filter);
+            return RedirectRoutesHelper.routeBasicHome;
+        }
+
+        #endregion
     }
 }

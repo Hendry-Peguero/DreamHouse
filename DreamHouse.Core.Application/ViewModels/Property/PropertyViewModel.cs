@@ -4,7 +4,6 @@ using DreamHouse.Core.Application.ViewModels.PropertyImage;
 using DreamHouse.Core.Application.ViewModels.PropertyImprovement;
 using DreamHouse.Core.Application.ViewModels.PropertyType;
 using DreamHouse.Core.Application.ViewModels.SaleType;
-using DreamHouse.Core.Domain.Entities;
 
 namespace DreamHouse.Core.Application.ViewModels.Property
 {

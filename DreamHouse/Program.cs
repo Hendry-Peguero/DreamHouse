@@ -11,7 +11,7 @@ builder.Services.AddSession();
 builder.Services.AddPersistenceDependency(builder.Configuration);
 builder.Services.AddApplicationDependency();
 builder.Services.AddSharedDependency(builder.Configuration);
-builder.Services.AddIdentityDependency(builder.Configuration);
+builder.Services.AddIdentityDependencyWeb(builder.Configuration);
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 

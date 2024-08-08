@@ -25,26 +25,9 @@ namespace DreamHouse.Infrastructure.Identity.DependencyInjection
 {
     public static class DependencyInjectionIdentityLayer
     {
-        public static void AddIdentityDependency(this IServiceCollection services, IConfiguration configuration)
+        public static void AddIdentityDependencyApi(this IServiceCollection services, IConfiguration configuration)
         {
-            #region Context
-            if (configuration.GetValue<bool>("UseInMemoryDatabase"))
-            {
-                services.AddDbContext<IdentityContext>(options =>
-                {
-                    options.UseInMemoryDatabase("IdentityContextInMemory");
-                });
-            }
-            else
-            {
-                var connectionString = configuration.GetConnection("IdentityConnection");
-
-                services.AddDbContext<IdentityContext>(options =>
-                {
-                    options.UseSqlServer(connectionString, a => a.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName));
-                });
-            }
-            #endregion
+            ContextConfiguration(services, configuration);
 
             #region Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -54,9 +37,7 @@ namespace DreamHouse.Infrastructure.Identity.DependencyInjection
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Authorization/Login";
-                //falta el de acceso denegado
-
-                options.AccessDeniedPath = "/Auth/AccessDenied";
+                options.AccessDeniedPath = "/Authorization/AccessDenied";
             });
 
             services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
@@ -109,12 +90,66 @@ namespace DreamHouse.Infrastructure.Identity.DependencyInjection
             });
             #endregion
 
+            ServiceConfiguration(services);
+        }
+        public static void AddIdentityDependencyWeb(this IServiceCollection services, IConfiguration configuration)
+        {
+            ContextConfiguration(services, configuration);
+
+            #region Identity
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityContext>()
+                .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Authorization/Login";
+                options.AccessDeniedPath = "/Authorization/AccessDenied";
+            });
+
+            services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
+
+            services.AddAuthentication();
+            #endregion
+
+            ServiceConfiguration(services);
+        }
+
+        #region "Private methods"
+
+        private static void ContextConfiguration(IServiceCollection services, IConfiguration configuration)
+        {
+            #region Context
+            if (configuration.GetValue<bool>("UseInMemoryDatabase"))
+            {
+                services.AddDbContext<IdentityContext>(options =>
+                {
+                    options.UseInMemoryDatabase("IdentityContextInMemory");
+                });
+            }
+            else
+            {
+                var connectionString = configuration.GetConnection("IdentityConnection");
+
+                services.AddDbContext<IdentityContext>(options =>
+                {
+                    options.UseSqlServer(connectionString, a => a.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName));
+                });
+            }
+            #endregion
+        }
+
+        private static void ServiceConfiguration(IServiceCollection services)
+        {
             #region Services
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IRegisterValidationService, RegisterValidationService>();
             #endregion
         }
+
+        #endregion
+
 
         public static async Task AddIdentitySeeds(this IHost app)
         {

@@ -9,8 +9,10 @@ namespace DreamHouse.Core.Application.Interfaces.Services
     {
         Task<List<PropertyViewModel>> GetAllWithIncludeAsync(List<string> includs);
         Task<List<PropertyViewModel>> GetFilteredPropertiesAsync(PropertiesFilter filter);
-        Task<List<PropertyViewModel>> GetFilteredPropertiesByRoleAsync(PropertiesFilter filter);
+        Task<List<PropertyViewModel>> GetFilteredPropertiesForAgentAsync(PropertiesFilter filter);
+        Task<List<PropertyViewModel>> GetFilteredPropertiesForClientAsync(PropertiesFilter filter);
         Task<List<PropertyViewModel>> GetFilteredPropertiesByFavoriteAsync(PropertiesFilter filter);
+        Task<List<PropertyViewModel>> GetFilteredPropertiesByAgentIdAsync(PropertiesFilter filter, string agentId);
         Task<PropertyViewModel?> GetPropertyDetailsAsync(int porpertyId);
         Task<int> GetAllFromAgentAsync(string agentId);
         new Task<PropertySaveViewModel?> AddAsync(PropertySaveViewModel propertySaveViewModel);

@@ -17,17 +17,30 @@
     controllerForFiltering = "Home";
     actionForFiltering = "HomeBasic";
 
-    // When we are in Only favorites from client
-    if (ViewBag.OnlyFavorites)
+
+    // For HomeClient
+    if (ViewBag.PropertiesForClient)
     {
         controllerForFiltering = "Property";
-        actionForFiltering = "FavoriteProperties";
+        actionForFiltering = "PropertiesForClient";
     }
-    // When we are in property maintenance from agent
-    if (ViewBag.PropertyMaintenance)
+    // For HomeAgent
+    if (ViewBag.PropertiesForAgent)
     {
         controllerForFiltering = "Property";
-        actionForFiltering = "PropertyMaintenance";
+        actionForFiltering = "PropertiesForAgent";
+    }
+    // For HomeFavorites
+    if (ViewBag.PropertiesForFavorites)
+    {
+        controllerForFiltering = "Property";
+        actionForFiltering = "PropertiesForFavorites";
+    }
+    // For HomeMaintenance
+    if (ViewBag.PropertiesForMaintenance)
+    {
+        controllerForFiltering = "Property";
+        actionForFiltering = "PropertiesForMaintenance";
     }
 
 }
@@ -37,7 +50,7 @@
 <div class="container mt-4">
 
     @* Put the title and add boton when is mainteniment of porperties *@
-    @if (ViewBag.PropertyMaintenance)
+    @if (ViewBag.PropertiesForMaintenance)
     {
         <div class="row mb-3 mt-4">
             <div class="d-flex gap-2 p-0">
@@ -93,8 +106,8 @@
                             onclick="location.href='@Url.Action("HomeDetail", "DetailProperties", new { id = property.Id })'" 
                         *@
                         <div class="card shadow-sm" style="cursor: pointer;">
-                            
-                            <img class="card-img-top img-product-size" src="https://steamuserimages-a.akamaihd.net/ugc/2047482034935865852/3C1717031CD5D57BFF84DE20EB2FB6B26AF628AC/" />
+
+                            <img class="card-img-top img-product-size" src="@(property.Images?.FirstOrDefault()?.ImageUrl ?? "https://www.henleyaudio.co.uk/media/images/products/product-noimage.jpg?width=1000")" />
 
                             <div class="card-body">
                                 <div class="d-flex p-0 m-0 justify-content-between">
@@ -116,8 +129,8 @@
                                     </div>
                                     <div>
 
-                                        @* Check and Uncheck the favorite *@
-                                        @if (user != null && userPrincipalRole == ERoles.CLIENT.ToString() && !ViewBag.OnlyFavorites)
+                                        @* Mark as favorite *@
+                                        @if (ViewBag.PropertiesForClient)
                                         {
                                             @if (property.MarkedAsFavorite)
                                             {
@@ -134,13 +147,13 @@
                                         }
                                         
                                         @* Show the start *@
-                                        @if (ViewBag.OnlyFavorites)
+                                        @if (ViewBag.PropertiesForFavorites)
                                         {
                                             <i class="bi bi-star-fill text-warning"></i>
                                         }
 
                                         @* Show the 2 buttons, edit and delete *@
-                                        @if (ViewBag.PropertyMaintenance)
+                                        @if (ViewBag.PropertiesForMaintenance)
                                         {
                                             <div class="input-group">
                                                 <a class="btn btn-warning rounded-3" asp-controller="Property" asp-action="Edit" asp-route-propertyId="@property.Id">

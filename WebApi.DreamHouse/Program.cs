@@ -17,7 +17,7 @@ builder.Services.AddApiVersioningExtension();
 builder.Services.AddPersistenceDependency(builder.Configuration);
 builder.Services.AddApplicationDependency();
 builder.Services.AddSharedDependency(builder.Configuration);
-builder.Services.AddIdentityDependency(builder.Configuration);
+builder.Services.AddIdentityDependencyApi(builder.Configuration);
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 

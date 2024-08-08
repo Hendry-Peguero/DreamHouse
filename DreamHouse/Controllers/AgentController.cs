@@ -38,9 +38,9 @@ namespace DreamHouse.Controllers
             return RedirectRoutesHelper.routeBasicHome;
         }
 
-        public async Task<IActionResult> Agent(string firstName)
+        public async Task<IActionResult> AgentsWorking(string firstName)
         {
-            var activeAgents = await userService.GetActiveAgents();
+            var activeAgents = (await userService.GetActiveAgents()).OrderBy(a => a.FirstName).ToList();
 
             if (!string.IsNullOrEmpty(firstName))
             {

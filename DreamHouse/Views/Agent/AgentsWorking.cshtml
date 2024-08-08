@@ -6,7 +6,7 @@
 
 <div class="container mt-4">
     <h2>Agents</h2>
-    <form method="get" asp-action="Agent">
+    <form method="get" asp-action="AgentsWorking">
         <div class="row mb-3">
             <div class="col-md-4">
                 <input type="text" class="form-control" name="firstName" placeholder="Nombre" value="@ViewContext.HttpContext.Request.Query["firstName"]">
@@ -14,7 +14,7 @@
             <div class="col-md-2">
                 <div class="d-flex justify-content-start align-items-center">
                     <button type="submit" class="btn btn-primary me-2">Filtrar</button>
-                    <a href="@Url.Action("Agent")" class="btn btn-secondary">Limpiar</a>
+                    <a href="@Url.Action("AgentsWorking")" class="btn btn-secondary">Limpiar</a>
                 </div>
             </div>
         </div>
