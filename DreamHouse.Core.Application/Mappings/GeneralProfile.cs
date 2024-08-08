@@ -145,6 +145,9 @@ namespace DreamHouse.Core.Application.Mappings
                 .ReverseMap()
                 .ForMember(destino => destino.Properties, otp => otp.Ignore());
 
+            CreateMap<PropertyTypeEntity, PropertyFavoriteViewModel>()
+                .ReverseMap();
+
             #endregion
 
 

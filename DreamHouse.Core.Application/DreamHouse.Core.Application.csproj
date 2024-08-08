@@ -24,8 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Properties\Commands\" />
-    <Folder Include="Features\PropertyType\Commands\Delete\" />
-    <Folder Include="Features\PropertyType\Queries\GetByIdQuery\" />
   </ItemGroup>
 
 </Project>
