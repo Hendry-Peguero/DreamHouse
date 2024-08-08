@@ -2,6 +2,7 @@
 using DreamHouse.Core.Application.Features.Properties.Queries.GetAllProperties;
 using DreamHouse.Core.Application.Features.Properties.Queries.GetPropertyById;
 using DreamHouse.Core.Application.Features.PropertyType.Commands.Create;
+using DreamHouse.Core.Application.Features.PropertyType.Commands.Update;
 using DreamHouse.Core.Application.Features.PropertyType.Queries.GetAllQuery;
 using DreamHouse.Core.Application.ViewModels.Property;
 using DreamHouse.Core.Application.ViewModels.PropertyType;
@@ -46,6 +47,29 @@ namespace WebApi.DreamHouse.Controllers.v1
                 {
                     return BadRequest();
                 }
+                return Ok(await Mediator.Send(command));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UpdatePropertyTypeResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+        public async Task<IActionResult> Put(int id, UpdatePropertyTypeCommand command)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                if (id != command.Id)
+                    return BadRequest();
+
                 return Ok(await Mediator.Send(command));
             }
             catch (Exception ex)

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DreamHouse.Core.Application.Dtos.Account;
 using DreamHouse.Core.Application.Features.PropertyType.Commands.Create;
+using DreamHouse.Core.Application.Features.PropertyType.Commands.Update;
 using DreamHouse.Core.Application.ViewModels.Agent;
 using DreamHouse.Core.Application.ViewModels.Auth;
 using DreamHouse.Core.Application.ViewModels.Improvement;
@@ -133,7 +134,16 @@ namespace DreamHouse.Core.Application.Mappings
             #region PropertyTypeCommand
             CreateMap<PropertyTypeEntity, CreatePropertyTypeCommand>()
                 .ReverseMap()
-                .ForMember(destino => destino.Id, otp => otp.Ignore());
+                .ForMember(destino => destino.Id, otp => otp.Ignore())
+                .ForMember(destino => destino.Properties, otp => otp.Ignore());
+
+            CreateMap<PropertyTypeEntity, UpdatePropertyTypeCommand>()
+                .ReverseMap()
+                .ForMember(destino => destino.Properties, otp => otp.Ignore());
+
+            CreateMap<PropertyTypeEntity, UpdatePropertyTypeResponse>()
+                .ReverseMap()
+                .ForMember(destino => destino.Properties, otp => otp.Ignore());
 
             #endregion
 
