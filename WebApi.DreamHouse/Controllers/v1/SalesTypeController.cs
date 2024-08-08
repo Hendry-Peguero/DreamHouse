@@ -6,6 +6,7 @@ using DreamHouse.Core.Application.Features.PropertyType.Queries.GetAllQuery;
 using DreamHouse.Core.Application.Features.PropertyType.Queries.GetByIdQuery;
 using DreamHouse.Core.Application.ViewModels.Property;
 using DreamHouse.Core.Application.ViewModels.PropertyType;
+using DreamHouse.Core.Application.ViewModels.SaleType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.DreamHouse.Controllers.General;
@@ -14,17 +15,17 @@ namespace WebApi.DreamHouse.Controllers.v1
 {
     [ApiVersion("1.0")]
     [Authorize(Roles = "ADMIN,DEVELOPER")]
-    public class PropertyTypeController : BaseApiController
+    public class SalesController : BaseApiController
     {
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PropertyViewModel>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<SaleTypeViewModel>))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get()
         {
             try
             {
-                return Ok(await Mediator.Send(new GetAllPropertiesTypeQuery()));
+                return Ok(await Mediator.Send(new GetAllSalesTypeQuery()));
             }
             catch (Exception ex)
             {
@@ -40,7 +41,7 @@ namespace WebApi.DreamHouse.Controllers.v1
         {
             try
             {
-                return Ok(await Mediator.Send(new GetPropertyTypeByIdQuery() { Id = id}));
+                return Ok(await Mediator.Send(new GetSalesTypeByIdQuery() { Id = id }));
             }
             catch (Exception ex)
             {
@@ -49,17 +50,17 @@ namespace WebApi.DreamHouse.Controllers.v1
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PropertyTypeViewModel))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SaleTypeViewModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-        public async Task<IActionResult> Post(CreatePropertyTypeCommand command)
+        public async Task<IActionResult> Post(CreateSaleTypeCommand command)
         {
             try
             {
                 if (!ModelState.IsValid)
-                {
                     return BadRequest();
-                }
+
                 return Ok(await Mediator.Send(command));
             }
             catch (Exception ex)
@@ -69,11 +70,11 @@ namespace WebApi.DreamHouse.Controllers.v1
         }
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UpdatePropertyTypeResponse))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UpdateSaleTypeResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-        public async Task<IActionResult> Put(int id, UpdatePropertyTypeCommand command)
+        public async Task<IActionResult> Put(int id, UpdateSaleTypeCommand command)
         {
             try
             {
@@ -95,7 +96,7 @@ namespace WebApi.DreamHouse.Controllers.v1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-        public async Task<IActionResult> Delete(DeletePropertyTypeCommand command)
+        public async Task<IActionResult> Delete(DeleteSaleTypeCommand command)
         {
             try
             {

@@ -148,6 +148,23 @@ namespace DreamHouse.Core.Application.Mappings
 
             #endregion
 
+            #region SalesTypeQuery
+            CreateMap<SaleTypeEntity, CreateSaleTypeCommand>()
+                .ReverseMap()
+                .ForMember(destino => destino.Properties, otp => otp.Ignore())
+                .ForMember(destino => destino.Id, otp => otp.Ignore());
+
+            CreateMap<SaleTypeEntity, UpdateSaleTypeCommand>()
+                .ReverseMap()
+                .ForMember(destino => destino.Properties, otp => otp.Ignore());
+
+
+            CreateMap<SaleTypeEntity, UpdateSaleTypeResponse>()
+                .ReverseMap()
+                .ForMember(destino => destino.Properties, otp => otp.Ignore());
+
+
+            #endregion
 
         }
     }
