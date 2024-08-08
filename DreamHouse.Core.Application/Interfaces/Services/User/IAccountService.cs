@@ -21,5 +21,7 @@ namespace DreamHouse.Core.Application.Interfaces.Services.User
         Task<bool> DuplicateUserName(string userName);
         Task<bool> DuplicateEmail(string email);
 
+        Task<RegisterResponse> RegisterUserAndagentAsync(RegisterRequest request, string origin);
+        Task<string> ConfirmAccountAsync(string userId, string token);
     }
 }
