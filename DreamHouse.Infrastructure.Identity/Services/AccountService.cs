@@ -248,6 +248,26 @@ namespace DreamHouse.Infrastructure.Identity.Services
                 return response;
             }
 
+            // Try to update the password
+            if (request.Password != null)
+            {
+                var removePassword = await userManager.RemovePasswordAsync(userToUpdate);
+                if (!removePassword.Succeeded)
+                {
+                    response.HasError = true;
+                    response.ErrorDescription = "An ocurred an error removing the user password try again";
+                    return response;
+                }
+
+                var addPassword = await userManager.AddPasswordAsync(userToUpdate, request.Password);
+                if (!addPassword.Succeeded)
+                {
+                    response.HasError = true;
+                    response.ErrorDescription = "An ocurred an adding removing the user password try again";
+                    return response;
+                }
+            }
+
             // Fill the response with data
             response = mapper.Map<AuthenticationResponse>(userToUpdate);
             response.Roles = (await userManager.GetRolesAsync(userToUpdate).ConfigureAwait(false)).ToList();

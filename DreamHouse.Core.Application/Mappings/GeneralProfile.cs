@@ -43,10 +43,8 @@ namespace DreamHouse.Core.Application.Mappings
                 .ForMember(destino => destino.ErrorDescription, otp => otp.Ignore());
 
             CreateMap<UserSaveViewModel, AuthenticationResponse>()
-                //.ForMember(destino => destino.PhoneNumber, otp => otp.Ignore())   FUI YO RAFAELLL
                 .ReverseMap()
                 .ForMember(destino => destino.File, otp => otp.Ignore())
-                .ForMember(destino => destino.Password, otp => otp.Ignore())
                 .ForMember(destino => destino.ConfirmPassword, otp => otp.Ignore());
 
             CreateMap<UserViewModel, AgentViewModel>()

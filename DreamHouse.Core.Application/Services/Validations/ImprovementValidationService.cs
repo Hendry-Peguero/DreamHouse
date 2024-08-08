@@ -25,7 +25,7 @@ namespace DreamHouse.Core.Application.Services.Validations
                 var duplicateName = (await improvementService.GetAllAsync())
                     .FirstOrDefault(propertyType => propertyType.Name == improvementSVm.Name);
 
-                if (duplicateName.Name != null) errors.Add("DuplicateName", "Name already in use");
+                if (duplicateName != null) errors.Add("DuplicateName", "Name already in use");
             }
 
             return errors;
