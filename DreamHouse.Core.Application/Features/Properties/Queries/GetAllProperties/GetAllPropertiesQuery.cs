@@ -26,10 +26,10 @@ namespace DreamHouse.Core.Application.Features.Properties.Queries.GetAllProperti
             this.mapper = mapper;
         }
 
-        public async Task<List<PropertyViewModel>> Handle(GetAllPropertiesQuery request, CancellationToken cancellationToken)
+        public async Task<List<PropertyViewModel>> Handle(GetAllPropertiesQuery query, CancellationToken cancellationToken)
         {
 
-            var propertiesVm = mapper.Map<List<PropertyViewModel>>(await propertyRepository.GetAllWithIncludeAsync(new List<string> {"TypeProperty"}));
+            var propertiesVm = mapper.Map<List<PropertyViewModel>>(await propertyRepository.GetAllAsync());
             if (propertiesVm == null) throw new Exception("There are not categories");
 
             return propertiesVm;

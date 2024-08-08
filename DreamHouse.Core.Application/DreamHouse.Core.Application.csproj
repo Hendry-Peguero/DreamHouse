@@ -24,8 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Properties\Commands\" />
-    <Folder Include="Features\Properties\Queries\GetPropertyById\" />
-    <Folder Include="Features\Properties\Queries\GetPropertyByCode\" />
   </ItemGroup>
 
 </Project>
