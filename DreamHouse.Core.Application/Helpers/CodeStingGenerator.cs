@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DreamHouse.Core.Application.Helpers
+﻿namespace DreamHouse.Core.Application.Helpers
 {
     public static class CodeStingGenerator
     {
         private static Random random = new Random();
-        private const string Uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private const string Lowercase = "abcdefghijklmnopqrstuvwxyz";
-        private const string Numbers = "0123456789";
-        private const string SpecialCharacters = "!@#$%^&*()_+[]{}|;:,.<>?";
+        public const string Uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public const string Lowercase = "abcdefghijklmnopqrstuvwxyz";
+        public const string Numbers = "0123456789";
+        public const string SpecialCharacters = "!@#$%^&*()_+[]{}|;:,.<>?";
 
         public static string GeneratePassword()
         {
@@ -31,17 +25,17 @@ namespace DreamHouse.Core.Application.Helpers
             return new string(password.ToCharArray().OrderBy(c => random.Next()).ToArray());
         }
 
-        //public static string GenerateProductNumber()
-        //{
-        //    string numberGenerated = string.Empty;
+        public static string GenerateRandomLetters(int length, string letters)
+        {
+            string stringGenerated = string.Empty;
 
-        //    for (int i = 0; i < BusinessLogicConstantsHelper.MaxLengthNumberAccount; i++)
-        //    {
-        //        numberGenerated += GetRandomCharacter(Numbers);
-        //    }
+            for (int i = 0; i < length; i++)
+            {
+                stringGenerated += GetRandomCharacter(letters);
+            }
 
-        //    return numberGenerated;
-        //}
+            return stringGenerated;
+        }
 
         private static char GetRandomCharacter(string characters)
         {

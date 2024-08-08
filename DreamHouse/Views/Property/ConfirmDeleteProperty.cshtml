@@ -1,0 +1,24 @@
+﻿@using DreamHouse.Core.Application.ViewModels.PropertyType
+@using DreamHouse.Core.Application.ViewModels.Property
+
+@model PropertySaveViewModel;
+@{
+    ViewData["Title"] = "Delete Property";
+}
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="card">
+            <div class="card-header bg-dark text-light">
+                <h4>Are you sure to delete this property: @Model.Code ?</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-controller="Property" asp-action="DeleteConfirmed" asp-route-propertyId="@Model.Id">
+                    <a asp-controller="Property" asp-action="PropertyMaintenance" class="btn btn-warning">Cancel</a>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

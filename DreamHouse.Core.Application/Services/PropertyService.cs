@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DreamHouse.Core.Application.Dtos.Filters;
 using DreamHouse.Core.Application.Enums;
+using DreamHouse.Core.Application.Helpers;
 using DreamHouse.Core.Application.Interfaces.Helpers;
 using DreamHouse.Core.Application.Interfaces.Repositories;
 using DreamHouse.Core.Application.Interfaces.Services;
@@ -14,20 +15,29 @@ namespace DreamHouse.Core.Application.Services
     {
         private readonly IPropertyRepository propertyRepository;
         private readonly IPropertyFavoriteRepository propertyFavoriteRepository;
+        private readonly IPropertyImageRepository propertyImageRepository;
+        private readonly IPropertyImprovementRepository propertyImprovementRepository;
         private readonly IUserHelper userHelper;
+        private readonly IImageHelper imageHelper;
         private readonly IMapper mapper;
 
         public PropertyService(
             IPropertyRepository propertyRepository,
             IPropertyFavoriteRepository propertyFavoriteRepository,
+            IPropertyImageRepository propertyImageRepository,
+            IPropertyImprovementRepository propertyImprovementRepository,
             IUserHelper userHelper,
+            IImageHelper imageHelper,
             IMapper mapper
         )
         : base(propertyRepository, mapper)
         {
             this.propertyRepository = propertyRepository;
             this.propertyFavoriteRepository = propertyFavoriteRepository;
+            this.propertyImageRepository = propertyImageRepository;
+            this.propertyImprovementRepository = propertyImprovementRepository;
             this.userHelper = userHelper;
+            this.imageHelper = imageHelper;
             this.mapper = mapper;
         }
 
@@ -100,6 +110,109 @@ namespace DreamHouse.Core.Application.Services
         {
             return (await base.GetAllAsync()).Where(property => property.AgentId == agentId).Count();
         }
+
+
+        public override async Task<PropertySaveViewModel?> AddAsync(PropertySaveViewModel propertySaveViewModel)
+        {
+            // Generate Code
+            var properties = await propertyRepository.GetAllAsync();
+            string code;
+            while (true)
+            {
+                code = CodeStingGenerator.GenerateRandomLetters(
+                    BusinessLogicConstansHelper.MaximumLettersPropertyCode,
+                    CodeStingGenerator.Uppercase +
+                    CodeStingGenerator.Lowercase +
+                    CodeStingGenerator.Numbers
+                );
+
+                if (!properties.Any(p => p.Code == code)) break;
+            }
+            propertySaveViewModel.Code = code;
+
+            // Set agent
+            propertySaveViewModel.AgentId = userHelper.GetUser()!.Id;
+
+            // Create the property
+            var propertyCreated = await base.AddAsync(propertySaveViewModel);
+
+            // Create the improvements
+            foreach (var improvementId in propertySaveViewModel.IdSelectedImprovements)
+            {
+                await propertyImprovementRepository.AddAsync(new PropertyImprovementEntity()
+                {
+                    PropertyId = propertyCreated.Id,
+                    ImprovementId = improvementId
+                });
+            }
+
+            // Create the images 
+            foreach (var image in propertySaveViewModel.Images)
+            {
+                string relativePath = imageHelper.SaveImage(image, propertyCreated.Id.ToString(), EGroupImage.PROPERTIES);
+                await propertyImageRepository.AddAsync(new PropertyImageEntity()
+                {
+                    ImageUrl = relativePath,
+                    PropertyId = propertyCreated.Id
+                });
+            }
+
+            return propertyCreated;
+        }
+
+        public override async Task<PropertySaveViewModel?> UpdateAsync(PropertySaveViewModel propertySaveViewModel, int propertyId)
+        {
+            // Update the property
+            var propertyUpdated = await base.UpdateAsync(propertySaveViewModel, propertyId);
+
+            // Remove the old improvements and add the new ones
+            var oldImprovements = (await propertyImprovementRepository.GetAllAsync()).Where(i => i.PropertyId == propertyId);
+            foreach (var improvement in oldImprovements)
+            {
+                await propertyImprovementRepository.DeleteAsync(improvement);
+            }
+            foreach (var improvementId in propertySaveViewModel.IdSelectedImprovements)
+            {
+                await propertyImprovementRepository.AddAsync(new PropertyImprovementEntity()
+                {
+                    PropertyId = propertyId,
+                    ImprovementId = improvementId
+                });
+            }
+
+            // Remove the old images and add the new ones
+            if (propertySaveViewModel.Images != null && propertySaveViewModel.Images.Count != 0)
+            {
+                var oldImages = (await propertyImageRepository.GetAllAsync()).Where(i => i.PropertyId == propertyId);
+                foreach (var image in oldImages)
+                {
+                    await propertyImageRepository.DeleteAsync(image);
+                }
+                imageHelper.RemoveImage(propertyId.ToString(), EGroupImage.PROPERTIES);
+                foreach (var image in propertySaveViewModel.Images)
+                {
+                    string relativePath = imageHelper.SaveImage(image, propertyId.ToString(), EGroupImage.PROPERTIES);
+                    await propertyImageRepository.AddAsync(new PropertyImageEntity()
+                    {
+                        ImageUrl = relativePath,
+                        PropertyId = propertyId
+                    });
+                }
+            }
+
+            return propertyUpdated;
+        }
+
+
+        public override async Task DeleteAsync(int propertyId)
+        {
+            // Delete the local images
+            imageHelper.RemoveImage(propertyId.ToString(), EGroupImage.PROPERTIES);
+
+            // Delete the property
+            await base.DeleteAsync(propertyId);
+        }
+
 
         public async Task ConfigFavorite(int propertyId) 
         {
