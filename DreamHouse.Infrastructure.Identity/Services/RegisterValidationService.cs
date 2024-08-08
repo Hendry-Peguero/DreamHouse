@@ -3,11 +3,7 @@ using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.ViewModels.User;
 using DreamHouse.Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
-using QuickBank.Core.Application.Helpers;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace DreamHouse.Infrastructure.Identity.Services
 {
@@ -64,9 +60,9 @@ namespace DreamHouse.Infrastructure.Identity.Services
             else
             {
                 // Check if password meets the minimum length requirement
-                if (usvm.Password.Length < BusinessLogicConstantsHelper.MinPasswordLength)
+                if (usvm.Password.Length < BusinessLogicConstansHelper.MinPasswordLength)
                 {
-                    errors.Add("MinPasswordLength", $"The minimum length is {BusinessLogicConstantsHelper.MinPasswordLength}");
+                    errors.Add("MinPasswordLength", $"The minimum length is {BusinessLogicConstansHelper.MinPasswordLength}");
                 }
 
                 // Check if password contains at least one lowercase letter
