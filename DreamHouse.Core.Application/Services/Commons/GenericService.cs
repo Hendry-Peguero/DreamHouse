@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using DreamHouse.Core.Application.Interfaces.Repositories;
 using DreamHouse.Core.Application.Interfaces.Services.Commons;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DreamHouse.Core.Application.Services.Commons
 {

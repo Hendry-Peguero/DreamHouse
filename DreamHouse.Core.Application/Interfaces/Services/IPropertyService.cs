@@ -13,6 +13,9 @@ namespace DreamHouse.Core.Application.Interfaces.Services
         Task<List<PropertyViewModel>> GetFilteredPropertiesByFavoriteAsync(PropertiesFilter filter);
         Task<PropertyViewModel?> GetPropertyDetailsAsync(int porpertyId);
         Task<int> GetAllFromAgentAsync(string agentId);
+        new Task<PropertySaveViewModel?> AddAsync(PropertySaveViewModel propertySaveViewModel);
+        new Task<PropertySaveViewModel?> UpdateAsync(PropertySaveViewModel propertySaveViewModel, int propertyId);
+        new Task DeleteAsync(int propertyId);
         Task ConfigFavorite(int propertyId);
     }
 }

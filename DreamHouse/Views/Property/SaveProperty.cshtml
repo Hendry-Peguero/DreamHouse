@@ -18,28 +18,31 @@
 
             <div class="card border-0">
                 <div class="card-body">
-                    <form method="post" asp-controller="Property" asp-action="Add" id="FormSaveUser" enctype="multipart/form-data">
+                    <form method="post" asp-controller="Property" asp-action="@(editMode ? "Edit" : "Add")" id="FormSaveUser" enctype="multipart/form-data">
                         <div class="row">
 
                             <div class="mb-3">
-                                <label asp-for="SelectedPropertyTypeId" class="form-label">Property Type</label>
-                                <select asp-for="SelectedPropertyTypeId" asp-items="@(new SelectList(Model.PropertyTypes,"Id","Name"))" class="form-control">
+                                <label asp-for="TypePropertyId" class="form-label">Property Type</label>
+                                <select asp-for="TypePropertyId" asp-items="@(new SelectList(Model.PropertyTypes,"Id","Name"))" class="form-control">
                                     <option value="0">Select an option</option>
                                 </select>
+                                <span asp-validation-for="TypePropertyId" class="text-danger"></span>
                             </div>
 
                             <div class="mb-3">
-                                <label asp-for="SelectedSaleTypeId" class="form-label">Sale Type</label>
-                                <select asp-for="SelectedSaleTypeId" asp-items="@(new SelectList(Model.SaleTypes,"Id","Name"))" class="form-control">
+                                <label asp-for="TypeSaleId" class="form-label">Sale Type</label>
+                                <select asp-for="TypeSaleId" asp-items="@(new SelectList(Model.SaleTypes,"Id","Name"))" class="form-control">
                                     <option value="0">Select an option</option>
                                 </select>
+                                <span asp-validation-for="TypeSaleId" class="text-danger"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label asp-for="IdSelectedImprovements" class="form-label">Improvements</label>
-                                <select asp-for="IdSelectedImprovements" asp-items="@(new SelectList(Model.PropertyTypes,"Id","Name"))" multiple="multiple" class="form-control">
+                                <select asp-for="IdSelectedImprovements" asp-items="@(new SelectList(Model.Improvements,"Id","Name"))" multiple="multiple" class="form-control">
                                     <option value="0">Select an option</option>
                                 </select>
+                                <span asp-validation-for="IdSelectedImprovements" class="text-danger"></span>
                             </div>
                             
                         </div>
@@ -78,14 +81,38 @@
 
                         <div class="mb-3">
                             <label asp-for="Images" class="form-label">Image/s</label>
-                            <input asp-for="Images" class="form-control" multiple />
+                            <input asp-for="Images" class="form-control" type="file" multiple />
                             <span asp-validation-for="Images" class="text-danger"></span>
+                            <div id="imageDiv">
+                                @foreach (var url in Model.ImagesUrl)
+                                {
+                                    if (url == null) continue;
+                                    <div class="card">
+                                        <img src="@url" class="img-thumbnail"/>
+                                    </div>
+                                }
+                            </div>
                         </div>
+
  
                         @* Hidden properties *@
                         <input type="hidden" asp-for="Id"/>
+                        <input type="hidden" asp-for="Code" />
+                        <input type="hidden" asp-for="AgentId" />
 
-                        @* Load the necesary data for the PropertyTypes list*@
+                        @* Load the necesary data of the list ImageUrl *@
+                        @if (Model.ImagesUrl.Count == 0)
+                        {
+                            <input type="hidden" asp-for="@Model.ImagesUrl" value=""/>
+                        }
+                        @for (int i = 0; i < Model.ImagesUrl.Count; i++)
+                        {
+                            <input type="hidden" asp-for="@Model.ImagesUrl[i]" />
+                        }
+
+
+@* 
+                        Load the necesary data for the PropertyTypes list
                         @if (Model.PropertyTypes.Count == 0)
                         {
                             <input type="hidden" asp-for="@Model.PropertyTypes" />
@@ -96,7 +123,7 @@
                             <input type="hidden" asp-for="@Model.PropertyTypes[i].Name" />
                         }
 
-                        @* Load the necesary data for the SaleTypes list*@
+                         Load the necesary data for the SaleTypes list
                         @if (Model.SaleTypes.Count == 0)
                         {
                             <input type="hidden" asp-for="@Model.SaleTypes" />
@@ -107,7 +134,7 @@
                             <input type="hidden" asp-for="@Model.SaleTypes[i].Name" />
                         }
 
-                        @* Load the necesary data for the Improvements list*@
+                         Load the necesary data for the Improvements list
                         @if (Model.Improvements.Count == 0)
                         {
                             <input type="hidden" asp-for="@Model.Improvements" />
@@ -117,7 +144,7 @@
                             <input type="hidden" asp-for="@Model.Improvements[i].Id" />
                             <input type="hidden" asp-for="@Model.Improvements[i].Name" />
                         }
-
+ *@
 
                         <div class="d-flex justify-content-end gap-2">
                             <a asp-controller="Property" asp-action="PropertyMaintenance" class="btn btn-warning">Cancel</a>
@@ -131,3 +158,28 @@
         </div>
     </div>
 </div>
+
+@* 
+<script>
+    function handleFileInputChange(input) {
+        //Get container
+        var container = document.getElementById("imageDiv");
+
+        //Clear container
+        container.innerHTML = '';
+
+
+        if (input.files && input.files.length > 0) {
+            // Get name
+            var fileName = input.files[0].name;
+
+            //Crear element for that text
+            var textElement = document.createElement("p");
+            textElement.textContent = fileName;
+            textElement.classList.add("p-2", "rounded-3", "text-light", "bg-primary", "fw-bold");
+
+            //Add element
+            container.appendChild(textElement);
+        }
+    }
+</script> *@

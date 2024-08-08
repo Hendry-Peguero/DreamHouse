@@ -1,4 +1,5 @@
-﻿using DreamHouse.Core.Application.ViewModels.PropertyFavorite;
+﻿using DreamHouse.Core.Application.ViewModels.Agent;
+using DreamHouse.Core.Application.ViewModels.PropertyFavorite;
 using DreamHouse.Core.Application.ViewModels.PropertyImage;
 using DreamHouse.Core.Application.ViewModels.PropertyImprovement;
 using DreamHouse.Core.Application.ViewModels.PropertyType;
@@ -24,6 +25,7 @@ namespace DreamHouse.Core.Application.ViewModels.Property
         public bool MarkedAsFavorite { get; set; }
 
 
+        public AgentViewModel? Agent { get; set; }
         public PropertyTypeViewModel? TypeProperty { get; set; }
         public SaleTypeViewModel? TypeSale { get; set; }
         public ICollection<PropertyFavoriteViewModel>? Favorites { get; set; }

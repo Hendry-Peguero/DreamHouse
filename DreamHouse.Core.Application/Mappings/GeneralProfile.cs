@@ -52,6 +52,8 @@ namespace DreamHouse.Core.Application.Mappings
                 .ForMember(destino => destino.NumberPropertiesAssigned, otp => otp.Ignore())
                 .ReverseMap();
 
+            CreateMap<UserViewModel, AgentViewModel>();
+            CreateMap<UserSaveViewModel, AgentViewModel>();
 
             #endregion
 
@@ -61,7 +63,19 @@ namespace DreamHouse.Core.Application.Mappings
                 .ForMember(destino => destino.MarkedAsFavorite, otp => otp.Ignore())
                 .ReverseMap();
 
-            //CreateMap<SaleTypeEntity, SaleTypeViewModel>().ReverseMap();
+            CreateMap<PropertyEntity, PropertySaveViewModel>()
+                .ForMember(destino => destino.IdSelectedImprovements, otp => otp.Ignore())
+                .ForMember(destino => destino.Images, otp => otp.Ignore())
+                .ForMember(destino => destino.ImagesUrl, otp => otp.Ignore())
+                .ForMember(destino => destino.PropertyTypes, otp => otp.Ignore())
+                .ForMember(destino => destino.SaleTypes, otp => otp.Ignore())
+                .ForMember(destino => destino.Improvements, otp => otp.Ignore())
+                .ReverseMap()
+                .ForMember(destino => destino.TypeProperty, otp => otp.Ignore())
+                .ForMember(destino => destino.TypeSale, otp => otp.Ignore())
+                .ForMember(destino => destino.Favorites, otp => otp.Ignore())
+                .ForMember(destino => destino.Images, otp => otp.Ignore())
+                .ForMember(destino => destino.ImprovementProperties, otp => otp.Ignore());
 
             #endregion
 

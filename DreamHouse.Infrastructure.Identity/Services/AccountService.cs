@@ -66,10 +66,18 @@ namespace DreamHouse.Infrastructure.Identity.Services
 
         public async Task<AuthenticationResponse> AuthenticateAsync(AuthenticationRequest request)
         {
-            // Resouces
-            var applicationUser = await userManager.FindByEmailAsync(request.Email);
             var responseWithErrors = new AuthenticationResponse();
 
+            // Intentar buscar por Email
+            var applicationUser = await userManager.FindByEmailAsync(request.Email);
+
+            // Si no se encuentra por Email, intentar buscar por UserName
+            if (applicationUser == null)
+            {
+                applicationUser = await userManager.FindByNameAsync(request.Email);
+            }
+
+            // Si aún no se encuentra, devolver error
             if (applicationUser == null)
             {
                 responseWithErrors.HasError = true;
@@ -77,41 +85,46 @@ namespace DreamHouse.Infrastructure.Identity.Services
                 return responseWithErrors;
             }
 
+            // Verificar credenciales
             var resultCredential = await signInManager.PasswordSignInAsync(applicationUser.UserName, request.Password, false, false);
             if (!resultCredential.Succeeded)
             {
                 responseWithErrors.HasError = true;
-                responseWithErrors.ErrorDescription = $"Invalid credentials for {request.Email}";
+                responseWithErrors.ErrorDescription = $"Invalid credentials for {applicationUser.UserName}";
                 return responseWithErrors;
             }
 
+            // Verificar si el correo electrónico está confirmado
             if (!applicationUser.EmailConfirmed)
             {
                 responseWithErrors.HasError = true;
-                responseWithErrors.ErrorDescription = $"Acount not confirmed for {request.Email}";
+                responseWithErrors.ErrorDescription = $"Account not confirmed for {applicationUser.UserName}";
                 return responseWithErrors;
             }
 
+            // Verificar si la cuenta está activa
             if (applicationUser.Status == (int)EUserStatus.INACTIVE)
             {
                 responseWithErrors.HasError = true;
-                responseWithErrors.ErrorDescription = $"Acount inactive for {request.Email}, please communicate with the admin";
+                responseWithErrors.ErrorDescription = $"Account inactive for {applicationUser.UserName}, please communicate with the admin";
                 return responseWithErrors;
             }
 
+            // Si no hay errores, construir la respuesta con datos
             var responseWithData = mapper.Map<AuthenticationResponse>(applicationUser);
             responseWithData.Roles = (await userManager.GetRolesAsync(applicationUser).ConfigureAwait(false)).ToList();
 
-            //JWT
+            // Generar JWT
             JwtSecurityToken jwtSecurityToken = await GenerateJWToken(applicationUser);
             responseWithData.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
+            // Generar Refresh Token
             var refreshTokenObject = GenerateRefreshToken();
             responseWithData.RefreshToken = refreshTokenObject.Token;
 
             return responseWithData;
-
         }
+
 
         #region privates
         private async Task<JwtSecurityToken> GenerateJWToken(ApplicationUser user)

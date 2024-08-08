@@ -1,10 +1,8 @@
-﻿namespace QuickBank.Core.Application.Helpers
+﻿namespace DreamHouse.Core.Application.Helpers
 {
-    public static class BusinessLogicConstantsHelper
+    public static class BusinessLogicConstansHelper
     {
         public const int MinPasswordLength = 6;
-        public const int MaxLengthNumberAccount = 9;
-        public const double MinimumPaymentAmount = 100.0;
-        public const double CashAdvanceInterest = 0.0625;
+        public const int MaximumLettersPropertyCode = 6;
     }
 }
