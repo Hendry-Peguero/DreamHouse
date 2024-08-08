@@ -42,6 +42,12 @@
         controllerForFiltering = "Property";
         actionForFiltering = "PropertiesForMaintenance";
     }
+    // For PropertiesForSpecifictAgent
+    if (ViewBag.PropertiesForSpecifictAgent)
+    {
+        controllerForFiltering = "Property";
+        actionForFiltering = "PropertiesForSpecifictAgent";
+    }
 
 }
 @model HomeBasicViewModel
@@ -86,11 +92,18 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 <button type="submit" class="btn btn-primary">Filtrar</button>
-                <a asp-controller="@controllerForFiltering" asp-action="@actionForFiltering" class="btn btn-secondary">
+                <a asp-controller="@controllerForFiltering" asp-action="@actionForFiltering" class="btn btn-secondary" asp-route-agentId="@(ViewBag.PropertiesForSpecifictAgent ? ViewBag.AgentId : string.Empty )">
                     Limpiar Filtros
                 </a>
             </div>
         </div>
+
+        @* Hide properties *@
+        @if (ViewBag.PropertiesForSpecifictAgent)
+        {
+            <input type="hidden" name="agentId" value="@ViewBag.AgentId">
+        }
+
     </form>
 
     <div class="products">

@@ -187,6 +187,14 @@ namespace DreamHouse.Controllers
             return RedirectRoutesHelper.routeBasicHome;
         }
 
+        public IActionResult PropertiesForSpecifictAgent(PropertiesFilter filter, string agentId)
+        {
+            // Create the key and save the filter
+            TempData["PropertiesForSpecifictAgent"] = jsonHelper.Serialize(filter);
+            TempData["AgentId"] = agentId;
+            return RedirectRoutesHelper.routeBasicHome;
+        }
+
         #endregion
     }
 }

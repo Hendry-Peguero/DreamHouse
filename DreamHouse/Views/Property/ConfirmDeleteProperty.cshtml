@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
                 <form method="post" asp-controller="Property" asp-action="DeleteConfirmed" asp-route-propertyId="@Model.Id">
-                    <a asp-controller="Property" asp-action="PropertyMaintenance" class="btn btn-warning">Cancel</a>
+                    <a asp-controller="Property" asp-action="PropertiesForMaintenance" class="btn btn-warning">Cancel</a>
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </div>

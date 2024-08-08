@@ -14,6 +14,8 @@
                 <h2 class="fw-bold text-light m-0 p-0 ms-4">@($"Editing the agent: {Model.FirstName} {Model.LastName}")</h2>
             </div>
 
+            <img src="@Model.ImageUrl"/>
+
             <div class="card border-0">
                 <div class="card-body">
                     <form method="post" asp-controller="Agent" asp-action="EditAgentProfile" id="FormSaveUser" enctype="multipart/form-data">

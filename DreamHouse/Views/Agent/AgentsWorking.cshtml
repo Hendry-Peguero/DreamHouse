@@ -27,7 +27,7 @@
                 @foreach (var agent in Model)
                 {
                     <div class="col">
-                        <div class="card shadow-sm" style="cursor: pointer;" onclick="location.href='@Url.Action("HomeDetail", "DetailProperties", new { id = agent.Id })'">
+                        <div class="card shadow-sm" style="cursor: pointer;" onclick="location.href='@Url.Action("PropertiesForSpecifictAgent", "Property", new { agentId = agent.Id })'">
                             @if (string.IsNullOrEmpty(agent.ImageUrl))
                             {
                                 <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">

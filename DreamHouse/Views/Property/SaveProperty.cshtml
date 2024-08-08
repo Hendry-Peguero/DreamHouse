@@ -110,44 +110,8 @@
                             <input type="hidden" asp-for="@Model.ImagesUrl[i]" />
                         }
 
-
-@* 
-                        Load the necesary data for the PropertyTypes list
-                        @if (Model.PropertyTypes.Count == 0)
-                        {
-                            <input type="hidden" asp-for="@Model.PropertyTypes" />
-                        }
-                        @for (int i = 0; i < Model.PropertyTypes.Count; i++)
-                        {
-                            <input type="hidden" asp-for="@Model.PropertyTypes[i].Id" />
-                            <input type="hidden" asp-for="@Model.PropertyTypes[i].Name" />
-                        }
-
-                         Load the necesary data for the SaleTypes list
-                        @if (Model.SaleTypes.Count == 0)
-                        {
-                            <input type="hidden" asp-for="@Model.SaleTypes" />
-                        }
-                        @for (int i = 0; i < Model.SaleTypes.Count; i++)
-                        {
-                            <input type="hidden" asp-for="@Model.SaleTypes[i].Id" />
-                            <input type="hidden" asp-for="@Model.SaleTypes[i].Name" />
-                        }
-
-                         Load the necesary data for the Improvements list
-                        @if (Model.Improvements.Count == 0)
-                        {
-                            <input type="hidden" asp-for="@Model.Improvements" />
-                        }
-                        @for (int i = 0; i < Model.Improvements.Count; i++)
-                        {
-                            <input type="hidden" asp-for="@Model.Improvements[i].Id" />
-                            <input type="hidden" asp-for="@Model.Improvements[i].Name" />
-                        }
- *@
-
                         <div class="d-flex justify-content-end gap-2">
-                            <a asp-controller="Property" asp-action="PropertyMaintenance" class="btn btn-warning">Cancel</a>
+                            <a asp-controller="Property" asp-action="PropertiesForMaintenance" class="btn btn-warning">Cancel</a>
                             <button type="submit" class="btn btn-primary"> Save </button>
                         </div>
 
@@ -158,28 +122,3 @@
         </div>
     </div>
 </div>
-
-@* 
-<script>
-    function handleFileInputChange(input) {
-        //Get container
-        var container = document.getElementById("imageDiv");
-
-        //Clear container
-        container.innerHTML = '';
-
-
-        if (input.files && input.files.length > 0) {
-            // Get name
-            var fileName = input.files[0].name;
-
-            //Crear element for that text
-            var textElement = document.createElement("p");
-            textElement.textContent = fileName;
-            textElement.classList.add("p-2", "rounded-3", "text-light", "bg-primary", "fw-bold");
-
-            //Add element
-            container.appendChild(textElement);
-        }
-    }
-</script> *@

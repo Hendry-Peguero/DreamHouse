@@ -8,7 +8,7 @@ namespace DreamHouse.Core.Application.Helpers
         public static RedirectToRouteResult routeClientHome = new RedirectToRouteResult(new { controller = "Property", action = "PropertiesForClient" });
         public static RedirectToRouteResult routeAgentHome = new RedirectToRouteResult(new { controller = "Property", action = "PropertiesForAgent" });
         public static RedirectToRouteResult routeAdminHome = new RedirectToRouteResult(new { controller = "Home", action = "AdminHome" });
-        public static RedirectToRouteResult routePropertyMaintanceHome = new RedirectToRouteResult(new { controller = "Property", action = "PropertyMaintenance" });
+        public static RedirectToRouteResult routePropertyMaintanceHome = new RedirectToRouteResult(new { controller = "Property", action = "PropertiesForMaintenance" });
         public static RedirectToRouteResult adminMaintanceHome = new RedirectToRouteResult(new { controller = "AdministrationUser", action = "AdminMaintance" });
         public static RedirectToRouteResult developerMaintanceHome = new RedirectToRouteResult(new { controller = "AdministrationUser", action = "DeveloperMaintance" });
         public static RedirectToRouteResult routePropertyTypeIndex = new RedirectToRouteResult(new { controller = "PropertyTypeMaintance", action = "Index" });

@@ -127,7 +127,7 @@ namespace DreamHouse.Infrastructure.Identity.Services
 
             #region Photo
 
-            if (string.IsNullOrEmpty(usvm.ImageUrl))
+            if (usvm.File == null)
                 errors.Add("InvalidImageUrl", "Post a profile photo");
 
             #endregion

@@ -274,27 +274,10 @@ namespace DreamHouse.Infrastructure.Identity.Services
                 HasError = false
             };
 
-            //Validaciones
-            //var userWithSameUserName = await userManager.FindByNameAsync(request.UserName);
-            //if (userWithSameUserName != null)
-            //{
-            //    response.HasError = true;
-            //    response.ErrorDescription = $"username '{request.UserName}' is already taken.";
-            //    return response;
-            //}
-
-            //var userWithSameEmail = await userManager.FindByEmailAsync(request.Email);
-            //if (userWithSameEmail != null)
-            //{
-            //    response.HasError = true;
-            //    response.ErrorDescription = $"Email '{request.Email}' is already registered.";
-            //    return response;
-            //}
-
             ApplicationUser userToRegister = mapper.Map<ApplicationUser>(request);
 
             // Dafault values for user when is created
-            userToRegister.EmailConfirmed = false;
+            userToRegister.EmailConfirmed = request.UserType!.ToString() == "AGENT" ? true : false;
             userToRegister.PhoneNumberConfirmed = true;
             userToRegister.Status = (int)EUserStatus.INACTIVE;
 
@@ -310,6 +293,7 @@ namespace DreamHouse.Infrastructure.Identity.Services
             // Set roles for created user
             await userManager.AddToRoleAsync(userToRegister, request.UserType.ToString());
 
+            // Send a email if is user
             if (request.UserType.ToString() == "CLIENT")
             {
                 var verificationUri = await SendVerificationEmailUri(userToRegister, origin);
@@ -330,18 +314,13 @@ namespace DreamHouse.Infrastructure.Identity.Services
                     Subject = "Confirm Registration"
                 });
             }
-            else
-            {
-                response.HasError = true;
-                response.ErrorDescription = $"An error occurred trying to register the user.";
-                return response;
-            }
 
             // Set id of user creatde to the response
             response.Id = userToRegister.Id;
 
             return response;
         }
+
         public async Task<string> ConfirmAccountAsync(string userId, string token)
         {
             var user = await userManager.FindByIdAsync(userId);

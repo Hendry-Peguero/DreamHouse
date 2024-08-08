@@ -6,7 +6,6 @@ using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Core.Application.ViewModels.Home;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace DreamHouse.Controllers
 {
@@ -78,6 +77,17 @@ namespace DreamHouse.Controllers
                 filter = jsonHelper.Deserialize<PropertiesFilter>((TempData["PropertiesForMaintenance"] as string)!)!;
                 properties = await propertyService.GetFilteredPropertiesForAgentAsync(filter);
                 ViewBag.PropertiesForMaintenance = true;
+            }
+
+            // Check if the option [PropertiesForSpecifictAgent is created]
+            ViewBag.PropertiesForSpecifictAgent = false;
+            if (TempData.ContainsKey("PropertiesForSpecifictAgent"))
+            {
+                var agentId = TempData["AgentId"]!.ToString();
+                filter = jsonHelper.Deserialize<PropertiesFilter>((TempData["PropertiesForSpecifictAgent"] as string)!)!;
+                properties = await propertyService.GetFilteredPropertiesByAgentIdAsync(filter, agentId);
+                ViewBag.PropertiesForSpecifictAgent = true;
+                ViewBag.AgentId = agentId;
             }
 
             HomeBasicViewModel ClientHomeVm = new()

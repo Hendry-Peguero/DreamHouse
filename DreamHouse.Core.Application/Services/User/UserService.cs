@@ -70,16 +70,7 @@ namespace DreamHouse.Core.Application.Services.User
         {
             // Register
             RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(vm);
-            RegisterResponse registerResponse = await _accountService.RegisterUserAsync(registerRequest);
-
-            // Create Image
-            vm.ImageUrl = _imageHelper.SaveImage(vm.File, registerResponse.Id, EGroupImage.USERS);
-            
-            // Update User
-            vm.Id = registerResponse.Id;
-            await UpdateUserAsync(vm);
-
-            return registerResponse;
+            return await _accountService.RegisterUserAsync(registerRequest);
         }
 
         public async Task<UserSaveViewModel> UpdateUserAsync(UserSaveViewModel saveUserViewModel)
@@ -128,7 +119,16 @@ namespace DreamHouse.Core.Application.Services.User
         public async Task<RegisterResponse> RegisterClienAndAgentAsync(UserSaveViewModel vm, string origin)
         {
             RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(vm);
-            return await _accountService.RegisterUserAndagentAsync(registerRequest, origin);
+            RegisterResponse registerResponse = await _accountService.RegisterUserAndagentAsync(registerRequest, origin);
+
+            // Create Image
+            vm.ImageUrl = _imageHelper.SaveImage(vm.File, registerResponse.Id, EGroupImage.USERS);
+
+            // Update User
+            vm.Id = registerResponse.Id;
+            await UpdateUserAsync(vm);
+
+            return registerResponse;
         }
 
         public async Task<string> ConfirmEmailAsync(string userId, string token)
