@@ -13,6 +13,7 @@ using DreamHouse.Core.Application.Services.Validations;
 using DreamHouse.Core.Application.ViewModels.SaleType;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using MediatR;
 
 namespace DreamHouse.Core.Application.DependencyInjection
 {
@@ -22,6 +23,7 @@ namespace DreamHouse.Core.Application.DependencyInjection
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             //for meditr
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddTransient(typeof(IGenericService<,,>), typeof(GenericService<,,>));
             services.AddTransient<IJsonHelper, JsonHelper>();
