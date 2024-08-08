@@ -26,6 +26,6 @@ namespace DreamHouse.Core.Application.Interfaces.Services.User
 
         Task<RegisterResponse> RegisterClienAndAgentAsync(UserSaveViewModel vm, string origin);
         Task<string> ConfirmEmailAsync(string userId, string token);
-
+        Task<List<AgentViewModel>> GetActiveAgents();
     }
 }
