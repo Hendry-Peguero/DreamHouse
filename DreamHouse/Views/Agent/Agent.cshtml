@@ -1,0 +1,73 @@
+﻿@model List<DreamHouse.Core.Application.ViewModels.Agent.AgentViewModel>
+
+@{
+    ViewBag.Title = "Active Agents";
+}
+
+<div class="container mt-4">
+    <h2>Agents</h2>
+    <form method="get" asp-action="Agent">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <input type="text" class="form-control" name="firstName" placeholder="Nombre" value="@ViewContext.HttpContext.Request.Query["firstName"]">
+            </div>
+            <div class="col-md-2">
+                <div class="d-flex justify-content-start align-items-center">
+                    <button type="submit" class="btn btn-primary me-2">Filtrar</button>
+                    <a href="@Url.Action("Agent")" class="btn btn-secondary">Limpiar</a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="products">
+        @if (Model != null && Model.Any())
+        {
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                @foreach (var agent in Model)
+                {
+                    <div class="col">
+                        <div class="card shadow-sm" style="cursor: pointer;" onclick="location.href='@Url.Action("HomeDetail", "DetailProperties", new { id = agent.Id })'">
+                            @if (string.IsNullOrEmpty(agent.ImageUrl))
+                            {
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                                    <text x="45%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
+                                </svg>
+                            }
+                            else
+                            {
+                                <img class="card-img-top img-product-size" src="@agent.ImageUrl" alt="Agent Image" />
+                            }
+                            <div class="card-body text-center">
+                                <h5 class="card-title">@agent.FirstName @agent.LastName</h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No active agents found.</p>
+        }
+    </div>
+</div>
+
+<style>
+    .card {
+        width: 20rem;
+    }
+
+    .card-img-top {
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>

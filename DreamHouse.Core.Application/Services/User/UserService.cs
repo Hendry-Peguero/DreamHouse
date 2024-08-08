@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DreamHouse.Core.Application.Dtos.Account;
+using DreamHouse.Core.Application.Dtos.Filters;
 using DreamHouse.Core.Application.Enums;
 using DreamHouse.Core.Application.Interfaces.Helpers;
 using DreamHouse.Core.Application.Interfaces.Services.User;
@@ -134,5 +135,16 @@ namespace DreamHouse.Core.Application.Services.User
         {
             return await _accountService.ConfirmAccountAsync(userId, token);
         }
+
+        public async Task<List<AgentViewModel>> GetActiveAgents()
+        {
+            var allUsers = await GetAllAsync();
+            var activeAgents = allUsers
+                .Where(user => user.Roles.Contains(ERoles.AGENT.ToString()) && user.Status == 1)
+                .ToList();
+
+            return _mapper.Map<List<AgentViewModel>>(activeAgents);
+        }
+
     }
 }

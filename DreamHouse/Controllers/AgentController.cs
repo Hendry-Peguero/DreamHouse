@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DreamHouse.Controllers
 {
-    [Authorize(Roles = "AGENT")]
     public class AgentController : Controller
     {
         private readonly IUserService userService;
@@ -37,6 +36,20 @@ namespace DreamHouse.Controllers
             await userService.UpdateAgentAsync(userSaveVm);
 
             return RedirectRoutesHelper.routeBasicHome;
+        }
+
+        public async Task<IActionResult> Agent(string firstName)
+        {
+            var activeAgents = await userService.GetActiveAgents();
+
+            if (!string.IsNullOrEmpty(firstName))
+            {
+                activeAgents = activeAgents
+                    .Where(agent => agent.FirstName.Contains(firstName, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            return View(activeAgents);
         }
     }
 }
