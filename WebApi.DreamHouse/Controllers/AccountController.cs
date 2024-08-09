@@ -1,6 +1,7 @@
 ﻿using DreamHouse.Core.Application.Dtos.Account;
 using DreamHouse.Core.Application.Enums;
 using DreamHouse.Core.Application.Interfaces.Services.User;
+using DreamHouse.Infrastructure.Identity.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,17 @@ namespace WebApi.DreamHouse.Controllers
         [HttpPost("autenticate")]
         public async Task<IActionResult> AuthenticateAsync(AuthenticationRequest request)
         {
+            // Check if the user is a CLIENT OR AGENT
+            var user = await accountService.FindByNameOrEmailAsync(request.Email);
+            if (user != null)
+            {
+                string principalRole = user.Roles![^1];
+                if (principalRole == ERoles.CLIENT.ToString() || principalRole == ERoles.AGENT.ToString())
+                {
+                    return BadRequest($"{principalRole} UNABLE TO LOG IN THE API");
+                }
+            }
+
             return Ok(await accountService.AuthenticateAsync(request));
         }
 

@@ -8,6 +8,7 @@ using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Core.Application.ViewModels.Agent;
 using DreamHouse.Core.Application.ViewModels.Auth;
 using DreamHouse.Core.Application.ViewModels.User;
+using MediatR;
 
 namespace DreamHouse.Core.Application.Services.User
 {
@@ -105,8 +106,19 @@ namespace DreamHouse.Core.Application.Services.User
 
         public async Task<AuthenticationResponse> LoginAsync(LoginViewModel vm)
         {
+            AuthenticationResponse authenticationResponse = new();
             AuthenticationRequest authenticationRequest = _mapper.Map<AuthenticationRequest>(vm);
-            AuthenticationResponse authenticationResponse = await _accountService.AuthenticateAsync(authenticationRequest);
+
+            // Check if the user is a DEVELOPER
+            var user = await _accountService.FindByNameOrEmailAsync(authenticationRequest.Email);
+            if (user != null && user.Roles![^1] == ERoles.DEVELOPER.ToString())
+            {
+                authenticationResponse.HasError = true;
+                authenticationResponse.ErrorDescription = $"UNABLE TO LOG IN WITH A DEVELOPER";
+                return authenticationResponse;
+            }
+
+            authenticationResponse = await _accountService.AuthenticateAsync(authenticationRequest);
             return authenticationResponse;
         }
 

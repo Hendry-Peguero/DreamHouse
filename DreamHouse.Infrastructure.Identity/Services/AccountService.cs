@@ -55,6 +55,24 @@ namespace DreamHouse.Infrastructure.Identity.Services
             return authResponses;
         }
 
+        public async Task<AuthenticationResponse?> FindByNameOrEmailAsync(string text)
+        {
+            var response = new AuthenticationResponse();
+
+            // Intentar buscar por Email
+            var applicationUser = await userManager.FindByEmailAsync(text);
+
+            // Si no se encuentra por Email, intentar buscar por UserName
+            if (applicationUser == null) applicationUser = await userManager.FindByNameAsync(text);
+
+            if (applicationUser == null) return response;
+
+            response = mapper.Map<AuthenticationResponse>(applicationUser);
+            response.Roles = (await userManager.GetRolesAsync(applicationUser!).ConfigureAwait(false)).ToList();
+
+            return response;
+        }
+
         public async Task<AuthenticationResponse> FindByIdAsync(string userId)
         {
             var applicationUser = await userManager.FindByIdAsync(userId);

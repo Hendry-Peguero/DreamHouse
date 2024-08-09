@@ -7,7 +7,6 @@ using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Core.Application.ViewModels.Auth;
 using DreamHouse.Core.Application.ViewModels.User;
-using DreamHouse.Infrastructure.Identity.Services;
 using DreamHouse.Middlewares;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +23,7 @@ namespace DreamHouse.Controllers
         private readonly IRegisterValidationService registerValidationService;
 
         public AuthorizationController(
-            IUserService userService, 
+            IUserService userService,
             IUserHelper userHelper,
             IAccountService accountService,
             IMapper mapper,
