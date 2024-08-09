@@ -59,7 +59,7 @@
                         <div class="col-md-12 mb-3">
                             <label asp-for="Email" class="form-label">Email:</label>
                             <input asp-for="Email" class="form-control"/>
-                            <span asp-asp-validation-for="Password"></span>
+                            <span asp-validation-for="Email" class="text-danger"></span>
                             @Html.ValidationMessage("DuplicateEmail", "", new { @class = "text-danger" })
                         </div>
                     </div>

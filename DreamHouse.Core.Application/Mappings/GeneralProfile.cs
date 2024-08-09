@@ -45,10 +45,8 @@ namespace DreamHouse.Core.Application.Mappings
                 .ForMember(destino => destino.ErrorDescription, otp => otp.Ignore());
 
             CreateMap<UserSaveViewModel, AuthenticationResponse>()
-                //.ForMember(destino => destino.PhoneNumber, otp => otp.Ignore())   FUI YO RAFAELLL
                 .ReverseMap()
                 .ForMember(destino => destino.File, otp => otp.Ignore())
-                .ForMember(destino => destino.Password, otp => otp.Ignore())
                 .ForMember(destino => destino.ConfirmPassword, otp => otp.Ignore());
 
             CreateMap<UserViewModel, AgentViewModel>()
@@ -166,6 +164,24 @@ namespace DreamHouse.Core.Application.Mappings
 
             // Aquí es donde añadimos el nuevo mapeo
             CreateMap<ImprovementEntity, UpdateImprovementResponse>();
+            #endregion
+
+            #region SalesTypeQuery
+            CreateMap<SaleTypeEntity, CreateSaleTypeCommand>()
+                .ReverseMap()
+                .ForMember(destino => destino.Properties, otp => otp.Ignore())
+                .ForMember(destino => destino.Id, otp => otp.Ignore());
+
+            CreateMap<SaleTypeEntity, UpdateSaleTypeCommand>()
+                .ReverseMap()
+                .ForMember(destino => destino.Properties, otp => otp.Ignore());
+
+
+            CreateMap<SaleTypeEntity, UpdateSaleTypeResponse>()
+                .ReverseMap()
+                .ForMember(destino => destino.Properties, otp => otp.Ignore());
+
+
             #endregion
 
         }

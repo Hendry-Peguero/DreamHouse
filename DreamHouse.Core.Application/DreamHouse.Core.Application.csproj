@@ -25,10 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Properties\Commands\" />
-    <Folder Include="Features\SalesType\Commands\Delete\" />
-    <Folder Include="Features\SalesType\Commands\Update\" />
-    <Folder Include="Features\SalesType\Commands\Create\" />
-    <Folder Include="Features\SalesType\Queries\" />
   </ItemGroup>
 
 </Project>

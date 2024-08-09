@@ -22,6 +22,7 @@ namespace DreamHouse.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "AGENT")]
         public async Task<IActionResult> EditAgentProfile()
         {
             var agentId = userHelper.GetUser()!.Id;
@@ -29,6 +30,7 @@ namespace DreamHouse.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "AGENT")]
         public async Task<IActionResult> EditAgentProfile(UserSaveViewModel userSaveVm)
         {
             if (!ModelState.IsValid) return View("SaveAgent", userSaveVm);

@@ -24,7 +24,7 @@ namespace DreamHouse.Core.Application.Services.Validations
                 var duplicateName = (await propertyTypeService.GetAllAsync())
                     .FirstOrDefault(propertyType => propertyType.Name == propertyTypeVm.Name);
 
-                if (duplicateName.Name != null) errors.Add("DuplicateName", "Name already in use");
+                if (duplicateName != null) errors.Add("DuplicateName", "Name already in use");
             }
 
             return errors;
@@ -41,7 +41,7 @@ namespace DreamHouse.Core.Application.Services.Validations
                 var duplicateName = (await propertyTypeService.GetAllAsync())
                     .FirstOrDefault(propertyType => propertyType.Name == propertyTypeVm.Name);
                 
-                if (duplicateName != null) errors.Add("DuplicateName", "Email already in use");
+                if (duplicateName != null) errors.Add("DuplicateName", "Name already in use");
             }
             
             return errors;
