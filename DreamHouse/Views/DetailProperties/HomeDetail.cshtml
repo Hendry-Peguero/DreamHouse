@@ -8,7 +8,14 @@
 @model PropertyViewModel
 
 <div class="container mt-4">
-    <h2>@ViewData["Title"]</h2>
+
+    <div class="row mb-3 mt-4">
+        <div class="d-flex gap-2 p-0">
+            <div class="rounded-3 bg-primary p-1 flex-grow-1">
+                <h1 class="fw-bold text-light m-0 p-0 ms-4">Details</h1>
+            </div>
+        </div>
+    </div>
 
     <div class="property-detail">
         <div class="row">
@@ -59,38 +66,45 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <h3>Código: @Model.Code</h3>
-                <p>Tipo de Propiedad: @Model.TypeProperty!.Name</p>
-                <p>Tipo de Venta: @Model.TypeSale!.Name</p>
-                <p>Precio: @Model.Price$</p>
-                <p>Habitaciones: @Model.Bedrooms</p>
-                <p>Baños: @Model.Bathrooms</p>
-                <p>Tamaño: @Model.SquareMeter m²</p>
-                <p>Descripción: @Model.Description</p>
-                <h4>Mejoras:</h4>
-                <ul>
-                    @foreach (var improvement in Model.ImprovementProperties!)
+
+                <div class="shadow-sm p-3 rounded-3 mb-3">
+                    <h3>Código: @Model.Code</h3>
+                    <p>Tipo de Propiedad: @Model.TypeProperty!.Name</p>
+                    <p>Tipo de Venta: @Model.TypeSale!.Name</p>
+                    <p>Precio: @Model.Price$</p>
+                    <p>Habitaciones: @Model.Bedrooms</p>
+                    <p>Baños: @Model.Bathrooms</p>
+                    <p>Tamaño: @Model.SquareMeter m²</p>
+                    <p>Descripción: @Model.Description</p>
+                </div>
+                <div class="shadow-sm p-3 rounded-3 mb-3">
+                    <h4>Mejoras:</h4>
+                    <ul>
+                        @foreach (var improvement in Model.ImprovementProperties!)
+                        {
+                            <li>@improvement.Improvement.Name</li>
+                        }
+                    </ul>
+                </div>
+                <div class="shadow-sm p-3 rounded-3 mb-3">
+                    <h4>Agente Inmobiliario:</h4>
+                    <p>Nombre: @Model.Agent?.FirstName</p>
+                    <p>Cedula: @Model.Agent?.IdCard</p>
+                    <p>Celular: @Model.Agent?.PhoneNumber</p>
+                    <p>Email: @Model.Agent?.Email</p>
+                    @if (string.IsNullOrEmpty(Model.Agent?.ImageUrl))
                     {
-                        <li>@improvement.Improvement.Name</li>
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title>Placeholder</title>
+                            <rect width="100%" height="100%" fill="#55595c"></rect>
+                            <text x="45%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
+                        </svg>
                     }
-                </ul>
-                <h4>Agente Inmobiliario:</h4>
-                <p>Nombre: @Model.Agent?.FirstName</p>
-                <p>Cedula: @Model.Agent?.IdCard</p>
-                <p>Celular: @Model.Agent?.PhoneNumber</p>
-                <p>Email: @Model.Agent?.Email</p>
-                @if (string.IsNullOrEmpty(Model.Agent?.ImageUrl))
-                {
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#55595c"></rect>
-                        <text x="45%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
-                    </svg>
-                }
-                else
-                {
-                    <img src="@Model.Agent.ImageUrl" alt="Foto del Agente" class="img-thumbnail">
-                }
+                    else
+                    {
+                        <img src="@Model.Agent.ImageUrl" alt="Foto del Agente" class="img-thumbnail">
+                    }
+                </div>
             </div>
             </div>
         </div>

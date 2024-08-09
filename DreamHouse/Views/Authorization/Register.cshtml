@@ -4,7 +4,15 @@
 }
 
 <div class="col-md-7 col-lg-8 mx-auto mt-5">
-    <h4 class="mb-3">@ViewData["Title"]</h4>
+
+    <div class="row mb-3 mt-4">
+        <div class="d-flex gap-2 p-0">
+            <div class="rounded-3 bg-primary p-1 flex-grow-1">
+                <h1 class="fw-bold text-light m-0 p-0 ms-4">Register</h1>
+            </div>
+        </div>
+    </div>
+
     <form asp-action="Register" method="post" enctype="multipart/form-data">
         <div class="row g-3">
         <div class="col-sm-6">

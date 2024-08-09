@@ -68,7 +68,16 @@
         </div>
     }
 
-    <form method="get" asp-action="@actionForFiltering" asp-controller="@controllerForFiltering">
+
+    <div class="row mb-3 mt-4">
+        <div class="d-flex gap-2 p-0">
+            <div class="rounded-3 bg-primary p-1 flex-grow-1">
+                <h1 class="fw-bold text-light m-0 p-0 ms-4">Filter</h1>
+            </div>
+        </div>
+    </div>
+
+    <form method="get" asp-action="@actionForFiltering" asp-controller="@controllerForFiltering" class="">
         <div class="row mb-3">
             <div class="col-md-2">
                 <input asp-for="filter!.Code" type="text" class="form-control" name="code" placeholder="Código">
@@ -91,9 +100,9 @@
         </div>
         <div class="row mb-3">
             <div class="col-md-6">
-                <button type="submit" class="btn btn-primary">Filtrar</button>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-funnel-fill"></i></button>
                 <a asp-controller="@controllerForFiltering" asp-action="@actionForFiltering" class="btn btn-secondary" asp-route-agentId="@(ViewBag.PropertiesForSpecifictAgent ? ViewBag.AgentId : string.Empty )">
-                    Limpiar Filtros
+                    <i class="bi bi-trash2-fill"></i>
                 </a>
             </div>
         </div>
@@ -106,6 +115,7 @@
 
     </form>
 
+
     <div class="products">
         @if (Model.Properties != null && Model.Properties.Any())
         {
@@ -113,11 +123,6 @@
                 @foreach (var property in Model.Properties)
                 {
                     <div class="col">
-                        @* 
-                            METODO DE HENDRY PARA HACER CLICK EN UNA TARJETA Y REDIRIGIR AL DETALLE
-
-                            onclick="location.href='@Url.Action("HomeDetail", "DetailProperties", new { id = property.Id })'" 
-                        *@
                         <div class="card shadow-sm" style="cursor: pointer;">
 
                             <img class="card-img-top img-product-size" src="@(property.Images?.FirstOrDefault()?.ImageUrl ?? "https://www.henleyaudio.co.uk/media/images/products/product-noimage.jpg?width=1000")" />
@@ -136,7 +141,7 @@
                                         </p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="btn-group">
-                                                <a href="@Url.Action("HomeDetail", "DetailProperties", new { id = property.Id })" class="btn btn-sm btn-outline-secondary">Ver</a>
+                                                <a href="@Url.Action("HomeDetail", "DetailProperties", new { id = property.Id })" class="btn btn-sm btn-outline-secondary">See details</a>
                                             </div>
                                         </div>
                                     </div>
@@ -197,6 +202,12 @@
 <style>
     .card {
         width: 20rem;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
     }
 
     .card-img-top {
