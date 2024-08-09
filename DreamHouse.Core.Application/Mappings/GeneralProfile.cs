@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using DreamHouse.Core.Application.Dtos.Account;
+using DreamHouse.Core.Application.Features.Improvements.Commands.Create;
+using DreamHouse.Core.Application.Features.Improvements.Commands.Update;
 using DreamHouse.Core.Application.Features.PropertyType.Commands.Create;
 using DreamHouse.Core.Application.Features.PropertyType.Commands.Update;
 using DreamHouse.Core.Application.ViewModels.Agent;
@@ -147,9 +149,24 @@ namespace DreamHouse.Core.Application.Mappings
 
             CreateMap<PropertyTypeEntity, PropertyFavoriteViewModel>()
                 .ReverseMap();
-
             #endregion
 
+            #region ImprovementCommand
+            CreateMap<ImprovementEntity, CreateImprovementCommand>()
+                .ReverseMap()
+                .ForMember(destino => destino.Id, otp => otp.Ignore())
+                .ForMember(destino => destino.ImprovementProperties, otp => otp.Ignore());
+
+            CreateMap<ImprovementEntity, UpdateImprovementCommand>()
+                .ReverseMap()
+                .ForMember(destino => destino.ImprovementProperties, otp => otp.Ignore());
+
+            CreateMap<ImprovementEntity, PropertyFavoriteViewModel>()
+                .ReverseMap();
+
+            // Aquí es donde añadimos el nuevo mapeo
+            CreateMap<ImprovementEntity, UpdateImprovementResponse>();
+            #endregion
 
         }
     }
