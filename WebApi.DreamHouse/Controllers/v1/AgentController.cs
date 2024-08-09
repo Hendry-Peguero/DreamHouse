@@ -52,6 +52,22 @@ namespace WebApi.DreamHouse.Controllers.v1
             }
         }
 
+        [HttpGet("Properties{agentId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropertyViewModel))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAgentProperties(string agentId)
+        {
+            try
+            {
+                return Ok(await Mediator.Send(new GetAllAgentsPropertiesQuery() { Id = agentId }));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         //[HttpPost]
         //[ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SaleTypeViewModel))]
         //[ProducesResponseType(StatusCodes.Status400BadRequest)]
