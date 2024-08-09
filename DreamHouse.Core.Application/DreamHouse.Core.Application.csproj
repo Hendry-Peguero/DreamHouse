@@ -24,6 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Agents\Commands\ChangeAgentStatus\" />
+    <Folder Include="Features\Agents\Queries\GetAgentProperties\" />
     <Folder Include="Features\Properties\Commands\" />
   </ItemGroup>
 

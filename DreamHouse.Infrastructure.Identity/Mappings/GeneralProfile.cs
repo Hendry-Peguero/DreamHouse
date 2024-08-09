@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DreamHouse.Core.Application.Dtos.Account;
+using DreamHouse.Core.Application.ViewModels.Agent;
 using DreamHouse.Core.Application.ViewModels.User;
 using DreamHouse.Infrastructure.Identity.Entities;
 
@@ -30,6 +31,25 @@ namespace DreamHouse.Infrastructure.Identity.Mappings
                     .ForMember(dest => dest.PhoneNumberConfirmed, opt => opt.Ignore())
                     .ForMember(dest => dest.SecurityStamp, opt => opt.Ignore())
                     .ForMember(dest => dest.TwoFactorEnabled, opt => opt.Ignore());
+
+            //CreateMap<ApplicationUser, AgentViewModel>()
+            //        .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+            //        .ForMember(dest => dest.NumberPropertiesAssigned, opt => opt.Ignore())
+            //        .ForMember(dest => dest.Status, opt => opt.Ignore())
+            //        .ForMember(dest => dest.UserType, opt => opt.Ignore())
+            //        .ForMember(dest => dest.Roles, opt => opt.Ignore())
+            //        .ReverseMap()
+            //        .ForMember(dest => dest.AccessFailedCount, opt => opt.Ignore())
+            //        .ForMember(dest => dest.ConcurrencyStamp, opt => opt.Ignore())
+            //        .ForMember(dest => dest.EmailConfirmed, opt => opt.Ignore())
+            //        .ForMember(dest => dest.LockoutEnabled, opt => opt.Ignore())
+            //        .ForMember(dest => dest.LockoutEnd, opt => opt.Ignore())
+            //        .ForMember(dest => dest.NormalizedEmail, opt => opt.Ignore())
+            //        .ForMember(dest => dest.NormalizedUserName, opt => opt.Ignore())
+            //        .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+            //        .ForMember(dest => dest.PhoneNumberConfirmed, opt => opt.Ignore())
+            //        .ForMember(dest => dest.SecurityStamp, opt => opt.Ignore())
+            //        .ForMember(dest => dest.TwoFactorEnabled, opt => opt.Ignore());
 
 
             //CreateMap<ApplicationUser, RegisterRequest>()

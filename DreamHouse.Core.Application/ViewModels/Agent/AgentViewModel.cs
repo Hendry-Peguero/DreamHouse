@@ -11,7 +11,11 @@ namespace DreamHouse.Core.Application.ViewModels.Agent
         public string IdCard { get; set; }
         public string UserName { get; set; }
         public string? ImageUrl { get; set; }
+
+        [JsonIgnore]
         public string? Password { get; set; }
+
+        [JsonIgnore]
         public string? PhoneNumber { get; set; }
         public List<string> Roles { get; set; }
         public int Status { get; set; }
