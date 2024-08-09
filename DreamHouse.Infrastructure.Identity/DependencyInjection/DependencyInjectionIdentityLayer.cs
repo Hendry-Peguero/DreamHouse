@@ -1,5 +1,4 @@
 ﻿using DreamHouse.Core.Application.Dtos.Token;
-using DreamHouse.Core.Application.Helpers.FOR_DELETE;
 using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Core.Domain.Settings;
@@ -129,7 +128,7 @@ namespace DreamHouse.Infrastructure.Identity.DependencyInjection
             }
             else
             {
-                var connectionString = configuration.GetConnection("IdentityConnection");
+                var connectionString = configuration.GetConnectionString("IdentityConnection");
 
                 services.AddDbContext<IdentityContext>(options =>
                 {
