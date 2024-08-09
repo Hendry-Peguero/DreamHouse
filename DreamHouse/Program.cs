@@ -2,6 +2,7 @@ using DreamHouse.Infrastructure.Identity.DependencyInjection;
 using DreamHouse.Infrastructure.Persistence.DependencyInjection;
 using DreamHouse.Core.Application.DependencyInjection;
 using DreamHouse.Infrastructure.Shared.DependencyInjection;
+using DreamHouse.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,7 @@ builder.Services.AddApplicationDependency();
 builder.Services.AddSharedDependency(builder.Configuration);
 builder.Services.AddIdentityDependencyWeb(builder.Configuration);
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+builder.Services.AddScoped<LoginAuthorize>();
 
 var app = builder.Build();
 await app.AddIdentitySeeds();

@@ -1,16 +1,14 @@
 ﻿using DreamHouse.Core.Application.Helpers;
 using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.Interfaces.Services.Validations;
-using DreamHouse.Core.Application.Services.User;
 using DreamHouse.Core.Application.ViewModels.PropertyType;
-using DreamHouse.Core.Application.ViewModels.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuickBank.Helpers;
 
 namespace DreamHouse.Controllers
 {
-    [Authorize(Roles ="ADMIN")]
+    [Authorize(Roles = "ADMIN")]
     public class PropertyTypeMaintanceController : Controller
     {
         private readonly IPropertyTypeService propertyTypeService;
@@ -54,7 +52,7 @@ namespace DreamHouse.Controllers
         public async Task<IActionResult> Edit(int id)
         {
 
-            return View("Save",  await propertyTypeService.GetByIdAsync(id));
+            return View("Save", await propertyTypeService.GetByIdAsync(id));
         }
 
         [HttpPost]
@@ -66,7 +64,7 @@ namespace DreamHouse.Controllers
             {
                 return View("Save", propertyTypeSaveVm);
             }
-            await propertyTypeService.UpdateAsync(propertyTypeSaveVm,propertyTypeSaveVm.Id.Value);
+            await propertyTypeService.UpdateAsync(propertyTypeSaveVm, propertyTypeSaveVm.Id.Value);
             return RedirectRoutesHelper.routePropertyTypeIndex;
         }
 

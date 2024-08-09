@@ -1,1 +1,57 @@
-﻿
+﻿@using DreamHouse.Core.Application.Dtos.Account
+@using DreamHouse.Core.Application.Interfaces.Helpers;
+@using DreamHouse.Core.Application.Enums;
+
+@inject IUserHelper userHelper;
+
+@{
+    ViewData["Title"] = "Access Denied";
+    var userLogged = userHelper.GetUser();
+    string? principalUserRol = userLogged?.Roles![^1];
+}
+
+<div class="row mt-5">
+    <div class="col-lg-6 offset-lg-3">
+        <div class="card shadow-lg border-0">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 pe-3 ps-3">
+                        <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h2 class="mb-3 text-danger fw-bold">Access denied</h2>
+                        <p class="mb-0 fw-lighter mb-2">You do not have permission to access this section.</p>
+                        @switch (principalUserRol)
+                        {
+                            case nameof(ERoles.CLIENT):
+                                <p><a class="btn btn-warning btn-lg" asp-controller="Property" asp-action="PropertiesForClient">Go to home</a></p>
+                                break;
+                            case nameof(ERoles.AGENT):
+                                <p><a class="btn btn-warning btn-lg" asp-controller="Property" asp-action="PropertiesForAgent">Go to home</a></p>
+                                break;
+                            case nameof(ERoles.ADMIN):
+                                <p><a class="btn btn-warning btn-lg" asp-controller="Home" asp-action="AdminHome">Go to home</a></p>
+                                break;
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-warning {
+        background-color: #ffc107; 
+        border-color: #ffc107; 
+    }
+
+        .btn-warning:hover {
+            background-color: #ffca2c; 
+            border-color: #ffca2c;
+        }
+
+    .bi-exclamation-triangle-fill {
+        font-size: 3rem; 
+    }
+</style>

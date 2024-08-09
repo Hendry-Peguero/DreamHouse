@@ -103,7 +103,7 @@ namespace DreamHouse.Infrastructure.Identity.DependencyInjection
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/Authorization/Login";
+                options.LoginPath = "/Home/HomeBasic";
                 options.AccessDeniedPath = "/Authorization/AccessDenied";
             });
 
