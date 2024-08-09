@@ -111,22 +111,22 @@ namespace WebApi.DreamHouse.Controllers.v1
         //    }
         //}
 
-        //[HttpDelete("{id}")]
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-        //public async Task<IActionResult> Delete(DeleteSaleTypeCommand command)
-        //{
-        //    try
-        //    {
-        //        await Mediator.Send(command);
-        //        return NoContent();
+        public async Task<IActionResult> Put(ChangeAgentStatusCommand command)
+        {
+            try
+            {
+                await Mediator.Send(command);
+                return NoContent();
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        //    }
-        //}
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }
