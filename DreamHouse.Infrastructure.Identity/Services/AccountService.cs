@@ -55,6 +55,24 @@ namespace DreamHouse.Infrastructure.Identity.Services
             return authResponses;
         }
 
+        public async Task<AuthenticationResponse?> FindByNameOrEmailAsync(string text)
+        {
+            var response = new AuthenticationResponse();
+
+            // Intentar buscar por Email
+            var applicationUser = await userManager.FindByEmailAsync(text);
+
+            // Si no se encuentra por Email, intentar buscar por UserName
+            if (applicationUser == null) applicationUser = await userManager.FindByNameAsync(text);
+
+            if (applicationUser == null) return response;
+
+            response = mapper.Map<AuthenticationResponse>(applicationUser);
+            response.Roles = (await userManager.GetRolesAsync(applicationUser!).ConfigureAwait(false)).ToList();
+
+            return response;
+        }
+
         public async Task<AuthenticationResponse> FindByIdAsync(string userId)
         {
             var applicationUser = await userManager.FindByIdAsync(userId);
@@ -246,6 +264,26 @@ namespace DreamHouse.Infrastructure.Identity.Services
                 response.HasError = true;
                 response.ErrorDescription = "An ocurred an error updating the user try again";
                 return response;
+            }
+
+            // Try to update the password
+            if (request.Password != null)
+            {
+                var removePassword = await userManager.RemovePasswordAsync(userToUpdate);
+                if (!removePassword.Succeeded)
+                {
+                    response.HasError = true;
+                    response.ErrorDescription = "An ocurred an error removing the user password try again";
+                    return response;
+                }
+
+                var addPassword = await userManager.AddPasswordAsync(userToUpdate, request.Password);
+                if (!addPassword.Succeeded)
+                {
+                    response.HasError = true;
+                    response.ErrorDescription = "An ocurred an adding removing the user password try again";
+                    return response;
+                }
             }
 
             // Fill the response with data

@@ -26,7 +26,6 @@ namespace WebApi.DreamHouse.Extensions
                 });
 
                 options.DescribeAllParametersInCamelCase();
-
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",

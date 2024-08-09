@@ -7,7 +7,8 @@ using DreamHouse.Core.Application.Interfaces.Services;
 using DreamHouse.Core.Application.Interfaces.Services.User;
 using DreamHouse.Core.Application.ViewModels.Auth;
 using DreamHouse.Core.Application.ViewModels.User;
-using DreamHouse.Infrastructure.Identity.Services;
+using DreamHouse.Middlewares;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuickBank.Helpers;
 
@@ -22,7 +23,7 @@ namespace DreamHouse.Controllers
         private readonly IRegisterValidationService registerValidationService;
 
         public AuthorizationController(
-            IUserService userService, 
+            IUserService userService,
             IUserHelper userHelper,
             IAccountService accountService,
             IMapper mapper,
@@ -35,12 +36,14 @@ namespace DreamHouse.Controllers
             this.registerValidationService = registerValidationService;
         }
 
+        [ServiceFilter(typeof(LoginAuthorize))]
         public IActionResult Login()
         {
             return View(new LoginViewModel());
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(LoginAuthorize))]
         public async Task<IActionResult> Login(LoginViewModel loginVm)
         {
             if (!ModelState.IsValid)
@@ -79,12 +82,13 @@ namespace DreamHouse.Controllers
             return RedirectRoutesHelper.routeBasicHome;
         }
 
+        [Authorize(Roles = "ADMIN,CLIENT,AGENT")]
         public async Task<IActionResult> AccessDenied()
         {
             return View();
         }
 
-
+        [ServiceFilter(typeof(LoginAuthorize))]
         public IActionResult Register()
         {
             return View(new UserSaveViewModel());
@@ -92,6 +96,7 @@ namespace DreamHouse.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(LoginAuthorize))]
         public async Task<IActionResult> Register(UserSaveViewModel vm)
         {
             ModelState.AddModelErrorRange(await registerValidationService.ValidateUserRegistrationAsync(vm));

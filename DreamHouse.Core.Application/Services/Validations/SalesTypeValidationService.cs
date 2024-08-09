@@ -22,7 +22,7 @@ namespace DreamHouse.Core.Application.Services.Validations
                 var duplicateName = (await saleTypeService.GetAllAsync())
                 .FirstOrDefault(saleType => saleType.Name == saleTypeVm.Name);
 
-                if (duplicateName.Name != null) errors.Add("DuplicateName", "Name already in use");
+                if (duplicateName != null) errors.Add("DuplicateName", "Name already in use");
             }
 
             return errors;

@@ -10,6 +10,7 @@ namespace DreamHouse.Core.Application.Interfaces.Services.User
     public interface IAccountService
     {
         Task<IEnumerable<AuthenticationResponse>> GetAllAsync();
+        Task<AuthenticationResponse?> FindByNameOrEmailAsync(string text);
         Task<AuthenticationResponse> FindByIdAsync(string id);
         Task<AuthenticationResponse> AuthenticateAsync(AuthenticationRequest request);
         //Task<string> ConfirmAccountAsync(string userId, string token);

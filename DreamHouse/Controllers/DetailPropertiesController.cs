@@ -25,6 +25,7 @@ namespace DreamHouse.Controllers
             this.userService = userService;
             this.mapper = mapper;
         }
+
         public async Task<IActionResult> HomeDetail(int id)
         {
             // Check for denied action

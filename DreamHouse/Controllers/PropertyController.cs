@@ -151,7 +151,6 @@ namespace DreamHouse.Controllers
 
         #endregion
 
-
         #region PropertiesFor...
 
 
@@ -196,5 +195,6 @@ namespace DreamHouse.Controllers
         }
 
         #endregion
+    
     }
 }

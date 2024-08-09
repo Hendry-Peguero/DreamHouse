@@ -10,15 +10,18 @@ namespace DreamHouse.Core.Application.Services
     public class SaleTypeService : GenericService<SaleTypeSaveViewModel, SaleTypeViewModel, SaleTypeEntity>, ISaleTypeService
     {
         private readonly ISaleTypeRepository saleTypeRepository;
+        private readonly IPropertyService propertyService;
         private readonly IMapper mapper;
 
         public SaleTypeService(
             ISaleTypeRepository saleTypeRepository,
+            IPropertyService propertyService,
             IMapper mapper
         )
         : base(saleTypeRepository, mapper)
         {
             this.saleTypeRepository = saleTypeRepository;
+            this.propertyService = propertyService;
             this.mapper = mapper;
         }
 
@@ -32,6 +35,19 @@ namespace DreamHouse.Core.Application.Services
                 Description = s.Description,
                 CuantitySalesAssigned = s.Properties.Count()
             }).ToList();
+        }
+
+        public override async Task DeleteAsync(int id)
+        {
+            // Delete properties manually
+            var properties = (await propertyService.GetAllAsync()).Where(p => p.TypeSaleId == id);
+            foreach (var property in properties)
+            {
+                await propertyService.DeleteAsync(property.Id);
+            }
+
+            //Delete
+            await base.DeleteAsync(id);
         }
     }
 }
