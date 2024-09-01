@@ -16,7 +16,7 @@ DreamHouse es una aplicación web de tienda de casas desarrollada en ASP.NET MVC
 - **Entity Framework Core:** ORM utilizado para interactuar con la base de datos.
 
 
-Contribuidores
-Hendry Gustavo Peguero Valdez: https://github.com/Hendry-Peguero
-Moisés Girón: https://github.com/01010011011001010110010001110100
-Rafael Gómez: https://github.com/RafaelGomezRuiz
+## Contribuidores
+- **Hendry Gustavo Peguero Valdez:** https://github.com/Hendry-Peguero
+- **Moisés Girón:** https://github.com/01010011011001010110010001110100
+- **Rafael Gómez:** https://github.com/RafaelGomezRuiz
